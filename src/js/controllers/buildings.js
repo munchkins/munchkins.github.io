@@ -5,11 +5,13 @@ angular
 
     this.buy = function(key) {
       const b = Buildings[key];
+      const incr = Math.pow(b.increase, b.value.current);
+
       b.value.current++;
 
       angular.forEach(b.requires.resources, function(req, rkey) {
         const r = Resources[rkey];
-        r.value.current -= req.value;
+        r.value.current -= req.value * incr;
       });
 
       angular.forEach(b.provides.resources, function(prov, pkey) {
