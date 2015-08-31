@@ -5,6 +5,7 @@ angular
       Game.ticks++;
 
       angular.forEach(Resources, function(key, res) {
+        console.log(key, res);
         res.value.current += res.rate;
       });
     };
