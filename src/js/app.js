@@ -1,16 +1,12 @@
 'use strict';
 
-angular.module('munchkins.controllers', []);
-angular.module('munchkins.services', []);
-angular.module('munchkins.values', []);
-
 angular
-  .module('munchkins', [
-    'ngRoute',
-    'munchkins.controllers',
-    'munchkins.services',
-    'munchkins.values'
-  ])
+  .module('munchkins', ['ngRoute'])
+  .constant('Defaults', {
+    TICK_RATE: 250,
+    SAVE_RATE: 60000,
+    SAVE_LOCATION: 'munchkinsSave'
+  })
   .config(function($routeProvider) {
     $routeProvider
       .when('/buildings', { templateUrl: 'views/buildings.html' })

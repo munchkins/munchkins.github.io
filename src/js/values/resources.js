@@ -12,7 +12,7 @@
   }
 */
 angular
-  .module('munchkins.values')
+  .module('munchkins')
   .value('Resources', {
     flowers: {
       name: 'Flowers',

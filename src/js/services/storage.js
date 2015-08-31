@@ -1,6 +1,6 @@
 angular
-  .module('munchkins.services')
-  .service('Storage', function($interval, Const, Resources, Buildings) {
+  .module('munchkins')
+  .service('Storage', function($interval, Defaults, Resources, Buildings) {
     this.save = function() {
       console.log('Saving game');
       try {

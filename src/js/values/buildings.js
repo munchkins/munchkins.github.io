@@ -29,7 +29,7 @@
   }
 */
 angular
-  .module('munchkins.values')
+  .module('munchkins')
   .value('Buildings', {
     collectFlowers: {
       name: 'Collect Flowers',

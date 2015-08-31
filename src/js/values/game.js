@@ -1,4 +1,4 @@
 angular
-  .module('munchkins.values')
+  .module('munchkins')
   .value('Game', {
   });
