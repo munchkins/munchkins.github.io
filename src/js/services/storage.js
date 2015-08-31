@@ -6,7 +6,7 @@ angular
       try {
         const save = {
           version: 1,
-          game: 0,
+          game: {},
           resources: {},
           buildings: {}
         };
