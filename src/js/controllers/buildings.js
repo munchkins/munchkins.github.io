@@ -26,6 +26,7 @@ angular
 
         req.buynow = price;
         req.affordable = Resources[rkey].value.current >= price;
+        req.name = Resources[rkey].name;
       });
 
       return Buildings[key].requires.resources;
@@ -63,8 +64,6 @@ angular
         Resources[pkey].value.current++;
         Resources[pkey].rate += prov.rate;
       });
-
-      Buildings[key].prices = getPrices(key);
 
       unlockBuildings();
     };
