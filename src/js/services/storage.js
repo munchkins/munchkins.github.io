@@ -2,29 +2,35 @@ angular
   .module('munchkins.services')
   .service('Storage', function($interval, Const, Resources, Buildings) {
     this.save = function() {
-      const save = {
-        version: 1,
-        resources: {},
-        buildings: {}
-      };
-
-      _.forEach(Resources, function(res, key) {
-        save.resources[key] = {
-          value: res.value
+      console.log('Saving game');
+      try {
+        const save = {
+          version: 1,
+          resources: {},
+          buildings: {}
         };
-      });
 
-      _.forEach(Buildings, function(bld, key) {
-        save.buildings[key] = {
-          value: bld.value,
-          unlocked: bld.unlocked
-        };
-      });
+        _.forEach(Resources, function(res, key) {
+          save.resources[key] = {
+            value: res.value
+          };
+        });
 
-      localStorage.setItem(Const.SAVE_LOCATION, JSON.stringify(save));
+        _.forEach(Buildings, function(bld, key) {
+          save.buildings[key] = {
+            value: bld.value,
+            unlocked: bld.unlocked
+          };
+        });
+
+        localStorage.setItem(Const.SAVE_LOCATION, JSON.stringify(save));
+      } catch(err) {
+        console.error(err);
+      }
     };
 
     this.load = function() {
+      console.log('Loading game');
       try {
         const load = JSON.parse(localStorage.getItem(Const.SAVE_LOCATION));
 
