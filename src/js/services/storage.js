@@ -23,7 +23,7 @@ angular
           };
         });
 
-        localStorage.setItem(Const.SAVE_LOCATION, JSON.stringify(save));
+        localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify(save));
       } catch(err) {
         console.error(err);
       }
@@ -32,7 +32,7 @@ angular
     this.load = function() {
       console.log('Loading game');
       try {
-        const load = JSON.parse(localStorage.getItem(Const.SAVE_LOCATION));
+        const load = JSON.parse(localStorage.getItem(Defaults.SAVE_LOCATION));
 
         _.forEach(load.resources, function(res, key) {
           Resources[key].value = res.value;
