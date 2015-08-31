@@ -27,7 +27,7 @@ angular
       angular.forEach(Buildings[key].requires.resources, function(req, rkey) {
         const price = req.value * incr;
         prices.push({
-          name: req.name,
+          name: Resources[rkey].name,
           value: price,
           affordable: Resources[rkey].value.current >= price
         });
