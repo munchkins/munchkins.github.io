@@ -1,11 +1,13 @@
 .action-panel,.log-panel,.resource-panel{float:left;display:block}
 html{box-sizing:border-box}
 *,::after,::before{box-sizing:inherit}
+body{color:#333}
 .resource-panel{margin-right:2.35765%;width:23.23176%}
 .resource-panel:last-child{margin-right:0}
 .action-panel{margin-right:2.35765%;width:48.82117%}
 .action-panel:last-child{margin-right:0}
-.action-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%;border:1px solid #000;cursor:pointer;text-align:center}
+.action-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%;border:1px solid #333;cursor:pointer;text-align:center}
 .action-panel .action-button:last-child{margin-right:0}
+.action-panel .action-button.inactive{color:gray;border:1px solid gray}
 .log-panel{margin-right:2.35765%;width:23.23176%}
 .log-panel:last-child{margin-right:0}

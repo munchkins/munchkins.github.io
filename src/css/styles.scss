@@ -2,6 +2,13 @@
 @import "neat-helpers";
 @import "neat";
 
+$primary-color: #333;
+$inactive-color: gray;
+
+body {
+  color: $primary-color;
+}
+
 .resource-panel {
   @include span-columns(3);
 }
@@ -11,9 +18,14 @@
 
   .action-button {
     @include span-columns(6);
-    border: 1px solid black;
+    border: 1px solid $primary-color;
     cursor: pointer;
     text-align: center;
+
+    &.inactive {
+      color: $inactive-color;
+      border: 1px solid $inactive-color;
+    }
   }
 }
 

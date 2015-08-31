@@ -20,21 +20,33 @@ angular
       });
     };
 
-    this.buy = function(key) {
-      const b = Buildings[key];
-      const incr = Math.pow(b.increase, b.value.current);
+    this.isBuyable = function(key) {
+      const incr = Math.pow(Buildings[key].increase, Buildings[key].value.current);
+      let buyable = true;
 
-      b.value.current++;
-
-      angular.forEach(b.requires.resources, function(req, rkey) {
-        const r = Resources[rkey];
-        r.value.current -= req.value * incr;
+      angular.forEach(Buildings[key].requires.resources, function(req, rkey) {
+        buyable = buyable && (Resources[rkey].value.current >= req.value * incr);
       });
 
-      angular.forEach(b.provides.resources, function(prov, pkey) {
-        const r = Resources[pkey];
-        r.value.current++;
-        r.rate += prov.rate;
+      return buyable;
+    };
+
+    this.buy = function(key) {
+      if (!this.isBuyable(key)) {
+        return;
+      }
+
+      const incr = Math.pow(Buildings[key].increase, Buildings[key].value.current);
+
+      Buildings[key].value.current++;
+
+      angular.forEach(Buildings[key].requires.resources, function(req, rkey) {
+        Resources[rkey].value.current -= req.value * incr;
+      });
+
+      angular.forEach(Buildings[key].provides.resources, function(prov, pkey) {
+        Resources[pkey].value.current++;
+        Resources[pkey].rate += prov.rate;
       });
 
       unlockBuildings();

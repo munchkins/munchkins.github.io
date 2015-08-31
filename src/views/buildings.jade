@@ -1,4 +1,4 @@
 div(ng-controller="Buildings as bld")
   div(ng-repeat="(bkey, b) in bld.buildings")
-    .action-button(ng-if="!b.locked" ng-click="bld.buy(bkey)")
+    .action-button(ng-if="!b.locked" ng-click="bld.buy(bkey)" ng-class="{ 'inactive': !bld.isBuyable(bkey) }")
       |{{b.name}} ({{b.value.current}})
