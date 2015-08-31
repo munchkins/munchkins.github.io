@@ -37,6 +37,10 @@ angular
       try {
         const load = JSON.parse(localStorage.getItem(Defaults.SAVE_LOCATION));
 
+        load.game = load.game || {};
+        load.resources = load.resources || {};
+        load.buildings = load.buildings || {};
+
         Game.ticks = load.game.ticks || Game.ticks;
 
         _.forEach(load.resources, function(res, key) {
