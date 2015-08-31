@@ -18,23 +18,20 @@ angular
       });
     };
 
-    const getPrices = function(key) {
+    this.getPrices = function(key) {
       const incr = Math.pow(Buildings[key].increase, Buildings[key].value.current);
-      const prices = [];
 
       angular.forEach(Buildings[key].requires.resources, function(req, rkey) {
         const price = req.value * incr;
-        prices.push({
-          name: Resources[rkey].name,
-          value: price,
-          affordable: Resources[rkey].value.current >= price
-        });
+
+        req.buynow = price;
+        req.affordable = Resources[rkey].value.current >= price;
       });
 
-      return prices;
+      return Buildings[key].requires.resources;
     };
 
-    const isBuyable = function(key) {
+    this.isBuyable = function(key) {
       const incr = Math.pow(Buildings[key].increase, Buildings[key].value.current);
       let buyable = true;
 
@@ -46,20 +43,11 @@ angular
     };
 
     this.getAll = function() {
-      const buildings = Buildings;
-
-      angular.forEach(buildings, function(b, key) {
-        b.buyable = isBuyable(key);
-        if (!b.prices) {
-          b.prices = getPrices(key);
-        }
-      });
-
-      return buildings;
+      return Buildings;
     };
 
     this.buy = function(key) {
-      if (!isBuyable(key)) {
+      if (!this.isBuyable(key)) {
         return;
       }
 
