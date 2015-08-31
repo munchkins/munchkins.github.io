@@ -1,1 +1,1 @@
-<div ng-controller="Buildings as bld"><div ng-repeat="(key, b) in bld.buildings"><a ng-if="b.unlocked" ng-click="bld.buy(key)">{{b.name}}</a></div></div>
+<div ng-controller="Buildings as bld"><div ng-repeat="(bkey, b) in bld.buildings"><a ng-if="b.unlocked" ng-click="bld.buy(bkey)">{{b.name}} ({{b.value.current}})</a></div></div>

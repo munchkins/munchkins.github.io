@@ -10,6 +10,7 @@ html(lang='en' ng-app='munchkins')
     style .ng-cloak { display: none; }
       
   body.ng-cloak(ng-controller='Game as game')
+    div(ng-include='"views/resources.html"')
     div(ng-view)
       
     script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js')
