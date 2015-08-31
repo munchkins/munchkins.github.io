@@ -1,14 +1,17 @@
 angular
   .module('munchkins')
-  .service('Storage', function($interval, Defaults, Resources, Buildings) {
+  .service('Storage', function($interval, Defaults, Game, Resources, Buildings) {
     this.save = function() {
       console.log('Saving game');
       try {
         const save = {
           version: 1,
+          game: 0,
           resources: {},
           buildings: {}
         };
+
+        save.game.ticks = Game.ticks;
 
         _.forEach(Resources, function(res, key) {
           save.resources[key] = {
@@ -33,6 +36,8 @@ angular
       console.log('Loading game');
       try {
         const load = JSON.parse(localStorage.getItem(Defaults.SAVE_LOCATION));
+
+        Game.ticks = load.game.ticks;
 
         _.forEach(load.resources, function(res, key) {
           Resources[key].value = res.value;
