@@ -2,9 +2,10 @@ div(ng-controller="Buildings as bld")
   div(ng-repeat="(bkey, b) in bld.buildings")
     .action-button(ng-if="!b.locked" ng-click="bld.buy(bkey)" ng-class="{ 'inactive': !bld.isBuyable(bkey) }")
       div {{b.name}} ({{b.value.current}})
-      div.detail
+      div.detail {{bld.getPrices(bkey)}}
+      //div.detail 
         |&nbsp;
-        span(ng-repeat="r in bld.getPrices(bkey)" ng-class="{ 'invalid': !r.affordable }")
+        span(ng-repeat="price in bld.getPrices(bkey)" ng-class="{ 'invalid': !price.affordable }")
           span(ng-if="$index") ,&nbsp;
-          |{{r.name}}@{{r.price}}
+          |{{price.name}}@{{price.value}}
         |&nbsp;

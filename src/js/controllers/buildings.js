@@ -28,7 +28,7 @@ angular
         const price = req.value * incr;
         prices.push({
           name: req.name,
-          price: price,
+          value: price,
           affordable: Resources[rkey].value.current >= price
         });
       });
@@ -67,4 +67,10 @@ angular
 
       unlockBuildings();
     };
+
+    angular.forEach(Buildings, function(bld) {
+      angular.forEach(bld.provides.resources, function(prov, pkey) {
+        Resources[pkey].rate += prov.rate;
+      });
+    });
   });
