@@ -22,7 +22,7 @@ var errcb = function(err) {
 gulp.task('js-babel', function() {
   return gulp
     .src(['src/js/**/*.js'])
-    .pipe(newer('app.js'))
+    .pipe(newer('munchkins.js'))
     .pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(annotate())
@@ -56,17 +56,16 @@ gulp.task('html-jade', function() {
 
 gulp.task('css-sass', function() {
   var nm = __dirname + '/node_modules';
-  var ip = ['bourbon', 'bourbon-neat'].map(function(p) {
-    return nm + '/' + p + '/app/assets/stylesheets';
-  });
-
-  return gulp.src(['src/css/**/*.sass'])
+  
+  return gulp.src(['src/css/**/*.scss'])
     .pipe(newer('munchkins.css'))
     .pipe(sass({
       indentedSyntax: false,
       sourceComments: 'normal',
       outputStyle: 'nested',
-      includePaths: ip
+      includePaths: ['bourbon', 'bourbon-neat'].map(function(p) {
+        return nm + '/' + p + '/app/assets/stylesheets';
+      })
     }))
     .on('error', errcb)
     .pipe(ignore.exclude('*.css.map'))
