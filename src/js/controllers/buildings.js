@@ -1,8 +1,6 @@
 angular
   .module('munchkins')
   .controller('Buildings', function(Buildings, Resources) {
-    this.buildings = Buildings;
-
     const unlockBuildings = function() {
       angular.forEach(Buildings, function(bld) {
         if (bld.locked) {
@@ -20,7 +18,7 @@ angular
       });
     };
 
-    this.getPrices = function(key) {
+    const getPrices = function(key) {
       const incr = Math.pow(Buildings[key].increase, Buildings[key].value.current);
       const prices = [];
 
@@ -36,7 +34,7 @@ angular
       return prices;
     };
 
-    this.isBuyable = function(key) {
+    const isBuyable = function(key) {
       const incr = Math.pow(Buildings[key].increase, Buildings[key].value.current);
       let buyable = true;
 
@@ -47,8 +45,19 @@ angular
       return buyable;
     };
 
+    this.getAll = function() {
+      const buildings = Buildings;
+
+      angular.forEach(buildings, function(b, key) {
+        b.buyable = isBuyable(key);
+        b.prices = getPrices(key);
+      });
+
+      return buildings;
+    };
+
     this.buy = function(key) {
-      if (!this.isBuyable(key)) {
+      if (!isBuyable(key)) {
         return;
       }
 
