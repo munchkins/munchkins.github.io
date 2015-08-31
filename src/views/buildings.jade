@@ -6,6 +6,6 @@ div(ng-controller="Buildings as bld")
       div.detail 
         |&nbsp;
         span(ng-repeat="price in bld.getPrices(bkey)" ng-class="{ 'invalid': !price.affordable }")
-          span(ng-if="price.$index") ,&nbsp;
+          //span(ng-if="price.$index") ,&nbsp;
           |{{price.name}}@{{price.value}}
         |&nbsp;

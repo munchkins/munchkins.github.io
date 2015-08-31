@@ -23,6 +23,7 @@ body {
     border: 1px solid $primary-color;
     cursor: pointer;
     text-align: center;
+    padding: 5px;
 
     &.inactive {
       color: $inactive-color;

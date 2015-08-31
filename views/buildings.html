@@ -1,2 +1,2 @@
 <div ng-controller="Buildings as bld"><div ng-repeat="(bkey, b) in bld.buildings"><div ng-if="!b.locked" ng-click="bld.buy(bkey)" ng-class="{ 'inactive': !bld.isBuyable(bkey) }" class="action-button"><div>{{b.name}} ({{b.value.current}})</div><div class="detail">{{bld.getPrices(bkey)}}</div><div class="detail"> 
-&nbsp;<span ng-repeat="price in bld.getPrices(bkey)" ng-class="{ 'invalid': !price.affordable }"><span ng-if="price.$index">,&nbsp;</span>{{price.name}}@{{price.value}}</span>&nbsp;</div></div></div></div>
+&nbsp;<span ng-repeat="price in bld.getPrices(bkey)" ng-class="{ 'invalid': !price.affordable }"><!--span(ng-if="price.$index") ,&nbsp;-->{{price.name}}@{{price.value}}</span>&nbsp;</div></div></div></div>

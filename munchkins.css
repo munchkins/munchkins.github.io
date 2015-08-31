@@ -6,7 +6,7 @@ body{color:#333}
 .resource-panel:last-child{margin-right:0}
 .action-panel{margin-right:2.35765%;width:48.82117%}
 .action-panel:last-child{margin-right:0}
-.action-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%;border:1px solid #333;cursor:pointer;text-align:center}
+.action-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%;border:1px solid #333;cursor:pointer;text-align:center;padding:5px}
 .action-panel .action-button:last-child{margin-right:0}
 .action-panel .action-button.inactive{color:#999;border:1px solid #999}
 .action-panel .action-button .detail{font-size:75%}
