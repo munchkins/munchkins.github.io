@@ -1,9 +1,9 @@
-div(ng-controller="Resources as res")
-  div(ng-repeat="(rkey, r) in res.resources")
-    div(ng-if="r.value.current > 0")
-      |{{r.name}} {{r.value.current}}
-      span(ng-if="r.value.limit > 0")
-        |/{{r.value.limit}}
+div(ng-controller="Resources as resc")
+  div(ng-repeat="(rkey, resource) in resc.resources")
+    div(ng-if="resource.value.current > 0")
+      |{{resource.name}} {{resource.value.current | filter:numeric}}
+      span(ng-if="resource.value.limit > 0")
+        |/{{resource.value.limit | filter:numeric}}
       |&nbsp;
       span(ng-if="r.rate > 0")
-        |({{r.rate}}/tick)
+        |({{resource.rate | filter:numeric}}/tick)
