@@ -5,5 +5,5 @@ div(ng-controller="Resources as resc")
       span(ng-if="resource.value.limit > 0")
         |/{{resource.value.limit | numeric}}
       |&nbsp;
-      span(ng-if="r.rate > 0")
+      span(ng-if="resource.rate > 0")
         |({{resource.rate | numeric}}/tick)
