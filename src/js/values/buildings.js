@@ -31,10 +31,10 @@
 angular
   .module('munchkins')
   .value('Buildings', {
-    collectFlowers: {
+    collect: {
       name: 'Collect Flowers',
       description: 'Flowers are the staple of the Munchkin diet, collect them',
-      unlocked: true,
+      locked: false,
       increase: 0,
       value: {
         current: 0,
@@ -48,6 +48,32 @@ angular
           flowers: {
             value: 1,
             rate: 0
+          }
+        }
+      }
+    },
+    meadow: {
+      name: 'Flower Meadow',
+      description: 'A naturally gorwing field of flowers',
+      locked: true,
+      increase: 1.1,
+      value: {
+        current: 0,
+        max: 0,
+        level: 0
+      },
+      requires: {
+        resources: {
+          flowers: {
+            value: 100
+          }
+        }
+      },
+      provides: {
+        resources: {
+          flowers: {
+            value: 0,
+            rate: 0.01
           }
         }
       }

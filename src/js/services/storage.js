@@ -22,7 +22,7 @@ angular
         angular.forEach(Buildings, function(bld, key) {
           save.buildings[key] = {
             value: bld.value,
-            unlocked: bld.unlocked
+            locked: bld.locked
           };
         });
 
@@ -49,7 +49,7 @@ angular
 
         angular.forEach(load.buildings, function(bld, key) {
           Buildings[key].value = bld.value;
-          Buildings[key].unlocked = bld.unlocked;
+          Buildings[key].locked = bld.locked;
         });
       } catch (err) {
         console.error(err);
