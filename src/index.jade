@@ -1,19 +1,19 @@
 doctype html
-html(lang='en' ng-app='munchkins')
+html(lang="en" ng-app="munchkins")
   head
-    meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
-    meta(name='description' content='')
-    meta(name='author', content='')
-    meta(name='viewport', content='width=device-width')
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
+    meta(name="description" content="")
+    meta(name="author", content="")
+    meta(name="viewport", content="width=device-width")
     title Munchkins
     style .ng-cloak { display: none; }
       
-  body.ng-cloak(ng-controller='Game as game')
-    div(ng-include='"views/resources.html"')
+  body.ng-cloak(ng-controller="Game as game")
+    div(ng-include="'views/resources.html'")
     div(ng-view)
       
-    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js')
-    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.min.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js')
-    script(src='munchkins.js')
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js")
+    script(src="munchkins.js")
