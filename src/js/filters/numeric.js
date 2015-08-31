@@ -12,6 +12,6 @@ angular
         p = 2;
       }
 
-      return (u < 0) ? (n.toFixed(p)) : ((n / 1000 ** Math.floor(u)).toFixed(p) + units[u]);
+      return (n < 1) ? (n.toFixed(p)) : ((n / 1000 ** Math.floor(u)).toFixed(p) + units[u]);
     };
   });
