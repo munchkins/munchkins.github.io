@@ -1,6 +1,5 @@
 'use strict';
 
-/* eslint no-console:0 */
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var babel = require('gulp-babel');
