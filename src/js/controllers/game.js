@@ -4,7 +4,7 @@ angular
     const tickloop = function() {
       Game.ticks++;
 
-      _.forEach(Resources, function(key, res) {
+      angular.forEach(Resources, function(key, res) {
         res.value.current += res.rate;
       });
     };

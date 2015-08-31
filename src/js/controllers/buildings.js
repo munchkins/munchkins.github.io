@@ -7,12 +7,12 @@ angular
       const b = Buildings[key];
       b.value.current++;
 
-      _.forEach(b.requires.resources, function(req, rkey) {
+      angular.forEach(b.requires.resources, function(req, rkey) {
         const r = Resources[rkey];
         r.value.current -= req.value;
       });
 
-      _.forEach(b.provides.resources, function(prov, pkey) {
+      angular.forEach(b.provides.resources, function(prov, pkey) {
         const r = Resources[pkey];
         r.value.current++;
         r.rate += prov.rate;

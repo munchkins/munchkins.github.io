@@ -13,13 +13,13 @@ angular
 
         save.game.ticks = Game.ticks;
 
-        _.forEach(Resources, function(res, key) {
+        angular.forEach(Resources, function(res, key) {
           save.resources[key] = {
             value: res.value
           };
         });
 
-        _.forEach(Buildings, function(bld, key) {
+        angular.forEach(Buildings, function(bld, key) {
           save.buildings[key] = {
             value: bld.value,
             unlocked: bld.unlocked
@@ -43,11 +43,11 @@ angular
 
         Game.ticks = load.game.ticks || Game.ticks;
 
-        _.forEach(load.resources, function(res, key) {
+        angular.forEach(load.resources, function(res, key) {
           Resources[key].value = res.value;
         });
 
-        _.forEach(load.buildings, function(bld, key) {
+        angular.forEach(load.buildings, function(bld, key) {
           Buildings[key].value = bld.value;
           Buildings[key].unlocked = bld.unlocked;
         });
