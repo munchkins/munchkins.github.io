@@ -50,7 +50,9 @@ angular
 
       angular.forEach(buildings, function(b, key) {
         b.buyable = isBuyable(key);
-        b.prices = getPrices(key);
+        if (!b.prices) {
+          b.prices = getPrices(key);
+        }
       });
 
       return buildings;
@@ -73,6 +75,8 @@ angular
         Resources[pkey].value.current++;
         Resources[pkey].rate += prov.rate;
       });
+
+      Buildings[key].prices = getPrices(key);
 
       unlockBuildings();
     };
