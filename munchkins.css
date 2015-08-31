@@ -1,0 +1,11 @@
+.col12,.col3,.col6,.col9{float:left;display:block}
+html{box-sizing:border-box}
+*,::after,::before{box-sizing:inherit}
+.col3{margin-right:2.35765%;width:23.23176%}
+.col3:last-child{margin-right:0}
+.col6{margin-right:2.35765%;width:48.82117%}
+.col6:last-child{margin-right:0}
+.col9{margin-right:2.35765%;width:74.41059%}
+.col9:last-child{margin-right:0}
+.col12{margin-right:2.35765%;width:100%}
+.col12:last-child{margin-right:0}

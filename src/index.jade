@@ -8,10 +8,12 @@ html(lang="en" ng-app="munchkins")
     meta(name="viewport", content="width=device-width")
     title Munchkins
     style .ng-cloak { display: none; }
+    link(rel="stylesheet" type="text/css" href="munchkins.css")
       
   body.ng-cloak(ng-controller="Game as game")
-    div(ng-include="'views/resources.html'")
-    div(ng-view)
+    .col3(ng-include="'views/resources.html'")
+    .col6(ng-view)
+    .col3
       
     script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js")
     script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.min.js")

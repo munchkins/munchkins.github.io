@@ -1,5 +1,6 @@
 'use strict';
 
+/* eslint no-var:0 */
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var babel = require('gulp-babel');
@@ -9,6 +10,14 @@ var annotate = require('gulp-ng-annotate');
 var jade = require('gulp-jade');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
+var sass = require('gulp-sass');
+var cssmin = require('gulp-cssmin');
+var ignore = require('gulp-ignore');
+
+var errcb = function(err) {
+  console.error(err.stack || err.message || err);
+  this.emit('end');
+};
 
 gulp.task('js-babel', function() {
   return gulp
@@ -41,15 +50,36 @@ gulp.task('html-jade', function() {
       ext: '.html'
     }))
     .pipe(jade())
-    .on('error', function(err) {
-      console.error(err.stack || err.message || err);
-      this.emit('end');
-    })
+    .on('error', errcb)
+    .pipe(gulp.dest('.'));
+});
+
+gulp.task('css-sass', function() {
+  var nm = __dirname + '/node_modules';
+  var ip = ['bourbon', 'bourbon-neat'].map(function(p) {
+    return nm + '/' + p + '/app/assets/stylesheets';
+  });
+
+  return gulp.src(['src/css/**/*.sass'])
+    .pipe(newer('munchkins.css'))
+    .pipe(sass({
+      indentedSyntax: true,
+      sourceComments: 'normal',
+      outputStyle: 'nested',
+      includePaths: ip
+    }))
+    .on('error', errcb)
+    .pipe(ignore.exclude('*.css.map'))
+    .pipe(cssmin({
+      keepBreaks: true
+    }))
+    .pipe(concat('munchkins.css'))
     .pipe(gulp.dest('.'));
 });
 
 gulp.task('default', [
   'js-eslint',
   'js-babel',
-  'html-jade'
+  'html-jade',
+  'css-sass'
 ]);
