@@ -1,5 +1,5 @@
 div(ng-controller="Resources as resc")
-  div(ng-repeat="(rkey, resource) in resc.resources")
+  div(ng-repeat="(k, resource) in resc.resources.getAl()")
     div(ng-if="resource.value.current > 0")
       span {{resource.name}} {{resource.value.current | numeric}}
       span(ng-if="resource.value.limit > 0") /{{resource.value.limit | numeric}}

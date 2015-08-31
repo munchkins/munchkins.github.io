@@ -11,18 +11,21 @@ angular
           buildings: {}
         };
 
-        save.game.ticks = Game.ticks;
+        const game = Game.get();
+        save.game.ticks = game.ticks;
 
-        angular.forEach(Resources, function(res, key) {
-          save.resources[key] = {
-            value: res.value
+        const resources = Resources.getAll();
+        angular.forEach(resources, function(r, k) {
+          save.resources[k] = {
+            value: r.value
           };
         });
 
-        angular.forEach(Buildings, function(bld, key) {
-          save.buildings[key] = {
-            value: bld.value,
-            locked: bld.locked
+        const buildings = Buildings.getAll();
+        angular.forEach(buildings, function(b, k) {
+          save.buildings[k] = {
+            value: b.value,
+            locked: b.locked
           };
         });
 
@@ -41,15 +44,18 @@ angular
         load.resources = load.resources || {};
         load.buildings = load.buildings || {};
 
-        Game.ticks = load.game.ticks || Game.ticks;
+        const game = Game.get();
+        game.ticks = load.game.ticks || game.ticks;
 
-        angular.forEach(load.resources, function(res, key) {
-          Resources[key].value = res.value;
+        angular.forEach(load.resources, function(r, k) {
+          const resource = Resources.get(k);
+          resource.value = r.value;
         });
 
-        angular.forEach(load.buildings, function(bld, key) {
-          Buildings[key].value = bld.value;
-          Buildings[key].locked = bld.locked;
+        angular.forEach(load.buildings, function(b, k) {
+          const building = Buildings.get(k);
+          building.value = b.value;
+          building.locked = b.locked;
         });
       } catch (err) {
         console.error(err);
