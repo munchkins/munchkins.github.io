@@ -70,7 +70,7 @@ angular
 
     angular.forEach(Buildings, function(bld) {
       angular.forEach(bld.provides.resources, function(prov, pkey) {
-        Resources[pkey].rate += prov.rate;
+        Resources[pkey].rate += bld.value.current * prov.rate;
       });
     });
   });
