@@ -1,10 +1,6 @@
-'use strict';
-
 angular
   .module('munchkins.services')
-  .service('storage', function($interval, resources, buildings) {
-    const SAVE_LOCATION = 'munchkinsSave';
-
+  .service('Storage', function($interval, Const, Resources, Buildings) {
     this.save = function() {
       const save = {
         version: 1,
@@ -12,38 +8,36 @@ angular
         buildings: {}
       };
 
-      _.forEach(resources, function(res, key) {
+      _.forEach(Resources, function(res, key) {
         save.resources[key] = {
           value: res.value
         };
       });
 
-      _.forEach(buildings, function(bld, key) {
+      _.forEach(Buildings, function(bld, key) {
         save.buildings[key] = {
           value: bld.value,
           unlocked: bld.unlocked
         };
       });
 
-      localStorage.setItem(SAVE_LOCATION, JSON.stringify(save));
+      localStorage.setItem(Const.SAVE_LOCATION, JSON.stringify(save));
     };
 
     this.load = function() {
       try {
-        const load = JSON.parse(localStorage.getItem(SAVE_LOCATION));
+        const load = JSON.parse(localStorage.getItem(Const.SAVE_LOCATION));
 
         _.forEach(load.resources, function(res, key) {
-          resources[key].value = res.value;
+          Resources[key].value = res.value;
         });
 
         _.forEach(load.buildings, function(bld, key) {
-          buildings[key].value = bld.value;
-          buildings[key].unlocked = bld.unlocked;
+          Buildings[key].value = bld.value;
+          Buildings[key].unlocked = bld.unlocked;
         });
       } catch (err) {
         console.error(err);
       }
     };
-
-    $interval(this.save, 60000);
   });

@@ -1,0 +1,3 @@
+div(ng-controller='Buildings as bld')
+  div(ng-repeat='(key, b) in bld.buildings')
+    a(ng-if='b.unlocked' ng-click='bld.buy(key)') {{b.name}}

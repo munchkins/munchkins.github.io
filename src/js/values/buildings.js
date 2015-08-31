@@ -1,7 +1,4 @@
-'use strict';
-
 /*
-
   Buildings are defined with the following structure
 
   <key>: {
@@ -30,11 +27,10 @@
       }
     }
   }
-
 */
 angular
   .module('munchkins.values')
-  .value('buildings', {
+  .value('Buildings', {
     collectFlowers: {
       name: 'Collect Flowers',
       description: 'Flowers are the staple of the Munchkin diet, collect them',

@@ -1,7 +1,4 @@
-'use strict';
-
 /*
-
   Resources are defined with the following structure
 
   <key>: {
@@ -13,11 +10,10 @@
     }
     rate: <rate of increase>
   }
-
 */
 angular
   .module('munchkins.values')
-  .value('resources', {
+  .value('Resources', {
     flowers: {
       name: 'Flowers',
       description: 'Flowers are the staple of the Munchkin diet',
