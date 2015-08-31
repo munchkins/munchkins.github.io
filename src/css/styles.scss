@@ -1,0 +1,22 @@
+@import "bourbon";
+@import "neat-helpers";
+@import "neat";
+
+.resource-panel {
+  @include span-columns(3);
+}
+
+.action-panel {
+  @include span-columns(6);
+
+  .action-button {
+    @include span-columns(6);
+    border: 1px solid black;
+    cursor: pointer;
+    text-align: center;
+  }
+}
+
+.log-panel {
+  @include span-columns(3);
+}

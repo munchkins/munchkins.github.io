@@ -63,7 +63,7 @@ gulp.task('css-sass', function() {
   return gulp.src(['src/css/**/*.sass'])
     .pipe(newer('munchkins.css'))
     .pipe(sass({
-      indentedSyntax: true,
+      indentedSyntax: false,
       sourceComments: 'normal',
       outputStyle: 'nested',
       includePaths: ip
