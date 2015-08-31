@@ -3,7 +3,9 @@
 @import "neat";
 
 $primary-color: #333;
-$inactive-color: gray;
+$sub-color: #666;
+$inactive-color: #999;
+$error-color: #933;
 
 body {
   color: $primary-color;
@@ -25,6 +27,15 @@ body {
     &.inactive {
       color: $inactive-color;
       border: 1px solid $inactive-color;
+    }
+
+    .detail {
+      font-size: 75%;
+      color: $sub-color;
+
+      .invalid {
+        color: $error-color;
+      }
     }
   }
 }

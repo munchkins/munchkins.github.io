@@ -20,6 +20,22 @@ angular
       });
     };
 
+    this.getPrices = function(key) {
+      const incr = Math.pow(Buildings[key].increase, Buildings[key].value.current);
+      const prices = [];
+
+      angular.forEach(Buildings[key].requires.resources, function(req, rkey) {
+        const price = req.value * incr;
+        prices.push({
+          name: req.name,
+          price: price,
+          affordable: Resources[rkey].value.current >= price
+        });
+      });
+
+      return prices;
+    };
+
     this.isBuyable = function(key) {
       const incr = Math.pow(Buildings[key].increase, Buildings[key].value.current);
       let buyable = true;
