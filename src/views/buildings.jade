@@ -1,6 +1,6 @@
 div(ng-controller="Buildings as bldc")
   div(ng-repeat="(bkey, building) in bldc.getAll()")
-    .action-button(ng-if="!bld.locked" ng-click="bldc.buy(bkey)" ng-class="{ 'inactive': !bldc.isBuyable(bkey) }")
+    .action-button(ng-if="!building.locked" ng-click="bldc.buy(bkey)" ng-class="{ 'inactive': !bldc.isBuyable(bkey) }")
       div {{building.name}} ({{building.value.current | numeric:0}})
       div.detail 
         |&nbsp;
