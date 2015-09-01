@@ -24,12 +24,13 @@ angular
           save.game.ticks = game.ticks;
         };
 
-        const resources = Resources.all();
-        _.forEach(resources, function(r, k) {
-          save.resources[k] = {
-            value: r.value
-          };
-        });
+        const saveResources = function(resources) {
+          _.forEach(resources, function(r, k) {
+            save.resources[k] = {
+              value: r.value
+            };
+          });
+        };
 
         saveGame(Game.all());
         saveResources(Resources.all());

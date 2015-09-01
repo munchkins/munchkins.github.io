@@ -314,12 +314,13 @@ angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Game",
           save.game.ticks = game.ticks;
         };
 
-        var resources = Resources.all();
-        _.forEach(resources, function (r, k) {
-          save.resources[k] = {
-            value: r.value
-          };
-        });
+        var saveResources = function saveResources(resources) {
+          _.forEach(resources, function (r, k) {
+            save.resources[k] = {
+              value: r.value
+            };
+          });
+        };
 
         saveGame(Game.all());
         saveResources(Resources.all());
