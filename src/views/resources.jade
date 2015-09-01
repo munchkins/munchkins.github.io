@@ -1,6 +1,11 @@
 div(ng-controller="Resources as resc")
-  div(ng-repeat="(k, resource) in resc.resources.getAl()")
-    div(ng-if="resource.value.current > 0")
-      span {{resource.name}} {{resource.value.current | numeric}}
-      span(ng-if="resource.value.limit > 0") /{{resource.value.limit | numeric}}
-      span(ng-if="resource.rate > 0") &nbsp;({{resource.rate | numeric}}/tick)
+  table.empty
+    tbody
+      tr(ng-repeat="(r, resource) in resc.resources.all()" ng-if="resource.value.current > 0")
+        td
+          span {{resource.name}}:
+        td 
+          span {{resource.value.current | numeric}}
+          span(ng-if="resource.value.limit > 0") /{{resource.value.limit | numeric}}
+        td
+          span(ng-if="resource.rate > 0") ({{resource.rate | numeric}}/tick)

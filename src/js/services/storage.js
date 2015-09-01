@@ -14,14 +14,14 @@ angular
         const game = Game.get();
         save.game.ticks = game.ticks;
 
-        const resources = Resources.getAll();
+        const resources = Resources.all();
         angular.forEach(resources, function(r, k) {
           save.resources[k] = {
             value: r.value
           };
         });
 
-        const buildings = Buildings.getAll();
+        const buildings = Buildings.all();
         angular.forEach(buildings, function(b, k) {
           save.buildings[k] = {
             value: b.value,

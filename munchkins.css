@@ -9,7 +9,8 @@ body{color:#333}
 .action-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%;border:1px solid #333;cursor:pointer;text-align:center;padding:5px}
 .action-panel .action-button:last-child{margin-right:0}
 .action-panel .action-button.inactive{color:#999;border:1px solid #999}
-.action-panel .action-button .detail{font-size:75%}
+.action-panel .action-button .detail{font-size:70%;text-align:right}
 .action-panel .action-button .detail .invalid{color:#933}
 .log-panel{margin-right:2.35765%;width:23.23176%}
 .log-panel:last-child{margin-right:0}
+table.empty{border:0}

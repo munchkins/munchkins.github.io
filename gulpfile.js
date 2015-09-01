@@ -26,7 +26,7 @@ gulp.task('js-babel', function() {
     .pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(annotate())
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(concat('munchkins.js'))
     .pipe(sourcemaps.write('.', {
       sourceRoot: '.',
@@ -56,7 +56,7 @@ gulp.task('html-jade', function() {
 
 gulp.task('css-sass', function() {
   var nm = __dirname + '/node_modules';
-  
+
   return gulp.src(['src/css/**/*.scss'])
     .pipe(newer('munchkins.css'))
     .pipe(sass({

@@ -1,11 +1,11 @@
 angular
   .module('munchkins')
   .service('Game', function() {
-    const values = {
+    const game = {
       ticks: 0
     };
 
     this.get = function() {
-      return values;
+      return game;
     };
   });

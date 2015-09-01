@@ -30,7 +30,7 @@
 */
 angular
   .module('munchkins')
-  .value('Buildings', function(Resources) {
+  .service('Buildings', function(Resources) {
     const buildings = {
       collect: {
         name: 'Collect Flowers',
@@ -55,7 +55,7 @@ angular
       },
       meadow: {
         name: 'Flower Meadow',
-        description: 'A naturally gorwing field of flowers',
+        description: 'A naturally growing field of flowers',
         locked: true,
         increase: 1.1,
         value: {
@@ -86,7 +86,7 @@ angular
         if (building.locked) {
           building.locked = false;
 
-          angular.forEach(b.requires.resources, function(r, k) {
+          angular.forEach(building.requires.resources, function(r, k) {
             if (!building.locked) {
               const resource = Resources.get(k);
               building.locked = !(resource.value.current >= r.value);
@@ -151,9 +151,9 @@ angular
 
     this.initResources = function() {
       angular.forEach(buildings, function(building) {
-        angular.forEach(b.provides.resources, function(p, k) {
+        angular.forEach(building.provides.resources, function(p, k) {
           const resource = Resources.get(k);
-          resource.rate += building.value.current * prov.rate;
+          resource.rate += building.value.current * p.rate;
         });
       });
     };

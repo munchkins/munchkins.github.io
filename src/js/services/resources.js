@@ -13,7 +13,7 @@
 */
 angular
   .module('munchkins')
-  .value('Resources', function() {
+  .service('Resources', function() {
     const resources = {
       flowers: {
         name: 'Flowers',

@@ -31,7 +31,8 @@ body {
     }
 
     .detail {
-      font-size: 75%;
+      font-size: 70%;
+      text-align: right;
 
       .invalid {
         color: $error-color;
@@ -42,4 +43,8 @@ body {
 
 .log-panel {
   @include span-columns(3);
+}
+
+table.empty {
+  border: 0;
 }
