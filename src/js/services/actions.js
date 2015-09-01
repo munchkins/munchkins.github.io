@@ -81,9 +81,7 @@ angular
     this.initResources = function() {
       const init = function(buildings) {
         _.forEach(buildings, function(building) {
-            console.log(building);
           _.forEach(building.provides.resources, function(p, k) {
-            console.log(p, k);
             Resources.get(k).rate += building.value.current * p.rate;
           });
         });
