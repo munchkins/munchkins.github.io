@@ -199,7 +199,7 @@ angular.module('munchkins').service('Buildings', function () {
     },
     shelter: {
       name: 'Stem Shelter',
-      description: 'A bsic shelter made from flower stems',
+      description: 'A basic shelter made from flower stems',
       locked: true,
       increase: 1.1,
       value: { current: 0, max: 0, level: 0 },
