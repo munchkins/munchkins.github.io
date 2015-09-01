@@ -8,34 +8,14 @@ angular
           version: 1,
           game: {},
           resources: {},
-          buildings: {}
+          buildings: {},
+          crafting: {}
         };
 
-        const saveBuildings = function(buildings) {
-          _.forEach(buildings, function(b, k) {
-            save.buildings[k] = {
-              value: b.value,
-              locked: b.locked
-            };
-          });
-        };
-
-        const saveGame = function(game) {
-          save.game.ticks = game.ticks;
-        };
-
-        const saveResources = function(resources) {
-          _.forEach(resources, function(r, k) {
-            save.resources[k] = {
-              value: r.value
-            };
-          });
-        };
-
-        saveGame(Game.all());
-        saveResources(Resources.all());
-        saveBuildings(Buildings.all());
-        saveBuildings(Crafting.all());
+        Game.save(save.game);
+        Buildings.save(save.buildings);
+        Crafting.save(save.crafting);
+        Resources.save(save.resources);
 
         localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify(save));
       } catch(err) {
@@ -46,34 +26,12 @@ angular
     this.load = function() {
       console.log('Loading game');
       try {
-        const load = JSON.parse(localStorage.getItem(Defaults.SAVE_LOCATION));
+        const load = JSON.parse(localStorage.getItem(Defaults.SAVE_LOCATION)) || {};
 
-        load.game = load.game || {};
-        load.resources = load.resources || {};
-        load.buildings = load.buildings || {};
-
-        const loadGame = function(game) {
-          game.ticks = load.game.ticks || game.ticks;
-        };
-
-        const loadResources = function() {
-          _.forEach(load.resources, function(r, k) {
-            const resource = Resources.get(k);
-            resource.value = r.value;
-          });
-        };
-
-        const loadBuildings = function() {
-          _.forEach(load.buildings, function(b, k) {
-            const building = Buildings.get(k) || Crafting.get(k);
-            building.value = b.value;
-            building.locked = b.locked;
-          });
-        };
-
-        loadGame(Game.all());
-        loadResources();
-        loadBuildings();
+        Game.load(load.game || {});
+        Buildings.load(load.buildings || {});
+        Crafting.load(load.crafting || {});
+        Resources.load(load.resources || {});
       } catch (err) {
         console.error(err);
       }

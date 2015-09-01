@@ -29,4 +29,18 @@ angular
     this.get = function(key) {
       return resources[key];
     };
+
+    this.save = function(to) {
+      _.forEach(resources, function(r, k) {
+        to[k] = {
+          value: r.value
+        };
+      });
+    };
+
+    this.load = function(from) {
+      _.forEach(from, function(r, k) {
+        resources[k].value = r.value;
+      });
+    };
   });

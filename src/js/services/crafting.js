@@ -47,4 +47,21 @@ angular
     this.get = function(key) {
       return crafting[key];
     };
+
+    this.save = function(to) {
+      _.forEach(crafting, function(c, k) {
+        to[k] = {
+          value: c.value,
+          locked: c.locked
+        };
+      });
+    };
+
+    this.load = function(from) {
+      _.forEach(from, function(c, k) {
+        const craft = crafting[k];
+        craft.value = c.value;
+        craft.locked = c.locked;
+      });
+    };
   });

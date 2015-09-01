@@ -29,4 +29,21 @@ angular
     this.get = function(key) {
       return buildings[key];
     };
+
+    this.save = function(to) {
+      _.forEach(buildings, function(b, k) {
+        to[k] = {
+          value: b.value,
+          locked: b.locked
+        };
+      });
+    };
+
+    this.load = function(from) {
+      _.forEach(from, function(b, k) {
+        const building = buildings[k];
+        building.value = b.value;
+        building.locked = b.locked;
+      });
+    };
   });

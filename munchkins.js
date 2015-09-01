@@ -193,6 +193,23 @@ angular.module('munchkins').service('Buildings', function () {
   this.get = function (key) {
     return buildings[key];
   };
+
+  this.save = function (to) {
+    _.forEach(buildings, function (b, k) {
+      to[k] = {
+        value: b.value,
+        locked: b.locked
+      };
+    });
+  };
+
+  this.load = function (from) {
+    _.forEach(from, function (b, k) {
+      var building = buildings[k];
+      building.value = b.value;
+      building.locked = b.locked;
+    });
+  };
 });
 'use strict';
 
@@ -243,6 +260,23 @@ angular.module('munchkins').service('Crafting', function () {
   this.get = function (key) {
     return crafting[key];
   };
+
+  this.save = function (to) {
+    _.forEach(crafting, function (c, k) {
+      to[k] = {
+        value: c.value,
+        locked: c.locked
+      };
+    });
+  };
+
+  this.load = function (from) {
+    _.forEach(from, function (c, k) {
+      var craft = crafting[k];
+      craft.value = c.value;
+      craft.locked = c.locked;
+    });
+  };
 });
 'use strict';
 
@@ -253,6 +287,14 @@ angular.module('munchkins').service('Game', function () {
 
   this.all = function () {
     return game;
+  };
+
+  this.save = function (to) {
+    to.ticks = game.ticks;
+  };
+
+  this.load = function (from) {
+    game.ticks = from.ticks || game.ticks;
   };
 });
 'use strict';
@@ -286,6 +328,20 @@ angular.module('munchkins').service('Resources', function () {
   this.get = function (key) {
     return resources[key];
   };
+
+  this.save = function (to) {
+    _.forEach(resources, function (r, k) {
+      to[k] = {
+        value: r.value
+      };
+    });
+  };
+
+  this.load = function (from) {
+    _.forEach(from, function (r, k) {
+      resources[k].value = r.value;
+    });
+  };
 });
 'use strict';
 
@@ -293,42 +349,20 @@ angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Game",
   this.save = function () {
     console.log('Saving game');
     try {
-      (function () {
-        var save = {
-          version: 1,
-          game: {},
-          resources: {},
-          buildings: {}
-        };
+      var save = {
+        version: 1,
+        game: {},
+        resources: {},
+        buildings: {},
+        crafting: {}
+      };
 
-        var saveBuildings = function saveBuildings(buildings) {
-          _.forEach(buildings, function (b, k) {
-            save.buildings[k] = {
-              value: b.value,
-              locked: b.locked
-            };
-          });
-        };
+      Game.save(save.game);
+      Buildings.save(save.buildings);
+      Crafting.save(save.crafting);
+      Resources.save(save.resources);
 
-        var saveGame = function saveGame(game) {
-          save.game.ticks = game.ticks;
-        };
-
-        var saveResources = function saveResources(resources) {
-          _.forEach(resources, function (r, k) {
-            save.resources[k] = {
-              value: r.value
-            };
-          });
-        };
-
-        saveGame(Game.all());
-        saveResources(Resources.all());
-        saveBuildings(Buildings.all());
-        saveBuildings(Crafting.all());
-
-        localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify(save));
-      })();
+      localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify(save));
     } catch (err) {
       console.error(err);
     }
@@ -337,36 +371,12 @@ angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Game",
   this.load = function () {
     console.log('Loading game');
     try {
-      (function () {
-        var load = JSON.parse(localStorage.getItem(Defaults.SAVE_LOCATION));
+      var load = JSON.parse(localStorage.getItem(Defaults.SAVE_LOCATION)) || {};
 
-        load.game = load.game || {};
-        load.resources = load.resources || {};
-        load.buildings = load.buildings || {};
-
-        var loadGame = function loadGame(game) {
-          game.ticks = load.game.ticks || game.ticks;
-        };
-
-        var loadResources = function loadResources() {
-          _.forEach(load.resources, function (r, k) {
-            var resource = Resources.get(k);
-            resource.value = r.value;
-          });
-        };
-
-        var loadBuildings = function loadBuildings() {
-          _.forEach(load.buildings, function (b, k) {
-            var building = Buildings.get(k) || Crafting.get(k);
-            building.value = b.value;
-            building.locked = b.locked;
-          });
-        };
-
-        loadGame(Game.all());
-        loadResources();
-        loadBuildings();
-      })();
+      Game.load(load.game || {});
+      Buildings.load(load.buildings || {});
+      Crafting.load(load.crafting || {});
+      Resources.load(load.resources || {});
     } catch (err) {
       console.error(err);
     }
