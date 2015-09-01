@@ -1,6 +1,6 @@
 angular
   .module('munchkins')
-  .service('Actions', function(Buildings, Crafting, Resources) {
+  .service('Actions', function(Buildings, Crafting, Resources, Tribe) {
     const unlockAll = function() {
       const unlock = function(buildings) {
         _.forEach(buildings, function(building) {
@@ -58,6 +58,8 @@ angular
         resource.rate += p.rate;
       });
 
+      Tribe.add(building.provides.tribe || 0);
+
       unlockAll();
     };
 
@@ -79,7 +81,9 @@ angular
     this.initResources = function() {
       const init = function(buildings) {
         _.forEach(buildings, function(building) {
+            console.log(building);
           _.forEach(building.provides.resources, function(p, k) {
+            console.log(p, k);
             Resources.get(k).rate += building.value.current * p.rate;
           });
         });

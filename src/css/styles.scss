@@ -15,6 +15,15 @@ body {
   @include span-columns(12);
 }
 
+.submenu {
+  @include shift(3);
+  @include span-columns(6);
+  margin-bottom: 10px;
+  a {
+    margin-right: 10px;
+  }
+}
+
 .resource-panel {
   @include span-columns(3);
 }

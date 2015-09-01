@@ -1,0 +1,3 @@
+div(ng-controller="Submenu as sub")
+  a(href="#/buildings") Buildings
+  a(href="#/tribe" ng-if="sub.tribeTotal()") Tribe ({{sub.tribeTotal()}})

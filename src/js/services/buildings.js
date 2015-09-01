@@ -5,7 +5,6 @@ angular
       meadow: {
         name: 'Flower Meadow',
         description: 'A naturally growing field of flowers',
-        craft: false,
         locked: true,
         increase: 1.1,
         value: { current: 0, max: 0, level: 0 },
@@ -18,6 +17,21 @@ angular
           resources: {
             flowers: { value: 0, rate: 0.01 }
           }
+        }
+      },
+      shelter: {
+        name: 'Stem Shelter',
+        description: 'A bsic shelter made from flower stems',
+        locked: true,
+        increase: 1.1,
+        value: { current: 0, max: 0, level: 0 },
+        requires: {
+          resources: {
+            stems: { value: 100 }
+          }
+        },
+        provides: {
+          tribe: 1
         }
       }
     };

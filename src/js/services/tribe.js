@@ -5,6 +5,10 @@ angular
       free: 0
     };
 
+    this.add = function(number) {
+      tribe.free += number;
+    };
+
     this.total = function() {
       return tribe.free;
     };

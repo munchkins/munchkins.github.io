@@ -56,6 +56,11 @@ angular.module('munchkins').controller('Resources', ["Resources", function (Reso
 }]);
 'use strict';
 
+angular.module('munchkins').controller('Submenu', ["Tribe", function (Tribe) {
+  this.tribeTotal = Tribe.total;
+}]);
+'use strict';
+
 angular.module('munchkins').controller('Tribe', ["Tribe", function (Tribe) {
   this.total = Tribe.total;
 }]);
@@ -78,7 +83,7 @@ angular.module('munchkins').filter('numeric', function () {
 });
 'use strict';
 
-angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resources", function (Buildings, Crafting, Resources) {
+angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resources", "Tribe", function (Buildings, Crafting, Resources, Tribe) {
   var unlockAll = function unlockAll() {
     var unlock = function unlock(buildings) {
       _.forEach(buildings, function (building) {
@@ -136,6 +141,8 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
       resource.rate += p.rate;
     });
 
+    Tribe.add(building.provides.tribe || 0);
+
     unlockAll();
   };
 
@@ -157,7 +164,9 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
   this.initResources = function () {
     var init = function init(buildings) {
       _.forEach(buildings, function (building) {
+        console.log(building);
         _.forEach(building.provides.resources, function (p, k) {
+          console.log(p, k);
           Resources.get(k).rate += building.value.current * p.rate;
         });
       });
@@ -174,7 +183,6 @@ angular.module('munchkins').service('Buildings', function () {
     meadow: {
       name: 'Flower Meadow',
       description: 'A naturally growing field of flowers',
-      craft: false,
       locked: true,
       increase: 1.1,
       value: { current: 0, max: 0, level: 0 },
@@ -187,6 +195,21 @@ angular.module('munchkins').service('Buildings', function () {
         resources: {
           flowers: { value: 0, rate: 0.01 }
         }
+      }
+    },
+    shelter: {
+      name: 'Stem Shelter',
+      description: 'A bsic shelter made from flower stems',
+      locked: true,
+      increase: 1.1,
+      value: { current: 0, max: 0, level: 0 },
+      requires: {
+        resources: {
+          stems: { value: 100 }
+        }
+      },
+      provides: {
+        tribe: 1
       }
     }
   };
@@ -223,7 +246,6 @@ angular.module('munchkins').service('Crafting', function () {
     collect: {
       name: 'Collect Flowers',
       description: 'Flowers are the staple of the Munchkin diet, collect them',
-      craft: true,
       locked: false,
       increase: 1.0,
       value: { current: 0, max: 0, level: 0 },
@@ -237,7 +259,6 @@ angular.module('munchkins').service('Crafting', function () {
     processing: {
       name: 'Process Flowers',
       description: 'Processes flowers into petals and stems',
-      craft: true,
       locked: true,
       increase: 1.0,
       value: { current: 0, max: 0, level: 0 },
@@ -395,6 +416,10 @@ angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Buildi
 angular.module('munchkins').service('Tribe', function () {
   var tribe = {
     free: 0
+  };
+
+  this.add = function (number) {
+    tribe.free += number;
   };
 
   this.total = function () {

@@ -5,7 +5,6 @@ angular
       collect: {
         name: 'Collect Flowers',
         description: 'Flowers are the staple of the Munchkin diet, collect them',
-        craft: true,
         locked: false,
         increase: 1.0,
         value: { current: 0, max: 0, level: 0 },
@@ -19,7 +18,6 @@ angular
       processing: {
         name: 'Process Flowers',
         description: 'Processes flowers into petals and stems',
-        craft: true,
         locked: true,
         increase: 1.0,
         value: { current: 0, max: 0, level: 0 },
