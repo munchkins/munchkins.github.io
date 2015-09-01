@@ -1,13 +1,17 @@
-.container,.submenu{float:left;display:block}
+.container,.topmenu{width:100%;float:left;display:block}
 html{box-sizing:border-box}
 *,::after,::before{box-sizing:inherit}
 body{color:#333;font-family:"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;font-size:90%}
-.container{margin-right:2.35765%;width:100%}
+a{margin-right:.5em;cursor:pointer;color:#33f;text-decoration:none}
+a.active{color:#339}
+.container{margin-right:2.35765%}
 .container:last-child{margin-right:0}
-.submenu{margin-left:25.58941%;margin-right:2.35765%;width:48.82117%;margin-bottom:.5em}
+.topmenu{margin-right:2.35765%;text-align:right}
+.topmenu:last-child{margin-right:0}
+.submenu{margin-left:25.58941%;float:left;display:block;margin-right:2.35765%;width:48.82117%}
 .crafting-panel,.resource-panel{width:23.23176%;float:left;display:block}
 .submenu:last-child{margin-right:0}
-.submenu a{margin-right:.5em}
+.submenu,.topmenu{margin-bottom:.5em}
 .resource-panel{margin-right:2.35765%}
 .resource-panel:last-child{margin-right:0}
 .crafting-panel{margin-right:2.35765%}

@@ -12,10 +12,14 @@ html(lang="en" ng-app="munchkins")
       
   body.ng-cloak(ng-controller="Game as game")
     .container
+      .topmenu(ng-include="'views/topmenu.html'")
+    .container
       .submenu(ng-include="'views/submenu.html'")
     .container
       .crafting-panel(ng-include="'views/crafting.html'")
-      .action-panel(ng-view)
+      .action-panel
+        div(ng-view)
+        div &nbsp;
       .resource-panel(ng-include="'views/resources.html'")
       
     script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js")

@@ -56,8 +56,17 @@ angular.module('munchkins').controller('Resources', ["Resources", function (Reso
 }]);
 'use strict';
 
-angular.module('munchkins').controller('Submenu', ["Tribe", function (Tribe) {
+angular.module('munchkins').controller('Submenu', ["$location", "Tribe", function ($location, Tribe) {
   this.tribeTotal = Tribe.total;
+
+  this.isOn = function (path) {
+    return $location.path() === path;
+  };
+}]);
+'use strict';
+
+angular.module('munchkins').controller('Topmenu', ["Storage", function (Storage) {
+  this.save = Storage.save;
 }]);
 'use strict';
 

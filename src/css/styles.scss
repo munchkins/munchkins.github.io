@@ -6,6 +6,8 @@ $primary-color: #333;
 $sub-color: #666;
 $inactive-color: #999;
 $error-color: #933;
+$link-color: #33f;
+$link-active: #339;
 
 body {
   color: $primary-color;
@@ -13,17 +15,34 @@ body {
   font-size: 90%;
 }
 
+a {
+  margin-right: 0.5em;
+  cursor: pointer;
+  color: $link-color;
+  text-decoration: none;
+
+  &.active {
+    color: $link-active;
+  }
+}
+
 .container {
   @include span-columns(12);
+}
+
+.topmenu {
+  @include span-columns(12);
+  margin-bottom: 0.5em;
+  text-align: right;
 }
 
 .submenu {
   @include shift(3);
   @include span-columns(6);
+}
+
+.topmenu, .submenu {
   margin-bottom: 0.5em;
-  a {
-    margin-right: 0.5em;
-  }
 }
 
 .resource-panel {
