@@ -1,7 +1,7 @@
 .container,.submenu{float:left;display:block}
 html{box-sizing:border-box}
 *,::after,::before{box-sizing:inherit}
-body{color:#333}
+body{color:#333;font-family:"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;font-size:90%}
 .container{margin-right:2.35765%;width:100%}
 .container:last-child{margin-right:0}
 .submenu{margin-left:25.58941%;margin-right:2.35765%;width:48.82117%;margin-bottom:.5em}
@@ -18,7 +18,7 @@ body{color:#333}
 .action-panel:last-child{margin-right:0}
 .action-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%}
 .action-panel .action-button:last-child{margin-right:0}
-.action-button{border:1px solid #333;cursor:pointer;text-align:center;padding:5px}
+.action-button{border:1px solid #333;cursor:pointer;text-align:center;padding:.25em}
 .action-button.inactive{color:#999;border:1px solid #999}
 .action-button .detail{font-size:70%;text-align:right}
 .action-button .detail .invalid{color:#933}

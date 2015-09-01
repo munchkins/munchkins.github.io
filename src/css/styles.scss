@@ -9,6 +9,8 @@ $error-color: #933;
 
 body {
   color: $primary-color;
+  font-family: $helvetica;
+  font-size: 90%;
 }
 
 .container {
@@ -46,7 +48,7 @@ body {
   border: 1px solid $primary-color;
   cursor: pointer;
   text-align: center;
-  padding: 5px;
+  padding: 0.25em;
 
   &.inactive {
     color: $inactive-color;
