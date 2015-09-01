@@ -22,7 +22,7 @@ a.active{color:#339}
 .action-panel:last-child{margin-right:0}
 .action-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%}
 .action-panel .action-button:last-child{margin-right:0}
-.action-button{border:1px solid #333;cursor:pointer;text-align:center;padding:.25em}
+.action-button{border:1px solid #333;cursor:pointer;text-align:center;padding:.25em;border-radius:4px;margin:.15em .25em}
 .action-button.inactive{color:#999;border:1px solid #999}
 .action-button .detail{font-size:70%;text-align:right}
 .action-button .detail .invalid{color:#933}
