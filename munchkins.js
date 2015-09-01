@@ -9,6 +9,23 @@ angular.module('munchkins', ['ngRoute']).constant('Defaults', {
 }]);
 'use strict';
 
+angular.module('munchkins').filter('numeric', function () {
+  var units = ['', 'K', 'M', 'G', 'T', 'P'];
+
+  return function (number, precision) {
+    var n = number || 0;
+    var u = Math.floor(Math.log(n) / Math.log(1000));
+
+    var p = precision || (precision === 0 ? 0 : 2);
+    if (p === 0 && p >= 1000) {
+      p = 2;
+    }
+
+    return n < 1 ? n.toFixed(p) : (n / Math.pow(1000, Math.floor(u))).toFixed(p) + units[u];
+  };
+});
+'use strict';
+
 angular.module('munchkins').controller('Buildings', ["Buildings", "Resources", function (Buildings, Resources) {
   this.buildings = Buildings;
   this.resources = Resources;
@@ -39,26 +56,10 @@ angular.module('munchkins').controller('Game', ["$interval", "Defaults", "Game",
 angular.module('munchkins').controller('Log', function () {});
 'use strict';
 
-angular.module('munchkins').controller('Resources', ["Resources", function (Resources) {
+angular.module('munchkins').controller('Resources', ["Craftables", "Resources", function (Craftables, Resources) {
+  this.craftables = Craftables;
   this.resources = Resources;
 }]);
-'use strict';
-
-angular.module('munchkins').filter('numeric', function () {
-  var units = ['', 'K', 'M', 'G', 'T', 'P'];
-
-  return function (number, precision) {
-    var n = number || 0;
-    var u = Math.floor(Math.log(n) / Math.log(1000));
-
-    var p = precision || (precision === 0 ? 0 : 2);
-    if (p === 0 && p >= 1000) {
-      p = 2;
-    }
-
-    return n < 1 ? n.toFixed(p) : (n / Math.pow(1000, Math.floor(u))).toFixed(p) + units[u];
-  };
-});
 /*
   Buildings are defined with the following structure
 
@@ -91,25 +92,18 @@ angular.module('munchkins').filter('numeric', function () {
 */
 'use strict';
 
-angular.module('munchkins').service('Buildings', ["Resources", function (Resources) {
+angular.module('munchkins').service('Buildings', ["Craftables", "Resources", function (Craftables, Resources) {
   var buildings = {
     collect: {
       name: 'Collect Flowers',
       description: 'Flowers are the staple of the Munchkin diet, collect them',
       locked: false,
-      increase: 0,
-      value: {
-        current: 0,
-        max: 0,
-        level: 0
-      },
+      increase: 1.0,
+      value: { current: 0, max: 0, level: 0 },
       requires: {},
       provides: {
         resources: {
-          flowers: {
-            value: 1,
-            rate: 0
-          }
+          flowers: { value: 1, rate: 0 }
         }
       }
     },
@@ -118,24 +112,36 @@ angular.module('munchkins').service('Buildings', ["Resources", function (Resourc
       description: 'A naturally growing field of flowers',
       locked: true,
       increase: 1.1,
-      value: {
-        current: 0,
-        max: 0,
-        level: 0
-      },
+      value: { current: 0, max: 0, level: 0 },
       requires: {
         resources: {
-          flowers: {
-            value: 100
-          }
+          flowers: { value: 100 }
         }
       },
       provides: {
         resources: {
-          flowers: {
-            value: 0,
-            rate: 0.01
-          }
+          flowers: { value: 0, rate: 0.01 }
+        }
+      }
+    },
+    processing: {
+      name: 'Flower processing',
+      description: 'Processes flowers into petals and stems',
+      locked: true,
+      increase: 1.0,
+      value: { current: 0, max: 0, level: 0 },
+      requires: {
+        buildings: {
+          meadow: { value: 1 }
+        },
+        resources: {
+          flowers: { value: 10, rate: 0 }
+        }
+      },
+      provides: {
+        craftables: {
+          stems: { value: 9, rate: 0 },
+          petals: { value: 75, rate: 0 }
         }
       }
     }
@@ -146,10 +152,23 @@ angular.module('munchkins').service('Buildings', ["Resources", function (Resourc
       if (building.locked) {
         building.locked = false;
 
+        angular.forEach(building.requires.buildings, function (b, k) {
+          if (!building.locked) {
+            building.locked = !(buildings[k].value.current >= b.value);
+          }
+        });
+
         angular.forEach(building.requires.resources, function (r, k) {
           if (!building.locked) {
             var resource = Resources.get(k);
             building.locked = !(resource.value.current >= r.value);
+          }
+        });
+
+        angular.forEach(building.requires.craftables, function (c, k) {
+          if (!building.locked) {
+            var craftable = Craftables.get(k);
+            building.locked = !(craftable.value.current >= r.value);
           }
         });
       }
@@ -162,8 +181,17 @@ angular.module('munchkins').service('Buildings', ["Resources", function (Resourc
     var buyable = true;
 
     angular.forEach(building.requires.resources, function (r, k) {
-      var resource = Resources.get(k);
-      buyable = buyable && resource.value.current >= r.value * incr;
+      if (buyable) {
+        var resource = Resources.get(k);
+        buyable = resource.value.current >= r.value * incr;
+      }
+    });
+
+    angular.forEach(building.requires.craftables, function (c, k) {
+      if (buyable) {
+        var craftable = Craftables.get(k);
+        buyable = craftable.value.current >= c.value * incr;
+      }
     });
 
     return buyable;
@@ -184,10 +212,21 @@ angular.module('munchkins').service('Buildings', ["Resources", function (Resourc
       resource.value.current -= r.value * incr;
     });
 
+    angular.forEach(building.requires.craftables, function (c, k) {
+      var craftable = Craftables.get(k);
+      craftable.value.current -= c.value * incr;
+    });
+
     angular.forEach(building.provides.resources, function (p, k) {
       var resource = Resources.get(k);
-      resource.value.current++;
+      resource.value.current += p.value;
       resource.rate += p.rate;
+    });
+
+    angular.forEach(building.provides.craftables, function (p, k) {
+      var craftables = Craftables.get(k);
+      craftables.value.current += p.value;
+      craftables.rate += p.rate;
     });
 
     unlock();
@@ -228,6 +267,32 @@ angular.module('munchkins').service('Buildings', ["Resources", function (Resourc
 }]);
 'use strict';
 
+angular.module('munchkins').service('Craftables', function () {
+  var craftables = {
+    stems: {
+      name: 'Stems',
+      description: 'Flower stems act as a basic building block',
+      value: { current: 0, limit: 0 },
+      rate: 0
+    },
+    petals: {
+      name: 'Petals',
+      description: 'Flower petals are a decoration with various uses',
+      value: { current: 0, limit: 0 },
+      rate: 0
+    }
+  };
+
+  this.all = function () {
+    return craftables;
+  };
+
+  this.get = function (key) {
+    return craftables[key];
+  };
+});
+'use strict';
+
 angular.module('munchkins').service('Game', function () {
   var game = {
     ticks: 0
@@ -257,10 +322,7 @@ angular.module('munchkins').service('Resources', function () {
     flowers: {
       name: 'Flowers',
       description: 'Flowers are the staple of the Munchkin diet',
-      value: {
-        current: 0,
-        limit: 0
-      },
+      value: { current: 0, limit: 0 },
       rate: 0
     }
   };
@@ -275,7 +337,7 @@ angular.module('munchkins').service('Resources', function () {
 });
 'use strict';
 
-angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Game", "Resources", "Buildings", function ($interval, Defaults, Game, Resources, Buildings) {
+angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Game", "Buildings", "Craftables", "Resources", function ($interval, Defaults, Game, Buildings, Craftables, Resources) {
   this.save = function () {
     console.log('Saving game');
     try {
@@ -284,6 +346,7 @@ angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Game",
           version: 1,
           game: {},
           resources: {},
+          craftables: {},
           buildings: {}
         };
 
@@ -293,6 +356,13 @@ angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Game",
         var resources = Resources.all();
         angular.forEach(resources, function (r, k) {
           save.resources[k] = {
+            value: r.value
+          };
+        });
+
+        var craftables = Craftables.all();
+        angular.forEach(craftables, function (r, k) {
+          save.craftables[k] = {
             value: r.value
           };
         });
@@ -319,6 +389,7 @@ angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Game",
 
       load.game = load.game || {};
       load.resources = load.resources || {};
+      load.craftables = load.craftables || {};
       load.buildings = load.buildings || {};
 
       var game = Game.get();
@@ -327,6 +398,11 @@ angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Game",
       angular.forEach(load.resources, function (r, k) {
         var resource = Resources.get(k);
         resource.value = r.value;
+      });
+
+      angular.forEach(load.craftables, function (c, k) {
+        var craftable = Craftables.get(k);
+        craftable.value = c.value;
       });
 
       angular.forEach(load.buildings, function (b, k) {

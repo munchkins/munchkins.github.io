@@ -30,26 +30,18 @@
 */
 angular
   .module('munchkins')
-  .service('Buildings', function(Resources) {
+  .service('Buildings', function(Craftables, Resources) {
     const buildings = {
       collect: {
         name: 'Collect Flowers',
         description: 'Flowers are the staple of the Munchkin diet, collect them',
         locked: false,
-        increase: 0,
-        value: {
-          current: 0,
-          max: 0,
-          level: 0
-        },
-        requires: {
-        },
+        increase: 1.0,
+        value: { current: 0, max: 0, level: 0 },
+        requires: {},
         provides: {
           resources: {
-            flowers: {
-              value: 1,
-              rate: 0
-            }
+            flowers: { value: 1, rate: 0 }
           }
         }
       },
@@ -58,24 +50,36 @@ angular
         description: 'A naturally growing field of flowers',
         locked: true,
         increase: 1.1,
-        value: {
-          current: 0,
-          max: 0,
-          level: 0
-        },
+        value: { current: 0, max: 0, level: 0 },
         requires: {
           resources: {
-            flowers: {
-              value: 100
-            }
+            flowers: { value: 100 }
           }
         },
         provides: {
           resources: {
-            flowers: {
-              value: 0,
-              rate: 0.01
-            }
+            flowers: { value: 0, rate: 0.01 }
+          }
+        }
+      },
+      processing: {
+        name: 'Flower processing',
+        description: 'Processes flowers into petals and stems',
+        locked: true,
+        increase: 1.0,
+        value: { current: 0, max: 0, level: 0 },
+        requires: {
+          buildings: {
+            meadow: { value: 1 }
+          },
+          resources: {
+            flowers: { value: 10, rate: 0 }
+          }
+        },
+        provides: {
+          craftables: {
+            stems: { value: 9, rate: 0 },
+            petals: { value: 75, rate: 0 }
           }
         }
       }
@@ -86,10 +90,23 @@ angular
         if (building.locked) {
           building.locked = false;
 
+          angular.forEach(building.requires.buildings, function(b, k) {
+            if (!building.locked) {
+              building.locked = !(buildings[k].value.current >= b.value);
+            }
+          });
+
           angular.forEach(building.requires.resources, function(r, k) {
             if (!building.locked) {
               const resource = Resources.get(k);
               building.locked = !(resource.value.current >= r.value);
+            }
+          });
+
+          angular.forEach(building.requires.craftables, function(c, k) {
+            if (!building.locked) {
+              const craftable = Craftables.get(k);
+              building.locked = !(craftable.value.current >= r.value);
             }
           });
         }
@@ -102,8 +119,17 @@ angular
       let buyable = true;
 
       angular.forEach(building.requires.resources, function(r, k) {
-        const resource = Resources.get(k);
-        buyable = buyable && (resource.value.current >= r.value * incr);
+        if (buyable) {
+          const resource = Resources.get(k);
+          buyable = resource.value.current >= r.value * incr;
+        }
+      });
+
+      angular.forEach(building.requires.craftables, function(c, k) {
+        if (buyable) {
+          const craftable = Craftables.get(k);
+          buyable = craftable.value.current >= c.value * incr;
+        }
       });
 
       return buyable;
@@ -124,10 +150,21 @@ angular
         resource.value.current -= r.value * incr;
       });
 
+      angular.forEach(building.requires.craftables, function(c, k) {
+        const craftable = Craftables.get(k);
+        craftable.value.current -= c.value * incr;
+      });
+
       angular.forEach(building.provides.resources, function(p, k) {
         const resource = Resources.get(k);
-        resource.value.current++;
+        resource.value.current += p.value;
         resource.rate += p.rate;
+      });
+
+      angular.forEach(building.provides.craftables, function(p, k) {
+        const craftables = Craftables.get(k);
+        craftables.value.current += p.value;
+        craftables.rate += p.rate;
       });
 
       unlock();

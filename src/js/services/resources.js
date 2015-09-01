@@ -18,10 +18,7 @@ angular
       flowers: {
         name: 'Flowers',
         description: 'Flowers are the staple of the Munchkin diet',
-        value: {
-          current: 0,
-          limit: 0
-        },
+        value: { current: 0, limit: 0 },
         rate: 0
       }
     };

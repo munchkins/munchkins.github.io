@@ -1,6 +1,6 @@
 angular
   .module('munchkins')
-  .service('Storage', function($interval, Defaults, Game, Resources, Buildings) {
+  .service('Storage', function($interval, Defaults, Game, Buildings, Craftables, Resources) {
     this.save = function() {
       console.log('Saving game');
       try {
@@ -8,6 +8,7 @@ angular
           version: 1,
           game: {},
           resources: {},
+          craftables: {},
           buildings: {}
         };
 
@@ -17,6 +18,13 @@ angular
         const resources = Resources.all();
         angular.forEach(resources, function(r, k) {
           save.resources[k] = {
+            value: r.value
+          };
+        });
+
+        const craftables = Craftables.all();
+        angular.forEach(craftables, function(r, k) {
+          save.craftables[k] = {
             value: r.value
           };
         });
@@ -42,6 +50,7 @@ angular
 
         load.game = load.game || {};
         load.resources = load.resources || {};
+        load.craftables = load.craftables || {};
         load.buildings = load.buildings || {};
 
         const game = Game.get();
@@ -50,6 +59,11 @@ angular
         angular.forEach(load.resources, function(r, k) {
           const resource = Resources.get(k);
           resource.value = r.value;
+        });
+
+        angular.forEach(load.craftables, function(c, k) {
+          const craftable = Craftables.get(k);
+          craftable.value = c.value;
         });
 
         angular.forEach(load.buildings, function(b, k) {

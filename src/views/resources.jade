@@ -9,3 +9,14 @@ div(ng-controller="Resources as resc")
           span(ng-if="resource.value.limit > 0") /{{resource.value.limit | numeric}}
         td
           span(ng-if="resource.rate > 0") ({{resource.rate | numeric}}/tick)
+            
+  table.empty
+    tbody
+      tr(ng-repeat="(c, craftable) in resc.craftables.all()" ng-if="craftable.value.current > 0")
+        td
+          span {{craftable.name}}:
+        td 
+          span {{craftable.value.current | numeric}}
+          span(ng-if="craftable.value.limit > 0") /{{craftable.value.limit | numeric}}
+        td
+          span(ng-if="craftable.rate > 0") ({{craftable.rate | numeric}}/tick)
