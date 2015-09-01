@@ -4,10 +4,10 @@ html{box-sizing:border-box}
 body{color:#333}
 .container{margin-right:2.35765%;width:100%}
 .container:last-child{margin-right:0}
-.submenu{margin-left:25.58941%;margin-right:2.35765%;width:48.82117%;margin-bottom:10px}
+.submenu{margin-left:25.58941%;margin-right:2.35765%;width:48.82117%;margin-bottom:.5em}
 .crafting-panel,.resource-panel{width:23.23176%;float:left;display:block}
 .submenu:last-child{margin-right:0}
-.submenu a{margin-right:10px}
+.submenu a{margin-right:.5em}
 .resource-panel{margin-right:2.35765%}
 .resource-panel:last-child{margin-right:0}
 .crafting-panel{margin-right:2.35765%}

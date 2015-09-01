@@ -18,9 +18,9 @@ body {
 .submenu {
   @include shift(3);
   @include span-columns(6);
-  margin-bottom: 10px;
+  margin-bottom: 0.5em;
   a {
-    margin-right: 10px;
+    margin-right: 0.5em;
   }
 }
 
