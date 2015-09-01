@@ -1,7 +1,7 @@
 angular
   .module('munchkins')
-  .controller('Buildings', function(Buildings) {
-    this.buildings = Buildings.allBuildings();
+  .controller('Crafting', function(Buildings) {
+    this.crafting = Buildings.allCrafting();
 
     this.buy = Buildings.buy;
     this.isBuyable = Buildings.isBuyable;

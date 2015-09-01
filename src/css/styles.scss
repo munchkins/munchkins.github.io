@@ -11,38 +11,47 @@ body {
   color: $primary-color;
 }
 
+.container {
+  @include span-columns(12);
+}
+
 .resource-panel {
   @include span-columns(3);
 }
 
-.action-panel {
-  @include span-columns(6);
-
+.crafting-panel {
+  @include span-columns(3);
   .action-button {
-    @include span-columns(6);
-    border: 1px solid $primary-color;
-    cursor: pointer;
-    text-align: center;
-    padding: 5px;
-
-    &.inactive {
-      color: $inactive-color;
-      border: 1px solid $inactive-color;
-    }
-
-    .detail {
-      font-size: 70%;
-      text-align: right;
-
-      .invalid {
-        color: $error-color;
-      }
-    }
+    @include span-columns(12);
   }
 }
 
-.log-panel {
-  @include span-columns(3);
+.action-panel {
+  @include span-columns(6);
+  .action-button {
+    @include span-columns(6);
+  }
+}
+
+.action-button {
+  border: 1px solid $primary-color;
+  cursor: pointer;
+  text-align: center;
+  padding: 5px;
+
+  &.inactive {
+    color: $inactive-color;
+    border: 1px solid $inactive-color;
+  }
+
+  .detail {
+    font-size: 70%;
+    text-align: right;
+
+    .invalid {
+      color: $error-color;
+    }
+  }
 }
 
 table.empty {

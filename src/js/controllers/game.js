@@ -5,7 +5,7 @@ angular
       Game.ticks++;
 
       const resources = Resources.all();
-      angular.forEach(resources, function(resource) {
+      _.forEach(resources, function(resource) {
         resource.value.current += resource.rate;
         if (resource.value.limit) {
           resource.value.current = Math.min(resource.value.current, resource.value.limit);

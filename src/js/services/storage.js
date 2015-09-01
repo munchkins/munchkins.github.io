@@ -1,6 +1,6 @@
 angular
   .module('munchkins')
-  .service('Storage', function($interval, Defaults, Game, Buildings, Craftables, Resources) {
+  .service('Storage', function($interval, Defaults, Game, Buildings, Resources) {
     this.save = function() {
       console.log('Saving game');
       try {
@@ -8,7 +8,6 @@ angular
           version: 1,
           game: {},
           resources: {},
-          craftables: {},
           buildings: {}
         };
 
@@ -16,21 +15,14 @@ angular
         save.game.ticks = game.ticks;
 
         const resources = Resources.all();
-        angular.forEach(resources, function(r, k) {
+        _.forEach(resources, function(r, k) {
           save.resources[k] = {
             value: r.value
           };
         });
 
-        const craftables = Craftables.all();
-        angular.forEach(craftables, function(r, k) {
-          save.craftables[k] = {
-            value: r.value
-          };
-        });
-
         const buildings = Buildings.all();
-        angular.forEach(buildings, function(b, k) {
+        _.forEach(buildings, function(b, k) {
           save.buildings[k] = {
             value: b.value,
             locked: b.locked
@@ -50,23 +42,17 @@ angular
 
         load.game = load.game || {};
         load.resources = load.resources || {};
-        load.craftables = load.craftables || {};
         load.buildings = load.buildings || {};
 
         const game = Game.get();
         game.ticks = load.game.ticks || game.ticks;
 
-        angular.forEach(load.resources, function(r, k) {
+        _.forEach(load.resources, function(r, k) {
           const resource = Resources.get(k);
           resource.value = r.value;
         });
 
-        angular.forEach(load.craftables, function(c, k) {
-          const craftable = Craftables.get(k);
-          craftable.value = c.value;
-        });
-
-        angular.forEach(load.buildings, function(b, k) {
+        _.forEach(load.buildings, function(b, k) {
           const building = Buildings.get(k);
           building.value = b.value;
           building.locked = b.locked;

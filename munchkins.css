@@ -1,16 +1,21 @@
-.action-panel,.log-panel,.resource-panel{float:left;display:block}
 html{box-sizing:border-box}
 *,::after,::before{box-sizing:inherit}
 body{color:#333}
-.resource-panel{margin-right:2.35765%;width:23.23176%}
+.container{float:left;display:block;margin-right:2.35765%;width:100%}
+.crafting-panel,.resource-panel{width:23.23176%;float:left;display:block}
+.container:last-child{margin-right:0}
+.resource-panel{margin-right:2.35765%}
 .resource-panel:last-child{margin-right:0}
-.action-panel{margin-right:2.35765%;width:48.82117%}
+.crafting-panel{margin-right:2.35765%}
+.crafting-panel:last-child{margin-right:0}
+.crafting-panel .action-button{float:left;display:block;margin-right:2.35765%;width:100%}
+.crafting-panel .action-button:last-child{margin-right:0}
+.action-panel{float:left;display:block;margin-right:2.35765%;width:48.82117%}
 .action-panel:last-child{margin-right:0}
-.action-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%;border:1px solid #333;cursor:pointer;text-align:center;padding:5px}
+.action-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%}
 .action-panel .action-button:last-child{margin-right:0}
-.action-panel .action-button.inactive{color:#999;border:1px solid #999}
-.action-panel .action-button .detail{font-size:70%;text-align:right}
-.action-panel .action-button .detail .invalid{color:#933}
-.log-panel{margin-right:2.35765%;width:23.23176%}
-.log-panel:last-child{margin-right:0}
+.action-button{border:1px solid #333;cursor:pointer;text-align:center;padding:5px}
+.action-button.inactive{color:#999;border:1px solid #999}
+.action-button .detail{font-size:70%;text-align:right}
+.action-button .detail .invalid{color:#933}
 table.empty{border:0}

@@ -1,0 +1,9 @@
+div(ng-controller="Crafting as craftc")
+  div(ng-repeat="(b, building) in craftc.crafting")
+    .action-button(ng-if="!building.locked" ng-click="craftc.buy(b)" ng-class="{ 'inactive': !craftc.isBuyable(b) }")
+      div {{building.name}}
+      div.detail
+        span(ng-repeat="(p, price) in craftc.prices(b)" ng-class="{ 'invalid': !price.affordable }")
+          span(ng-if="price.$index") ,&nbsp;
+          span {{price.name}}@{{price.buynow | numeric}}
+        span &nbsp;

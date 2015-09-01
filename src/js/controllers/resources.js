@@ -1,6 +1,5 @@
 angular
   .module('munchkins')
-  .controller('Resources', function(Craftables, Resources) {
-    this.craftables = Craftables;
-    this.resources = Resources;
+  .controller('Resources', function(Resources) {
+    this.resources = Resources.all();
   });
