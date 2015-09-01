@@ -5,7 +5,7 @@ angular.module('munchkins', ['ngRoute']).constant('Defaults', {
   SAVE_RATE: 60000,
   SAVE_LOCATION: 'munchkinsSave'
 }).config(["$routeProvider", function ($routeProvider) {
-  $routeProvider.when('/buildings', { templateUrl: 'views/buildings.html' }).otherwise({ redirectTo: '/buildings' });
+  $routeProvider.when('/buildings', { templateUrl: 'views/buildings.html' }).when('/tribe', { templateUrl: 'views/tribe.html' }).otherwise({ redirectTo: '/buildings' });
 }]);
 'use strict';
 
@@ -53,6 +53,11 @@ angular.module('munchkins').controller('Log', function () {});
 
 angular.module('munchkins').controller('Resources', ["Resources", function (Resources) {
   this.resources = Resources.all();
+}]);
+'use strict';
+
+angular.module('munchkins').controller('Tribe', ["Tribe", function (Tribe) {
+  this.total = Tribe.total;
 }]);
 'use strict';
 
@@ -345,22 +350,24 @@ angular.module('munchkins').service('Resources', function () {
 });
 'use strict';
 
-angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Game", "Buildings", "Crafting", "Resources", function ($interval, Defaults, Game, Buildings, Crafting, Resources) {
+angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Buildings", "Crafting", "Game", "Resources", "Tribe", function ($interval, Defaults, Buildings, Crafting, Game, Resources, Tribe) {
   this.save = function () {
     console.log('Saving game');
     try {
       var save = {
         version: 1,
+        buildings: {},
+        crafting: {},
         game: {},
         resources: {},
-        buildings: {},
-        crafting: {}
+        tribe: {}
       };
 
-      Game.save(save.game);
       Buildings.save(save.buildings);
       Crafting.save(save.crafting);
+      Game.save(save.game);
       Resources.save(save.resources);
+      Tribe.save(save.tribe);
 
       localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify(save));
     } catch (err) {
@@ -373,13 +380,33 @@ angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Game",
     try {
       var load = JSON.parse(localStorage.getItem(Defaults.SAVE_LOCATION)) || {};
 
-      Game.load(load.game || {});
       Buildings.load(load.buildings || {});
       Crafting.load(load.crafting || {});
+      Game.load(load.game || {});
       Resources.load(load.resources || {});
+      Tribe.load(load.tribe || {});
     } catch (err) {
       console.error(err);
     }
   };
 }]);
+'use strict';
+
+angular.module('munchkins').service('Tribe', function () {
+  var tribe = {
+    free: 0
+  };
+
+  this.total = function () {
+    return tribe.free;
+  };
+
+  this.save = function (to) {
+    to.free = tribe.free;
+  };
+
+  this.load = function (from) {
+    tribe.free = from.free || tribe.free;
+  };
+});
 //# sourceMappingURL=.munchkins.js.map

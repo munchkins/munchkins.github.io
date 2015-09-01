@@ -10,5 +10,6 @@ angular
   .config(function($routeProvider) {
     $routeProvider
       .when('/buildings', { templateUrl: 'views/buildings.html' })
+      .when('/tribe', { templateUrl: 'views/tribe.html' })
       .otherwise({ redirectTo: '/buildings' });
   });
