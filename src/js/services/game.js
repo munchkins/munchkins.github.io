@@ -5,7 +5,7 @@ angular
       ticks: 0
     };
 
-    this.get = function() {
+    this.all = function() {
       return game;
     };
   });

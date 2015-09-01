@@ -1,16 +1,3 @@
-/*
-  Resources are defined with the following structure
-
-  <key>: {
-    name: <string name>
-    description: <string description>
-    value: {
-      current: <current value>
-      max: <max value>
-    }
-    rate: <rate of increase>
-  }
-*/
 angular
   .module('munchkins')
   .service('Resources', function() {
@@ -36,7 +23,7 @@ angular
     };
 
     this.all = function() {
-      return resources;
+      return _.filter(resources, {});
     };
 
     this.get = function(key) {

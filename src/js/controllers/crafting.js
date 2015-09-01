@@ -1,9 +1,9 @@
 angular
   .module('munchkins')
-  .controller('Crafting', function(Buildings) {
-    this.crafting = Buildings.allCrafting();
+  .controller('Crafting', function(Actions, Crafting) {
+    this.crafting = Crafting.all();
 
-    this.buy = Buildings.buy;
-    this.isBuyable = Buildings.isBuyable;
-    this.prices = Buildings.prices;
+    this.buy = Actions.buy;
+    this.isBuyable = Actions.isBuyable;
+    this.prices = Actions.prices;
   });

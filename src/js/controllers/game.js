@@ -1,8 +1,8 @@
 angular
   .module('munchkins')
-  .controller('Game', function($interval, Defaults, Game, Buildings, Resources, Storage) {
+  .controller('Game', function($interval, Defaults, Game, Actions, Resources, Storage) {
     const tickloop = function() {
-      Game.ticks++;
+      Game.all().ticks++;
 
       const resources = Resources.all();
       _.forEach(resources, function(resource) {
@@ -14,7 +14,7 @@ angular
     };
 
     Storage.load();
-    Buildings.initResources();
+    Actions.initResources();
 
     $interval(Storage.save, Defaults.SAVE_RATE);
     $interval(tickloop, Defaults.TICK_RATE);
