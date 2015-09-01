@@ -57,18 +57,8 @@ angular.module('munchkins').controller('Resources', ["Resources", function (Reso
 'use strict';
 
 angular.module('munchkins').controller('Submenu', ["$location", "Buildings", "Tribe", function ($location, Buildings, Tribe) {
-  this.hasTribe = Tribe.total;
   this.totalTribe = Tribe.total;
-
-  var prevNumBuildings = 0;
-  this.hasBuildings = function () {
-    if (!prevNumBuildings) {
-      _.forEach(Buildings.all(), function (b) {
-        prevNumBuildings += b.locked ? 0 : 1;
-      });
-    }
-    return prevNumBuildings;
-  };
+  this.totalBuildings = Buildings.activeTotal;
 
   this.isOn = function (path) {
     return $location.path() === path;
@@ -108,19 +98,25 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
     var unlock = function unlock(buildings) {
       _.forEach(buildings, function (building) {
         if (building.locked) {
-          building.locked = false;
+          (function () {
+            var locked = false;
 
-          _.forEach(building.requires.buildings, function (b, k) {
-            if (!building.locked) {
-              building.locked = !(Buildings.get(k).value.current >= b.value);
-            }
-          });
+            _.forEach(building.requires.buildings, function (b, k) {
+              if (!locked) {
+                locked = !(Buildings.get(k).value.current >= b.value);
+              }
+            });
 
-          _.forEach(building.requires.resources, function (r, k) {
-            if (!building.locked) {
-              building.locked = !(Resources.get(k).value.current >= r.value);
+            _.forEach(building.requires.resources, function (r, k) {
+              if (!locked) {
+                building.locked = !(Resources.get(k).value.current >= r.value);
+              }
+            });
+
+            if (!locked) {
+              Buildings.activate(building);
             }
-          });
+          })();
         }
       });
     };
@@ -216,7 +212,7 @@ angular.module('munchkins').service('Buildings', function () {
       }
     },
     shelter: {
-      name: 'Stem Shelter',
+      name: 'Shelter',
       description: 'A basic shelter made from flower stems',
       locked: true,
       increase: 1.1,
@@ -230,6 +226,16 @@ angular.module('munchkins').service('Buildings', function () {
         tribe: 1
       }
     }
+  };
+
+  var activeTotal = 0;
+  this.activeTotal = function () {
+    return activeTotal;
+  };
+
+  this.activate = function (building) {
+    activeTotal++;
+    building.locked = false;
   };
 
   this.all = function () {
@@ -252,8 +258,12 @@ angular.module('munchkins').service('Buildings', function () {
   this.load = function (from) {
     _.forEach(from, function (b, k) {
       var building = buildings[k];
+
       building.value = b.value;
       building.locked = b.locked;
+      if (!building.locked) {
+        activeTotal++;
+      }
     });
   };
 });

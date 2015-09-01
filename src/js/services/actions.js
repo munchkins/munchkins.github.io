@@ -5,19 +5,23 @@ angular
       const unlock = function(buildings) {
         _.forEach(buildings, function(building) {
           if (building.locked) {
-            building.locked = false;
+            let locked = false;
 
             _.forEach(building.requires.buildings, function(b, k) {
-              if (!building.locked) {
-                building.locked = !(Buildings.get(k).value.current >= b.value);
+              if (!locked) {
+                locked = !(Buildings.get(k).value.current >= b.value);
               }
             });
 
             _.forEach(building.requires.resources, function(r, k) {
-              if (!building.locked) {
+              if (!locked) {
                 building.locked = !(Resources.get(k).value.current >= r.value);
               }
             });
+
+            if (!locked) {
+              Buildings.activate(building);
+            }
           }
         });
       };

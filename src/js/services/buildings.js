@@ -20,7 +20,7 @@ angular
         }
       },
       shelter: {
-        name: 'Stem Shelter',
+        name: 'Shelter',
         description: 'A basic shelter made from flower stems',
         locked: true,
         increase: 1.1,
@@ -34,6 +34,16 @@ angular
           tribe: 1
         }
       }
+    };
+
+    let activeTotal = 0;
+    this.activeTotal = function() {
+      return activeTotal;
+    };
+
+    this.activate = function(building) {
+      activeTotal++;
+      building.locked = false;
     };
 
     this.all = function() {
@@ -56,8 +66,12 @@ angular
     this.load = function(from) {
       _.forEach(from, function(b, k) {
         const building = buildings[k];
+
         building.value = b.value;
         building.locked = b.locked;
+        if (!building.locked) {
+          activeTotal++;
+        }
       });
     };
   });
