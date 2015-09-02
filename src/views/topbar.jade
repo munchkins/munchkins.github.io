@@ -1,6 +1,6 @@
 .topbar(ng-controller="Topbar as top")
   .info.
-    Day {{1 + top.calendar().day}} of {{['Spring', 'Summer', 'Autum', 'Winter'][top.calendar().season]}}, Year {{1 + top.calendar().year}}
+    Day {{1 + top.calendar().day}} of {{['Spring', 'Summer', 'Autum', 'Winter'][top.calendar().season]}} in Year {{(1 + top.calendar().year) | number:0}}
     
   .menu
     a(ng-click="top.save()") Save
