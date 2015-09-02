@@ -30,18 +30,24 @@ a {
   @include span-columns(12);
 }
 
-.topmenu {
+.topbar {
   @include span-columns(12);
   margin-bottom: 0.5em;
-  text-align: right;
+
+  .info {
+    @include span-columns(6);
+  }
+
+  .menu {
+    @include span-columns(6);
+    text-align: right;
+  }
 }
 
-.submenu {
+.subbar {
   @include shift(3);
   @include span-columns(6);
-}
 
-.topmenu, .submenu {
   margin-bottom: 0.5em;
 }
 

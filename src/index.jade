@@ -11,10 +11,8 @@ html(lang="en" ng-app="munchkins")
     link(rel="stylesheet" type="text/css" href="munchkins.css")
       
   body.ng-cloak(ng-controller="Game as game")
-    .container
-      .topmenu(ng-include="'views/topmenu.html'")
-    .container
-      .submenu(ng-include="'views/submenu.html'")
+    .container(ng-include="'views/topbar.html'")
+    .container(ng-include="'views/subbar.html'")
     .container
       .crafting-panel(ng-include="'views/crafting.html'")
       .action-panel

@@ -27,25 +27,7 @@ angular.module('munchkins').controller('Crafting', ["Actions", "Crafting", funct
 }]);
 'use strict';
 
-angular.module('munchkins').controller('Game', ["$interval", "Defaults", "Game", "Actions", "Resources", "Storage", function ($interval, Defaults, Game, Actions, Resources, Storage) {
-  var tickloop = function tickloop() {
-    Game.all().ticks++;
-
-    var resources = Resources.all();
-    _.forEach(resources, function (resource) {
-      resource.value.current += resource.rate;
-      if (resource.value.limit) {
-        resource.value.current = Math.min(resource.value.current, resource.value.limit);
-      }
-    });
-  };
-
-  Storage.load();
-  Actions.initResources();
-
-  $interval(Storage.save, Defaults.SAVE_RATE);
-  $interval(tickloop, Defaults.TICK_RATE);
-}]);
+angular.module('munchkins').controller('Game', function () {});
 'use strict';
 
 angular.module('munchkins').controller('Log', function () {});
@@ -56,7 +38,7 @@ angular.module('munchkins').controller('Resources', ["Resources", function (Reso
 }]);
 'use strict';
 
-angular.module('munchkins').controller('Submenu', ["$location", "Buildings", "Tribe", function ($location, Buildings, Tribe) {
+angular.module('munchkins').controller('Subbar', ["$location", "Buildings", "Tribe", function ($location, Buildings, Tribe) {
   this.totalTribe = Tribe.total;
   this.totalBuildings = Buildings.activeTotal;
 
@@ -66,8 +48,9 @@ angular.module('munchkins').controller('Submenu', ["$location", "Buildings", "Tr
 }]);
 'use strict';
 
-angular.module('munchkins').controller('Topmenu', ["Storage", function (Storage) {
-  this.save = Storage.save;
+angular.module('munchkins').controller('Topbar', ["Game", function (Game) {
+  this.save = Game.save;
+  this.calendar = Game.calendar;
 }]);
 'use strict';
 
@@ -334,23 +317,88 @@ angular.module('munchkins').service('Crafting', function () {
 });
 'use strict';
 
-angular.module('munchkins').service('Game', function () {
+angular.module('munchkins').service('Game', ["$interval", "Actions", "Buildings", "Crafting", "Defaults", "Resources", "Tribe", function ($interval, Actions, Buildings, Crafting, Defaults, Resources, Tribe) {
   var game = {
-    ticks: 0
+    ticks: 0,
+    calendar: {
+      day: 0,
+      season: 0,
+      year: 0
+    }
   };
 
-  this.all = function () {
-    return game;
+  var DAY_TICKS = 4 * 60;
+  var SEASON_DAYS = 98;
+  var YEAR_DAYS = 4 * SEASON_DAYS;
+
+  var tick = function tick() {
+    game.ticks++;
+
+    var days = Math.floor(game.ticks / DAY_TICKS);
+    game.calendar.year = Math.floor(days / YEAR_DAYS);
+    game.calendar.season = Math.floor(days % YEAR_DAYS / SEASON_DAYS);
+    game.calendar.day = days % YEAR_DAYS % SEASON_DAYS;
+
+    var resources = Resources.all();
+    _.forEach(resources, function (resource) {
+      resource.value.current += resource.rate;
+      if (resource.value.limit) {
+        resource.value.current = Math.min(resource.value.current, resource.value.limit);
+      }
+    });
   };
 
-  this.save = function (to) {
-    to.ticks = game.ticks;
+  this.calendar = function () {
+    return game.calendar;
   };
 
-  this.load = function (from) {
-    game.ticks = from.ticks || game.ticks;
+  this.save = function () {
+    console.log('Saving game');
+    try {
+      var save = {
+        version: 1,
+        game: {
+          ticks: game.ticks
+        },
+        buildings: {},
+        crafting: {},
+        resources: {},
+        tribe: {}
+      };
+
+      Buildings.save(save.buildings);
+      Crafting.save(save.crafting);
+      Resources.save(save.resources);
+      Tribe.save(save.tribe);
+
+      localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify(save));
+    } catch (err) {
+      console.error(err);
+    }
   };
-});
+
+  this.load = function () {
+    console.log('Loading game');
+    try {
+      var load = JSON.parse(localStorage.getItem(Defaults.SAVE_LOCATION)) || {};
+
+      game.ticks = (load.game || {}).ticks || game.ticks;
+
+      Buildings.load(load.buildings || {});
+      Crafting.load(load.crafting || {});
+      Resources.load(load.resources || {});
+      Tribe.load(load.tribe || {});
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  this.load();
+  Actions.initResources();
+
+  $interval(this.save, Defaults.SAVE_RATE);
+  $interval(tick, Defaults.TICK_RATE);
+}]);
 'use strict';
 
 angular.module('munchkins').service('Resources', function () {
@@ -397,48 +445,6 @@ angular.module('munchkins').service('Resources', function () {
     });
   };
 });
-'use strict';
-
-angular.module('munchkins').service('Storage', ["$interval", "Defaults", "Buildings", "Crafting", "Game", "Resources", "Tribe", function ($interval, Defaults, Buildings, Crafting, Game, Resources, Tribe) {
-  this.save = function () {
-    console.log('Saving game');
-    try {
-      var save = {
-        version: 1,
-        buildings: {},
-        crafting: {},
-        game: {},
-        resources: {},
-        tribe: {}
-      };
-
-      Buildings.save(save.buildings);
-      Crafting.save(save.crafting);
-      Game.save(save.game);
-      Resources.save(save.resources);
-      Tribe.save(save.tribe);
-
-      localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify(save));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  this.load = function () {
-    console.log('Loading game');
-    try {
-      var load = JSON.parse(localStorage.getItem(Defaults.SAVE_LOCATION)) || {};
-
-      Buildings.load(load.buildings || {});
-      Crafting.load(load.crafting || {});
-      Game.load(load.game || {});
-      Resources.load(load.resources || {});
-      Tribe.load(load.tribe || {});
-    } catch (err) {
-      console.error(err);
-    }
-  };
-}]);
 'use strict';
 
 angular.module('munchkins').service('Tribe', function () {
