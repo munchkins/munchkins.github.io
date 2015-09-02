@@ -327,7 +327,7 @@ angular.module('munchkins').service('Game', ["$interval", "Actions", "Buildings"
     }
   };
 
-  var DAY_TICKS = 4 * 60;
+  var DAY_TICKS = 200;
   var SEASON_DAYS = 98;
   var YEAR_DAYS = 4 * SEASON_DAYS;
 

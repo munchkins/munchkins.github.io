@@ -10,7 +10,7 @@ angular
       }
     };
 
-    const DAY_TICKS = 4 * 60;
+    const DAY_TICKS = 200;
     const SEASON_DAYS = 98;
     const YEAR_DAYS = 4 * SEASON_DAYS;
 
