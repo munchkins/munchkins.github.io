@@ -2,39 +2,40 @@ angular
   .module('munchkins')
   .service('Actions', function(Buildings, Crafting, Resources, Tribe) {
     const unlockAll = function() {
-      const unlock = function(buildings) {
-        _.forEach(buildings, function(building) {
-          if (building.locked) {
-            let locked = false;
+      const unlockOne = function(item) {
+        if (item.locked) {
+          let locked = false;
 
-            _.forEach(building.requires.buildings, function(b, k) {
-              if (!locked) {
-                locked = !(Buildings.get(k).value.current >= b.value);
-              }
-            });
-
-            _.forEach(building.requires.resources, function(r, k) {
-              if (!locked) {
-                building.locked = !(Resources.get(k).value.current >= r.value);
-              }
-            });
-
+          _.forEach(item.requires.buildings, function(b, k) {
             if (!locked) {
-              Buildings.activate(building);
+              locked = !(Buildings.get(k).value.current >= b.value);
             }
-          }
-        });
+          });
+
+          _.forEach(item.requires.resources, function(r, k) {
+            if (!locked) {
+              locked = !(Resources.get(k).value.current >= r.value);
+            }
+          });
+
+          item.locked = locked;
+        }
       };
 
-      unlock(Buildings.all());
-      unlock(Crafting.all());
+      _.forEach(Buildings.all(), unlockOne);
+      _.forEach(Crafting.all(), unlockOne);
+      _.forEach(Tribe.all(), unlockOne);
     };
 
-    this.isBuyable = function(building) {
-      const incr = Math.pow(building.increase, building.value.current);
-      let buyable = true;
+    const priceMultiplier = function(item) {
+      return Math.pow(item.increase || 1, item.value.current);
+    };
 
-      _.forEach(building.requires.resources, function(r, k) {
+    this.isBuyable = function(item) {
+      const incr = priceMultiplier(item);
+      let buyable = !item.locked && (Tribe.free() >= (item.requires.tribe || 0));
+
+      _.forEach(item.requires.resources, function(r, k) {
         if (buyable) {
           buyable = Resources.get(k).value.current >= r.value * incr;
         }
@@ -43,34 +44,36 @@ angular
       return buyable;
     };
 
-    this.buy = function(building) {
-      if (!this.isBuyable(building)) {
-        return;
+    this.buy = function(item) {
+      if (!this.isBuyable(item)) {
+        return false;
       }
 
-      const incr = Math.pow(building.increase, building.value.current);
+      const incr = priceMultiplier(item);
+      item.value.current++;
 
-      building.value.current++;
-
-      _.forEach(building.requires.resources, function(r, k) {
+      _.forEach(item.requires.resources, function(r, k) {
         Resources.get(k).value.current -= r.value * incr;
       });
 
-      _.forEach(building.provides.resources, function(p, k) {
+      _.forEach(item.provides.resources, function(p, k) {
         const resource = Resources.get(k);
         resource.value.current += p.value;
         resource.rate += p.rate;
       });
 
-      Tribe.add(building.provides.tribe || 0);
+      Tribe.add(-1 * (item.requires.tribe || 0));
+      Tribe.add(item.provides.tribe || 0);
 
       unlockAll();
+
+      return true;
     };
 
-    this.prices = function(building) {
-      const incr = Math.pow(building.increase, building.value.current);
+    this.prices = function(item) {
+      const incr = priceMultiplier(item);
 
-      _.forEach(building.requires.resources, function(r, k) {
+      _.forEach(item.requires.resources, function(r, k) {
         const price = r.value * incr;
         const resource = Resources.get(k);
 
@@ -79,19 +82,22 @@ angular
         r.name = resource.name;
       });
 
-      return _.filter(building.requires.resources, {});
+      return _.filter(item.requires.resources, {});
+    };
+
+    this.initResource = function(item) {
+      _.forEach(item.provides.resources, function(p, k) {
+        Resources.get(k).rate += item.value.current * (p.rate || 0);
+      });
+
+      _.forEach(item.requires.resources, function(r, k) {
+        Resources.get(k).rate -= item.value.current * (r.rate || 0);
+      });
     };
 
     this.initResources = function() {
-      const init = function(buildings) {
-        _.forEach(buildings, function(building) {
-          _.forEach(building.provides.resources, function(p, k) {
-            Resources.get(k).rate += building.value.current * p.rate;
-          });
-        });
-      };
-
-      init(Buildings.all());
-      init(Crafting.all());
+      _.forEach(Buildings.all(), this.initResource);
+      _.forEach(Crafting.all(), this.initResource);
+      _.forEach(Tribe.all(), this.initResource);
     };
   });

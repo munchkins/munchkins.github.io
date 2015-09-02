@@ -10,7 +10,7 @@ angular
         value: { current: 0, max: 0, level: 0 },
         requires: {
           resources: {
-            flowers: { value: 100 }
+            flowers: { value: 100, rate: 0 }
           }
         },
         provides: {
@@ -27,7 +27,7 @@ angular
         value: { current: 0, max: 0, level: 0 },
         requires: {
           resources: {
-            stems: { value: 100 }
+            stems: { value: 100, rate: 0 }
           }
         },
         provides: {
@@ -36,14 +36,12 @@ angular
       }
     };
 
-    let activeTotal = 0;
     this.activeTotal = function() {
-      return activeTotal;
-    };
-
-    this.activate = function(building) {
-      activeTotal++;
-      building.locked = false;
+      let total = 0;
+      _.forEach(buildings, function(building) {
+        total += building.locked ? 0 : 1;
+      });
+      return total;
     };
 
     this.all = function() {
@@ -66,12 +64,8 @@ angular
     this.load = function(from) {
       _.forEach(from, function(b, k) {
         const building = buildings[k];
-
         building.value = b.value;
         building.locked = b.locked;
-        if (!building.locked) {
-          activeTotal++;
-        }
       });
     };
   });

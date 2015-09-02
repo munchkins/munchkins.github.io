@@ -5,22 +5,41 @@ angular
       free: 0,
       types: {
         farmer: {
-          unlocked: false,
-          value: 0,
+          name: 'Farmer',
+          description: 'A farmer that works the meadows for additional production',
+          locked: true,
+          value: { current: 0 },
           requires: {
+            buildings: {
+              meadow: { value: 1 }
+            },
+            tribe: 1
+          },
+          provides: {
+            resources: {
+              flowers: { value: 0, rate: 0.01 }
+            }
           }
         }
       }
+    };
+
+    this.all = function() {
+      return _.filter(tribe.types, {});
     };
 
     this.add = function(number) {
       tribe.free += number;
     };
 
+    this.free = function() {
+      return tribe.free;
+    };
+
     this.total = function() {
       let count = 0;
       _.forEach(tribe.types, function(type) {
-        count += type.value;
+        count += type.value.current;
       });
       return tribe.free + count;
     };
@@ -30,7 +49,7 @@ angular
       to.types = {};
       _.forEach(tribe.types, function(type, key) {
         to.types[key] = {
-          unlocked: type.unlocked,
+          locked: type.locked,
           value: type.value
         };
       });
@@ -38,9 +57,10 @@ angular
 
     this.load = function(from) {
       tribe.free = from.free || tribe.free;
-      _.forEach(from.types, function(type, key) {
-        tribe[key].unlocked = type.unlocked;
-        tribe[key].value = type.value;
+      _.forEach(from.types, function(t, k) {
+        const type = tribe.types[k];
+        type.locked = t.locked;
+        type.value = t.value;
       });
     };
   });

@@ -39,8 +39,12 @@ angular.module('munchkins').controller('Resources', ["Resources", function (Reso
 'use strict';
 
 angular.module('munchkins').controller('Subbar', ["$location", "Buildings", "Tribe", function ($location, Buildings, Tribe) {
-  this.totalTribe = Tribe.total;
   this.totalBuildings = Buildings.activeTotal;
+  this.totalTribe = Tribe.total;
+
+  this.allocTribe = function () {
+    return Tribe.total() - Tribe.free();
+  };
 
   this.isOn = function (path) {
     return $location.path() === path;
@@ -54,8 +58,14 @@ angular.module('munchkins').controller('Topbar', ["Game", function (Game) {
 }]);
 'use strict';
 
-angular.module('munchkins').controller('Tribe', ["Tribe", function (Tribe) {
+angular.module('munchkins').controller('Tribe', ["Actions", "Tribe", function (Actions, Tribe) {
   this.total = Tribe.total;
+  this.free = Tribe.free;
+  this.types = Tribe.all();
+
+  this.buy = Actions.buy;
+  this.isBuyable = Actions.isBuyable;
+  this.prices = Actions.prices;
 }]);
 'use strict';
 
@@ -78,41 +88,42 @@ angular.module('munchkins').filter('numeric', function () {
 
 angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resources", "Tribe", function (Buildings, Crafting, Resources, Tribe) {
   var unlockAll = function unlockAll() {
-    var unlock = function unlock(buildings) {
-      _.forEach(buildings, function (building) {
-        if (building.locked) {
-          (function () {
-            var locked = false;
+    var unlockOne = function unlockOne(item) {
+      if (item.locked) {
+        (function () {
+          var locked = false;
 
-            _.forEach(building.requires.buildings, function (b, k) {
-              if (!locked) {
-                locked = !(Buildings.get(k).value.current >= b.value);
-              }
-            });
-
-            _.forEach(building.requires.resources, function (r, k) {
-              if (!locked) {
-                building.locked = !(Resources.get(k).value.current >= r.value);
-              }
-            });
-
+          _.forEach(item.requires.buildings, function (b, k) {
             if (!locked) {
-              Buildings.activate(building);
+              locked = !(Buildings.get(k).value.current >= b.value);
             }
-          })();
-        }
-      });
+          });
+
+          _.forEach(item.requires.resources, function (r, k) {
+            if (!locked) {
+              locked = !(Resources.get(k).value.current >= r.value);
+            }
+          });
+
+          item.locked = locked;
+        })();
+      }
     };
 
-    unlock(Buildings.all());
-    unlock(Crafting.all());
+    _.forEach(Buildings.all(), unlockOne);
+    _.forEach(Crafting.all(), unlockOne);
+    _.forEach(Tribe.all(), unlockOne);
   };
 
-  this.isBuyable = function (building) {
-    var incr = Math.pow(building.increase, building.value.current);
-    var buyable = true;
+  var priceMultiplier = function priceMultiplier(item) {
+    return Math.pow(item.increase || 1, item.value.current);
+  };
 
-    _.forEach(building.requires.resources, function (r, k) {
+  this.isBuyable = function (item) {
+    var incr = priceMultiplier(item);
+    var buyable = !item.locked && Tribe.free() >= (item.requires.tribe || 0);
+
+    _.forEach(item.requires.resources, function (r, k) {
       if (buyable) {
         buyable = Resources.get(k).value.current >= r.value * incr;
       }
@@ -121,34 +132,36 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
     return buyable;
   };
 
-  this.buy = function (building) {
-    if (!this.isBuyable(building)) {
-      return;
+  this.buy = function (item) {
+    if (!this.isBuyable(item)) {
+      return false;
     }
 
-    var incr = Math.pow(building.increase, building.value.current);
+    var incr = priceMultiplier(item);
+    item.value.current++;
 
-    building.value.current++;
-
-    _.forEach(building.requires.resources, function (r, k) {
+    _.forEach(item.requires.resources, function (r, k) {
       Resources.get(k).value.current -= r.value * incr;
     });
 
-    _.forEach(building.provides.resources, function (p, k) {
+    _.forEach(item.provides.resources, function (p, k) {
       var resource = Resources.get(k);
       resource.value.current += p.value;
       resource.rate += p.rate;
     });
 
-    Tribe.add(building.provides.tribe || 0);
+    Tribe.add(-1 * (item.requires.tribe || 0));
+    Tribe.add(item.provides.tribe || 0);
 
     unlockAll();
+
+    return true;
   };
 
-  this.prices = function (building) {
-    var incr = Math.pow(building.increase, building.value.current);
+  this.prices = function (item) {
+    var incr = priceMultiplier(item);
 
-    _.forEach(building.requires.resources, function (r, k) {
+    _.forEach(item.requires.resources, function (r, k) {
       var price = r.value * incr;
       var resource = Resources.get(k);
 
@@ -157,20 +170,23 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
       r.name = resource.name;
     });
 
-    return _.filter(building.requires.resources, {});
+    return _.filter(item.requires.resources, {});
+  };
+
+  this.initResource = function (item) {
+    _.forEach(item.provides.resources, function (p, k) {
+      Resources.get(k).rate += item.value.current * (p.rate || 0);
+    });
+
+    _.forEach(item.requires.resources, function (r, k) {
+      Resources.get(k).rate -= item.value.current * (r.rate || 0);
+    });
   };
 
   this.initResources = function () {
-    var init = function init(buildings) {
-      _.forEach(buildings, function (building) {
-        _.forEach(building.provides.resources, function (p, k) {
-          Resources.get(k).rate += building.value.current * p.rate;
-        });
-      });
-    };
-
-    init(Buildings.all());
-    init(Crafting.all());
+    _.forEach(Buildings.all(), this.initResource);
+    _.forEach(Crafting.all(), this.initResource);
+    _.forEach(Tribe.all(), this.initResource);
   };
 }]);
 'use strict';
@@ -185,7 +201,7 @@ angular.module('munchkins').service('Buildings', function () {
       value: { current: 0, max: 0, level: 0 },
       requires: {
         resources: {
-          flowers: { value: 100 }
+          flowers: { value: 100, rate: 0 }
         }
       },
       provides: {
@@ -202,7 +218,7 @@ angular.module('munchkins').service('Buildings', function () {
       value: { current: 0, max: 0, level: 0 },
       requires: {
         resources: {
-          stems: { value: 100 }
+          stems: { value: 100, rate: 0 }
         }
       },
       provides: {
@@ -211,14 +227,12 @@ angular.module('munchkins').service('Buildings', function () {
     }
   };
 
-  var activeTotal = 0;
   this.activeTotal = function () {
-    return activeTotal;
-  };
-
-  this.activate = function (building) {
-    activeTotal++;
-    building.locked = false;
+    var total = 0;
+    _.forEach(buildings, function (building) {
+      total += building.locked ? 0 : 1;
+    });
+    return total;
   };
 
   this.all = function () {
@@ -241,12 +255,8 @@ angular.module('munchkins').service('Buildings', function () {
   this.load = function (from) {
     _.forEach(from, function (b, k) {
       var building = buildings[k];
-
       building.value = b.value;
       building.locked = b.locked;
-      if (!building.locked) {
-        activeTotal++;
-      }
     });
   };
 });
@@ -258,7 +268,6 @@ angular.module('munchkins').service('Crafting', function () {
       name: 'Collect Flowers',
       description: 'Flowers are the staple of the Munchkin diet, collect them',
       locked: false,
-      increase: 1.0,
       value: { current: 0, max: 0, level: 0 },
       requires: {},
       provides: {
@@ -271,7 +280,6 @@ angular.module('munchkins').service('Crafting', function () {
       name: 'Process Flowers',
       description: 'Processes flowers into petals and stems',
       locked: true,
-      increase: 1.0,
       value: { current: 0, max: 0, level: 0 },
       requires: {
         buildings: {
@@ -452,21 +460,41 @@ angular.module('munchkins').service('Tribe', function () {
     free: 0,
     types: {
       farmer: {
-        unlocked: false,
-        value: 0,
-        requires: {}
+        name: 'Farmer',
+        description: 'A farmer that works the meadows for additional production',
+        locked: true,
+        value: { current: 0 },
+        requires: {
+          buildings: {
+            meadow: { value: 1 }
+          },
+          tribe: 1
+        },
+        provides: {
+          resources: {
+            flowers: { value: 0, rate: 0.01 }
+          }
+        }
       }
     }
+  };
+
+  this.all = function () {
+    return _.filter(tribe.types, {});
   };
 
   this.add = function (number) {
     tribe.free += number;
   };
 
+  this.free = function () {
+    return tribe.free;
+  };
+
   this.total = function () {
     var count = 0;
     _.forEach(tribe.types, function (type) {
-      count += type.value;
+      count += type.value.current;
     });
     return tribe.free + count;
   };
@@ -476,7 +504,7 @@ angular.module('munchkins').service('Tribe', function () {
     to.types = {};
     _.forEach(tribe.types, function (type, key) {
       to.types[key] = {
-        unlocked: type.unlocked,
+        locked: type.locked,
         value: type.value
       };
     });
@@ -484,9 +512,10 @@ angular.module('munchkins').service('Tribe', function () {
 
   this.load = function (from) {
     tribe.free = from.free || tribe.free;
-    _.forEach(from.types, function (type, key) {
-      tribe[key].unlocked = type.unlocked;
-      tribe[key].value = type.value;
+    _.forEach(from.types, function (t, k) {
+      var type = tribe.types[k];
+      type.locked = t.locked;
+      type.value = t.value;
     });
   };
 });
