@@ -14,10 +14,11 @@ html(lang="en" ng-app="munchkins")
     .container(ng-include="'views/topbar.html'")
     .container(ng-include="'views/subbar.html'")
     .container
-      .crafting-panel(ng-include="'views/crafting.html'")
       .action-panel
-        div(ng-view)
-        div &nbsp;
+        .crafting-panel(ng-include="'views/crafting.html'")
+        .building-panel
+          div(ng-view)
+          div &nbsp;
       .resource-panel(ng-include="'views/resources.html'")
       
     script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js")

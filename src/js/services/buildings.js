@@ -3,7 +3,7 @@ angular
   .service('Buildings', function() {
     const buildings = {
       meadow: {
-        name: 'Flower Meadow',
+        name: 'Meadow',
         description: 'A naturally growing field of flowers',
         locked: true,
         increase: 1.1,

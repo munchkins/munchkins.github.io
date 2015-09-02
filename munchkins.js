@@ -194,7 +194,7 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
 angular.module('munchkins').service('Buildings', function () {
   var buildings = {
     meadow: {
-      name: 'Flower Meadow',
+      name: 'Meadow',
       description: 'A naturally growing field of flowers',
       locked: true,
       increase: 1.1,

@@ -45,27 +45,34 @@ a {
 }
 
 .subbar {
-  @include shift(3);
-  @include span-columns(6);
-
+  @include span-columns(9);
   margin-bottom: 0.5em;
+
+  .nav {
+    @include shift(6);
+    @include span-columns(6);
+  }
 }
 
 .resource-panel {
   @include span-columns(3);
 }
 
-.crafting-panel {
-  @include span-columns(3);
-  .action-button {
-    @include span-columns(12);
-  }
-}
-
 .action-panel {
-  @include span-columns(6);
-  .action-button {
+  @include span-columns(9);
+
+  .crafting-panel {
     @include span-columns(6);
+    .action-button {
+      @include span-columns(6);
+    }
+  }
+
+  .building-panel {
+    @include span-columns(6);
+    .action-button {
+      @include span-columns(6);
+    }
   }
 }
 

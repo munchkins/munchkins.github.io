@@ -8,25 +8,28 @@ a.active{color:#339}
 .container{margin-right:2.35765%}
 .container:last-child{margin-right:0}
 .topbar{margin-right:2.35765%}
-.subbar,.topbar .info,.topbar .menu{float:left;display:block;width:48.82117%}
+.topbar .info,.topbar .menu{width:48.82117%;float:left;display:block}
 .topbar:last-child{margin-right:0}
 .topbar .info{margin-right:2.35765%}
 .topbar .info:last-child{margin-right:0}
 .topbar .menu{margin-right:2.35765%;text-align:right}
 .topbar .menu:last-child{margin-right:0}
-.subbar{margin-left:25.58941%;margin-right:2.35765%}
-.crafting-panel,.resource-panel{width:23.23176%;float:left;display:block}
+.subbar{float:left;display:block;margin-right:2.35765%;width:74.41059%}
 .subbar:last-child{margin-right:0}
-.resource-panel{margin-right:2.35765%}
+.subbar .nav{margin-left:51.17883%;float:left;display:block;margin-right:2.35765%;width:48.82117%}
+.subbar .nav:last-child{margin-right:0}
+.resource-panel{float:left;display:block;margin-right:2.35765%;width:23.23176%}
 .resource-panel:last-child{margin-right:0}
-.crafting-panel{margin-right:2.35765%}
-.crafting-panel:last-child{margin-right:0}
-.crafting-panel .action-button{float:left;display:block;margin-right:2.35765%;width:100%}
-.crafting-panel .action-button:last-child{margin-right:0}
-.action-panel{float:left;display:block;margin-right:2.35765%;width:48.82117%}
+.action-panel{float:left;display:block;margin-right:2.35765%;width:74.41059%}
 .action-panel:last-child{margin-right:0}
-.action-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%}
-.action-panel .action-button:last-child{margin-right:0}
+.action-panel .crafting-panel{float:left;display:block;margin-right:2.35765%;width:48.82117%}
+.action-panel .crafting-panel:last-child{margin-right:0}
+.action-panel .crafting-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%}
+.action-panel .crafting-panel .action-button:last-child{margin-right:0}
+.action-panel .building-panel{float:left;display:block;margin-right:2.35765%;width:48.82117%}
+.action-panel .building-panel:last-child{margin-right:0}
+.action-panel .building-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%}
+.action-panel .building-panel .action-button:last-child{margin-right:0}
 .action-button{border:1px solid #333;cursor:pointer;text-align:center;padding:.25em;border-radius:4px;margin:.15em .25em}
 .action-button.inactive{color:#999;border:1px solid #999}
 .action-button .detail{font-size:70%;text-align:right}
