@@ -33,6 +33,22 @@ angular
             petals: { value: 75, rate: 0 }
           }
         }
+      },
+      press: {
+        name: 'Press Petals',
+        description: 'Process petals into paper',
+        locked: true,
+        value: { current: 0, max: 0, level: 0 },
+        requires: {
+          resources: {
+            petals: { value: 1000, rate: 0 }
+          }
+        },
+        provides: {
+          resources: {
+            paper: { value: 1, rate: 0 }
+          }
+        }
       }
     };
 

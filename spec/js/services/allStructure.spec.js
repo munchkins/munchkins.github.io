@@ -23,6 +23,10 @@ describe('All Exposed Structures', function() {
   const testResource = function(item) {
     expect(item.name).to.be.ok;
     expect(item.description).to.be.ok;
+    expect(item.value).to.be.ok;
+    expect(item.value.current).to.be.at.least(0);
+    expect(item.value.limit).to.be.at.least(0);
+    expect(item.rate).to.be.at.least(0);
   };
 
   it('Has Correct Resource Structure', function() {

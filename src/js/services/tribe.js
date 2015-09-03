@@ -17,7 +17,8 @@ angular
           },
           provides: {
             resources: {
-              flowers: { value: 0, rate: 0.01, hyper: true }
+              flowers: { value: 0, rate: 0.01, hyper: true },
+              rocks: { value: 0, rate: 0.001, hyper: true }
             }
           }
         }

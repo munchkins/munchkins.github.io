@@ -19,6 +19,18 @@ angular
         description: 'Flower petals are a decoration with various uses',
         value: { current: 0, limit: 0 },
         rate: 0
+      },
+      paper: {
+        name: 'Paper',
+        description: 'Petal paper',
+        value: { current: 0, limit: 0 },
+        rate: 0
+      },
+      rocks: {
+        name: 'Rocks',
+        description: 'Rocks are a by-product of farming',
+        value: { current: 0, limit: 0 },
+        rate: 0
       }
     };
 
