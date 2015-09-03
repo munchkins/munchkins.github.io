@@ -1,5 +1,5 @@
 angular
-  .module('munchkins.controllers')
+  .module('munchkins')
   .service('Game', function($interval, Actions, Buildings, Crafting, Defaults, Resources, Tribe) {
     const game = {
       ticks: 0,

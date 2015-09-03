@@ -1,5 +1,5 @@
 angular
-  .module('munchkins.controllers')
+  .module('munchkins')
   .controller('Resources', function(Resources) {
     this.resources = Resources.all();
   });

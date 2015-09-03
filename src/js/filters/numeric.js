@@ -1,5 +1,5 @@
 angular
-  .module('munchkins.filters')
+  .module('munchkins')
   .filter('numeric', function() {
     const units = ['', 'K', 'M', 'G', 'T', 'P'];
 

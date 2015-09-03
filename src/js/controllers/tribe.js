@@ -1,5 +1,5 @@
 angular
-  .module('munchkins.controllers')
+  .module('munchkins')
   .controller('Tribe', function(Actions, Tribe) {
     this.total = Tribe.total;
     this.free = Tribe.free;

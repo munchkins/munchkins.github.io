@@ -1,5 +1,5 @@
 angular
-  .module('munchkins.controllers')
+  .module('munchkins')
   .controller('Crafting', function(Actions, Crafting) {
     this.crafting = Crafting.all();
 

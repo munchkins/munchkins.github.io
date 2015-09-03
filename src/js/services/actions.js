@@ -1,5 +1,5 @@
 angular
-  .module('munchkins.services')
+  .module('munchkins')
   .service('Actions', function(Buildings, Crafting, Resources, Tribe) {
     const unlockAll = function() {
       const unlockOne = function(item) {

@@ -1,5 +1,5 @@
 angular
-  .module('munchkins.services')
+  .module('munchkins')
   .service('Resources', function() {
     const resources = {
       flowers: {

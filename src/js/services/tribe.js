@@ -1,5 +1,5 @@
 angular
-  .module('munchkins.services')
+  .module('munchkins')
   .service('Tribe', function() {
     const tribe = {
       free: 0,

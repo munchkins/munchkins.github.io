@@ -1,5 +1,5 @@
 angular
-  .module('munchkins.controllers')
+  .module('munchkins')
   .controller('Subbar', function($location, Buildings, Tribe) {
     this.totalBuildings = Buildings.activeTotal;
     this.totalTribe = Tribe.total;

@@ -2,7 +2,7 @@ describe('Numeric Filter', function() {
   let filter = undefined;
 
   beforeEach(function() {
-    module('munchkins.filters');
+    module('munchkins');
 
     inject(function(_$filter_) {
       filter = _$filter_('numeric');
