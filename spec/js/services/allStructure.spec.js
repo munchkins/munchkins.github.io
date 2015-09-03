@@ -18,6 +18,8 @@ describe('All Exposed Structures', function() {
   const testStructure = function(item) {
     expect(item.name).to.be.ok;
     expect(item.description).to.be.ok;
+    expect(item.requires).to.be.ok;
+    expect(item.provides).to.be.ok;
   };
 
   const testResource = function(item) {

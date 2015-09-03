@@ -100,6 +100,7 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
           });
 
           _.forEach(item.requires.resources, function (r, k) {
+            console.log(item.name, r, k);
             if (!locked) {
               locked = !(Resources.get(k).value.current >= r.value);
             }
@@ -239,7 +240,7 @@ angular.module('munchkins').service('Buildings', function () {
       increase: 1.11,
       value: { current: 0, max: 0, level: 0 },
       requires: {
-        rescources: {
+        resources: {
           rocks: { value: 50, rate: 0 }
         }
       },

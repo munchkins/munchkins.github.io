@@ -41,7 +41,7 @@ angular
         increase: 1.11,
         value: { current: 0, max: 0, level: 0 },
         requires: {
-          rescources: {
+          resources: {
             rocks: { value: 50, rate: 0 }
           }
         },
