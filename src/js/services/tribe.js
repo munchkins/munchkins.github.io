@@ -1,5 +1,5 @@
 angular
-  .module('munchkins')
+  .module('munchkins.services')
   .service('Tribe', function() {
     const tribe = {
       free: 0,
@@ -17,7 +17,7 @@ angular
           },
           provides: {
             resources: {
-              flowers: { value: 0, rate: 0.01 }
+              flowers: { value: 0, rate: 0.01, hyper: true }
             }
           }
         }

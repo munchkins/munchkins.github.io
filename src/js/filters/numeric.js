@@ -1,5 +1,5 @@
 angular
-  .module('munchkins')
+  .module('munchkins.filters')
   .filter('numeric', function() {
     const units = ['', 'K', 'M', 'G', 'T', 'P'];
 
@@ -8,7 +8,7 @@ angular
       const u = Math.floor(Math.log(n) / Math.log(1000));
 
       let p = precision || ((precision === 0) ? 0 : 2);
-      if ((p === 0) && (p >= 1000)) {
+      if ((p === 0) && (n >= 1000)) {
         p = 2;
       }
 

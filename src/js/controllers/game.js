@@ -1,3 +1,3 @@
 angular
-  .module('munchkins')
+  .module('munchkins.controllers')
   .controller('Game', function() {});

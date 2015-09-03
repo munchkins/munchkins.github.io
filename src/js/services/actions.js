@@ -1,5 +1,5 @@
 angular
-  .module('munchkins')
+  .module('munchkins.services')
   .service('Actions', function(Buildings, Crafting, Resources, Tribe) {
     const unlockAll = function() {
       const unlockOne = function(item) {
@@ -59,7 +59,7 @@ angular
       _.forEach(item.provides.resources, function(p, k) {
         const resource = Resources.get(k);
         resource.value.current += p.value;
-        resource.rate += p.rate;
+        resource.rate += Math.pow(p.rate, p.hyper ? item.value.current : 1);
       });
 
       Tribe.add(-1 * (item.requires.tribe || 0));
@@ -87,7 +87,14 @@ angular
 
     this.initResource = function(item) {
       _.forEach(item.provides.resources, function(p, k) {
-        Resources.get(k).rate += item.value.current * (p.rate || 0);
+        const resource = Resources.get(k);
+        if (p.hyper) {
+          for (let i = 1; i <= item.value.current; i++) {
+            resource.rate += Math.pow((p.rate || 0), i);
+          }
+        } else {
+          resource.rate += item.value.current * (p.rate || 0);
+        }
       });
 
       _.forEach(item.requires.resources, function(r, k) {

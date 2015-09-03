@@ -4,10 +4,12 @@
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var babel = require('gulp-babel');
+var bower = require('gulp-bower');
 var concat = require('gulp-concat');
 var newer = require('gulp-newer');
 var annotate = require('gulp-ng-annotate');
 var jade = require('gulp-jade');
+var karma = require('gulp-karma');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
@@ -74,6 +76,20 @@ gulp.task('css-sass', function() {
     }))
     .pipe(concat('munchkins.css'))
     .pipe(gulp.dest('.'));
+});
+
+gulp.task('bower', function() {
+  return bower();
+});
+
+gulp.task('test', ['bower'], function() {
+  return gulp
+    .src([])
+    .pipe(karma({
+      configFile: 'karma.conf.js',
+      action: 'run'
+    }))
+    .on('error', errcb);
 });
 
 gulp.task('default', [

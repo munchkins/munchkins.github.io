@@ -1,7 +1,16 @@
 'use strict';
 
+angular.module('munchkins.controllers', []);
+angular.module('munchkins.filters', []);
+angular.module('munchkins.services', []);
+
 angular
-  .module('munchkins', ['ngRoute'])
+  .module('munchkins', [
+    'ngRoute',
+    'munchkins.controllers',
+    'munchkins.filters',
+    'munchkins.services'
+  ])
   .constant('Defaults', {
     TICK_RATE: 250,
     SAVE_RATE: 60000,

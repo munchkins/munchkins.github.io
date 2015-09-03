@@ -1,5 +1,5 @@
 angular
-  .module('munchkins')
+  .module('munchkins.controllers')
   .service('Crafting', function() {
     const crafting = {
       collect: {

@@ -1,6 +1,10 @@
 'use strict';
 
-angular.module('munchkins', ['ngRoute']).constant('Defaults', {
+angular.module('munchkins.controllers', []);
+angular.module('munchkins.filters', []);
+angular.module('munchkins.services', []);
+
+angular.module('munchkins', ['ngRoute', 'munchkins.controllers', 'munchkins.filters', 'munchkins.services']).constant('Defaults', {
   TICK_RATE: 250,
   SAVE_RATE: 60000,
   SAVE_LOCATION: 'munchkinsSave'
@@ -9,7 +13,7 @@ angular.module('munchkins', ['ngRoute']).constant('Defaults', {
 }]);
 'use strict';
 
-angular.module('munchkins').controller('Buildings', ["Actions", "Buildings", function (Actions, Buildings) {
+angular.module('munchkins.controllers').controller('Buildings', ["Actions", "Buildings", function (Actions, Buildings) {
   this.buildings = Buildings.all();
 
   this.buy = Actions.buy;
@@ -18,7 +22,7 @@ angular.module('munchkins').controller('Buildings', ["Actions", "Buildings", fun
 }]);
 'use strict';
 
-angular.module('munchkins').controller('Crafting', ["Actions", "Crafting", function (Actions, Crafting) {
+angular.module('munchkins.controllers').controller('Crafting', ["Actions", "Crafting", function (Actions, Crafting) {
   this.crafting = Crafting.all();
 
   this.buy = Actions.buy;
@@ -27,18 +31,18 @@ angular.module('munchkins').controller('Crafting', ["Actions", "Crafting", funct
 }]);
 'use strict';
 
-angular.module('munchkins').controller('Game', function () {});
+angular.module('munchkins.controllers').controller('Game', function () {});
 'use strict';
 
-angular.module('munchkins').controller('Log', function () {});
+angular.module('munchkins.controllers').controller('Log', function () {});
 'use strict';
 
-angular.module('munchkins').controller('Resources', ["Resources", function (Resources) {
+angular.module('munchkins.controllers').controller('Resources', ["Resources", function (Resources) {
   this.resources = Resources.all();
 }]);
 'use strict';
 
-angular.module('munchkins').controller('Subbar', ["$location", "Buildings", "Tribe", function ($location, Buildings, Tribe) {
+angular.module('munchkins.controllers').controller('Subbar', ["$location", "Buildings", "Tribe", function ($location, Buildings, Tribe) {
   this.totalBuildings = Buildings.activeTotal;
   this.totalTribe = Tribe.total;
 
@@ -52,13 +56,13 @@ angular.module('munchkins').controller('Subbar', ["$location", "Buildings", "Tri
 }]);
 'use strict';
 
-angular.module('munchkins').controller('Topbar', ["Game", function (Game) {
+angular.module('munchkins.controllers').controller('Topbar', ["Game", function (Game) {
   this.save = Game.save;
   this.calendar = Game.calendar;
 }]);
 'use strict';
 
-angular.module('munchkins').controller('Tribe', ["Actions", "Tribe", function (Actions, Tribe) {
+angular.module('munchkins.controllers').controller('Tribe', ["Actions", "Tribe", function (Actions, Tribe) {
   this.total = Tribe.total;
   this.free = Tribe.free;
   this.types = Tribe.all();
@@ -69,7 +73,7 @@ angular.module('munchkins').controller('Tribe', ["Actions", "Tribe", function (A
 }]);
 'use strict';
 
-angular.module('munchkins').filter('numeric', function () {
+angular.module('munchkins.filters').filter('numeric', function () {
   var units = ['', 'K', 'M', 'G', 'T', 'P'];
 
   return function (number, precision) {
@@ -77,7 +81,7 @@ angular.module('munchkins').filter('numeric', function () {
     var u = Math.floor(Math.log(n) / Math.log(1000));
 
     var p = precision || (precision === 0 ? 0 : 2);
-    if (p === 0 && p >= 1000) {
+    if (p === 0 && n >= 1000) {
       p = 2;
     }
 
@@ -86,7 +90,7 @@ angular.module('munchkins').filter('numeric', function () {
 });
 'use strict';
 
-angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resources", "Tribe", function (Buildings, Crafting, Resources, Tribe) {
+angular.module('munchkins.services').service('Actions', ["Buildings", "Crafting", "Resources", "Tribe", function (Buildings, Crafting, Resources, Tribe) {
   var unlockAll = function unlockAll() {
     var unlockOne = function unlockOne(item) {
       if (item.locked) {
@@ -147,7 +151,7 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
     _.forEach(item.provides.resources, function (p, k) {
       var resource = Resources.get(k);
       resource.value.current += p.value;
-      resource.rate += p.rate;
+      resource.rate += Math.pow(p.rate, p.hyper ? item.value.current : 1);
     });
 
     Tribe.add(-1 * (item.requires.tribe || 0));
@@ -175,7 +179,14 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
 
   this.initResource = function (item) {
     _.forEach(item.provides.resources, function (p, k) {
-      Resources.get(k).rate += item.value.current * (p.rate || 0);
+      var resource = Resources.get(k);
+      if (p.hyper) {
+        for (var i = 1; i <= item.value.current; i++) {
+          resource.rate += Math.pow(p.rate || 0, i);
+        }
+      } else {
+        resource.rate += item.value.current * (p.rate || 0);
+      }
     });
 
     _.forEach(item.requires.resources, function (r, k) {
@@ -191,7 +202,7 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
 }]);
 'use strict';
 
-angular.module('munchkins').service('Buildings', function () {
+angular.module('munchkins.controllers').service('Buildings', function () {
   var buildings = {
     meadow: {
       name: 'Meadow',
@@ -262,7 +273,7 @@ angular.module('munchkins').service('Buildings', function () {
 });
 'use strict';
 
-angular.module('munchkins').service('Crafting', function () {
+angular.module('munchkins.controllers').service('Crafting', function () {
   var crafting = {
     collect: {
       name: 'Collect Flowers',
@@ -325,7 +336,7 @@ angular.module('munchkins').service('Crafting', function () {
 });
 'use strict';
 
-angular.module('munchkins').service('Game', ["$interval", "Actions", "Buildings", "Crafting", "Defaults", "Resources", "Tribe", function ($interval, Actions, Buildings, Crafting, Defaults, Resources, Tribe) {
+angular.module('munchkins.controllers').service('Game', ["$interval", "Actions", "Buildings", "Crafting", "Defaults", "Resources", "Tribe", function ($interval, Actions, Buildings, Crafting, Defaults, Resources, Tribe) {
   var game = {
     ticks: 0,
     calendar: {
@@ -409,7 +420,7 @@ angular.module('munchkins').service('Game', ["$interval", "Actions", "Buildings"
 }]);
 'use strict';
 
-angular.module('munchkins').service('Resources', function () {
+angular.module('munchkins.services').service('Resources', function () {
   var resources = {
     flowers: {
       name: 'Flowers',
@@ -455,7 +466,7 @@ angular.module('munchkins').service('Resources', function () {
 });
 'use strict';
 
-angular.module('munchkins').service('Tribe', function () {
+angular.module('munchkins.services').service('Tribe', function () {
   var tribe = {
     free: 0,
     types: {
@@ -472,7 +483,7 @@ angular.module('munchkins').service('Tribe', function () {
         },
         provides: {
           resources: {
-            flowers: { value: 0, rate: 0.01 }
+            flowers: { value: 0, rate: 0.01, hyper: true }
           }
         }
       }

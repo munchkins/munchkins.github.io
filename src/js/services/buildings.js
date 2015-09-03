@@ -1,5 +1,5 @@
 angular
-  .module('munchkins')
+  .module('munchkins.controllers')
   .service('Buildings', function() {
     const buildings = {
       meadow: {
