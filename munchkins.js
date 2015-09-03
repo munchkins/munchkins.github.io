@@ -1,10 +1,6 @@
 'use strict';
 
-angular.module('munchkins.controllers', []);
-angular.module('munchkins.filters', []);
-angular.module('munchkins.services', []);
-
-angular.module('munchkins', ['ngRoute', 'munchkins.controllers', 'munchkins.filters', 'munchkins.services']).constant('Defaults', {
+angular.module('munchkins', ['ngRoute']).constant('Defaults', {
   TICK_RATE: 250,
   SAVE_RATE: 60000,
   SAVE_LOCATION: 'munchkinsSave'
@@ -13,7 +9,7 @@ angular.module('munchkins', ['ngRoute', 'munchkins.controllers', 'munchkins.filt
 }]);
 'use strict';
 
-angular.module('munchkins.controllers').controller('Buildings', ["Actions", "Buildings", function (Actions, Buildings) {
+angular.module('munchkins').controller('Buildings', ["Actions", "Buildings", function (Actions, Buildings) {
   this.buildings = Buildings.all();
 
   this.buy = Actions.buy;
@@ -22,7 +18,7 @@ angular.module('munchkins.controllers').controller('Buildings', ["Actions", "Bui
 }]);
 'use strict';
 
-angular.module('munchkins.controllers').controller('Crafting', ["Actions", "Crafting", function (Actions, Crafting) {
+angular.module('munchkins').controller('Crafting', ["Actions", "Crafting", function (Actions, Crafting) {
   this.crafting = Crafting.all();
 
   this.buy = Actions.buy;
@@ -31,18 +27,18 @@ angular.module('munchkins.controllers').controller('Crafting', ["Actions", "Craf
 }]);
 'use strict';
 
-angular.module('munchkins.controllers').controller('Game', function () {});
+angular.module('munchkins').controller('Game', function () {});
 'use strict';
 
-angular.module('munchkins.controllers').controller('Log', function () {});
+angular.module('munchkins').controller('Log', function () {});
 'use strict';
 
-angular.module('munchkins.controllers').controller('Resources', ["Resources", function (Resources) {
+angular.module('munchkins').controller('Resources', ["Resources", function (Resources) {
   this.resources = Resources.all();
 }]);
 'use strict';
 
-angular.module('munchkins.controllers').controller('Subbar', ["$location", "Buildings", "Tribe", function ($location, Buildings, Tribe) {
+angular.module('munchkins').controller('Subbar', ["$location", "Buildings", "Tribe", function ($location, Buildings, Tribe) {
   this.totalBuildings = Buildings.activeTotal;
   this.totalTribe = Tribe.total;
 
@@ -56,13 +52,13 @@ angular.module('munchkins.controllers').controller('Subbar', ["$location", "Buil
 }]);
 'use strict';
 
-angular.module('munchkins.controllers').controller('Topbar', ["Game", function (Game) {
+angular.module('munchkins').controller('Topbar', ["Game", function (Game) {
   this.save = Game.save;
   this.calendar = Game.calendar;
 }]);
 'use strict';
 
-angular.module('munchkins.controllers').controller('Tribe', ["Actions", "Tribe", function (Actions, Tribe) {
+angular.module('munchkins').controller('Tribe', ["Actions", "Tribe", function (Actions, Tribe) {
   this.total = Tribe.total;
   this.free = Tribe.free;
   this.types = Tribe.all();
@@ -73,7 +69,7 @@ angular.module('munchkins.controllers').controller('Tribe', ["Actions", "Tribe",
 }]);
 'use strict';
 
-angular.module('munchkins.filters').filter('numeric', function () {
+angular.module('munchkins').filter('numeric', function () {
   var units = ['', 'K', 'M', 'G', 'T', 'P'];
 
   return function (number, precision) {
@@ -90,7 +86,7 @@ angular.module('munchkins.filters').filter('numeric', function () {
 });
 'use strict';
 
-angular.module('munchkins.services').service('Actions', ["Buildings", "Crafting", "Resources", "Tribe", function (Buildings, Crafting, Resources, Tribe) {
+angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resources", "Tribe", function (Buildings, Crafting, Resources, Tribe) {
   var unlockAll = function unlockAll() {
     var unlockOne = function unlockOne(item) {
       if (item.locked) {
@@ -202,13 +198,13 @@ angular.module('munchkins.services').service('Actions', ["Buildings", "Crafting"
 }]);
 'use strict';
 
-angular.module('munchkins.controllers').service('Buildings', function () {
+angular.module('munchkins').service('Buildings', function () {
   var buildings = {
     meadow: {
       name: 'Meadow',
       description: 'A naturally growing field of flowers',
       locked: true,
-      increase: 1.1,
+      increase: 1.11,
       value: { current: 0, max: 0, level: 0 },
       requires: {
         resources: {
@@ -225,7 +221,7 @@ angular.module('munchkins.controllers').service('Buildings', function () {
       name: 'Shelter',
       description: 'A basic shelter made from flower stems',
       locked: true,
-      increase: 1.1,
+      increase: 1.11,
       value: { current: 0, max: 0, level: 0 },
       requires: {
         resources: {
@@ -234,6 +230,23 @@ angular.module('munchkins.controllers').service('Buildings', function () {
       },
       provides: {
         tribe: 1
+      }
+    },
+    quarry: {
+      name: 'Rock Quarry',
+      description: 'An area where rocks can be harvested',
+      locked: true,
+      increase: 1.11,
+      value: { current: 0, max: 0, level: 0 },
+      requires: {
+        rescources: {
+          rocks: { value: 50, rate: 0 }
+        }
+      },
+      provides: {
+        resources: {
+          rocks: { value: 0, rate: 0.01 }
+        }
       }
     }
   };
@@ -273,7 +286,7 @@ angular.module('munchkins.controllers').service('Buildings', function () {
 });
 'use strict';
 
-angular.module('munchkins.controllers').service('Crafting', function () {
+angular.module('munchkins').service('Crafting', function () {
   var crafting = {
     collect: {
       name: 'Collect Flowers',
@@ -306,6 +319,22 @@ angular.module('munchkins.controllers').service('Crafting', function () {
           petals: { value: 75, rate: 0 }
         }
       }
+    },
+    press: {
+      name: 'Press Petals',
+      description: 'Process petals into paper',
+      locked: true,
+      value: { current: 0, max: 0, level: 0 },
+      requires: {
+        resources: {
+          petals: { value: 1000, rate: 0 }
+        }
+      },
+      provides: {
+        resources: {
+          paper: { value: 1, rate: 0 }
+        }
+      }
     }
   };
 
@@ -336,7 +365,7 @@ angular.module('munchkins.controllers').service('Crafting', function () {
 });
 'use strict';
 
-angular.module('munchkins.controllers').service('Game', ["$interval", "Actions", "Buildings", "Crafting", "Defaults", "Resources", "Tribe", function ($interval, Actions, Buildings, Crafting, Defaults, Resources, Tribe) {
+angular.module('munchkins').service('Game', ["$interval", "Actions", "Buildings", "Crafting", "Defaults", "Resources", "Tribe", function ($interval, Actions, Buildings, Crafting, Defaults, Resources, Tribe) {
   var game = {
     ticks: 0,
     calendar: {
@@ -420,7 +449,7 @@ angular.module('munchkins.controllers').service('Game', ["$interval", "Actions",
 }]);
 'use strict';
 
-angular.module('munchkins.services').service('Resources', function () {
+angular.module('munchkins').service('Resources', function () {
   var resources = {
     flowers: {
       name: 'Flowers',
@@ -437,6 +466,18 @@ angular.module('munchkins.services').service('Resources', function () {
     petals: {
       name: 'Petals',
       description: 'Flower petals are a decoration with various uses',
+      value: { current: 0, limit: 0 },
+      rate: 0
+    },
+    paper: {
+      name: 'Paper',
+      description: 'Petal paper',
+      value: { current: 0, limit: 0 },
+      rate: 0
+    },
+    rocks: {
+      name: 'Rocks',
+      description: 'Rocks are a by-product of farming',
       value: { current: 0, limit: 0 },
       rate: 0
     }
@@ -466,7 +507,7 @@ angular.module('munchkins.services').service('Resources', function () {
 });
 'use strict';
 
-angular.module('munchkins.services').service('Tribe', function () {
+angular.module('munchkins').service('Tribe', function () {
   var tribe = {
     free: 0,
     types: {
@@ -483,7 +524,8 @@ angular.module('munchkins.services').service('Tribe', function () {
         },
         provides: {
           resources: {
-            flowers: { value: 0, rate: 0.01, hyper: true }
+            flowers: { value: 0, rate: 0.01, hyper: true },
+            rocks: { value: 0, rate: 0.001, hyper: true }
           }
         }
       }
