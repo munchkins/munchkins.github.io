@@ -7,7 +7,7 @@ describe('Exposed Services', function() {
     it('has all expected resources', inject(function($injector) {
       const res = $injector.get(source);
       _.forEach(exp, function(b, k) {
-        expect(res.get(k) || `${k}`).to.be.ok;
+        expect(res.get(k) ? true : `${k}`).to.be.true;
       });
     }));
 

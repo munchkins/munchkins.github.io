@@ -9,7 +9,7 @@ var concat = require('gulp-concat');
 var newer = require('gulp-newer');
 var annotate = require('gulp-ng-annotate');
 var jade = require('gulp-jade');
-var karma = require('gulp-karma');
+var karma = require('karma');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
@@ -82,14 +82,11 @@ gulp.task('bower', function() {
   return bower();
 });
 
-gulp.task('test', ['bower'], function() {
-  return gulp
-    .src([])
-    .pipe(karma({
-      configFile: 'karma.conf.js',
-      action: 'run'
-    }))
-    .on('error', errcb);
+gulp.task('test', ['bower'], function(done) {
+  new karma.Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
 });
 
 gulp.task('default', [

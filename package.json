@@ -30,7 +30,6 @@
     "gulp-if": "^1.2.5",
     "gulp-ignore": "^1.2.1",
     "gulp-jade": "^1.1.0",
-    "gulp-karma": "0.0.4",
     "gulp-newer": "^0.5.1",
     "gulp-ng-annotate": "^1.1.0",
     "gulp-sass": "^2.0.4",
