@@ -15,35 +15,72 @@ describe('All Exposed Structures', function() {
     });
   });
 
-  const testStructure = function(item) {
-    expect(item.name).to.be.ok;
-    expect(item.description).to.be.ok;
-    expect(item.requires).to.be.ok;
-    expect(item.provides).to.be.ok;
+  describe('Resource Structure', function() {
+    const exp = { flowers: true, stems: true, petals: true, paper: true, rocks: true };
+
+    describe('all expected resources', function() {
+      _.forEach(exp, function(b, k) {
+        it(`${k} is a resource`, function() {
+          expect(Resources.get(k)).to.be.ok;
+        });
+      });
+    });
+
+    it('no additional resources', function() {
+      _.forEach(Resources.keys(), function(k) {
+        it(`${k} is an expected resource`, function() {
+          expect(exp[k]).to.be.true;
+        });
+      });
+    });
+
+    describe('valid resources', function() {
+      _.forEach(exp, function(b, k) {
+        it(`${k} has valid info`, function() {
+          const res = Resources.get(k);
+          expect(res.name).to.be.ok;
+          expect(res.description).to.be.ok;
+          expect(res.value).to.be.ok;
+          expect(res.value.current).to.be.at.least(0);
+          expect(res.value.limit).to.be.at.least(0);
+          expect(res.rate).to.be.at.least(0);
+        });
+      });
+    });
+  });
+
+  const testStructure = function(res) {
+    expect(res.name).to.be.ok;
+    expect(res.description).to.be.ok;
+    expect(res.requires).to.be.ok;
+    expect(res.provides).to.be.ok;
   };
 
-  const testResource = function(item) {
-    expect(item.name).to.be.ok;
-    expect(item.description).to.be.ok;
-    expect(item.value).to.be.ok;
-    expect(item.value.current).to.be.at.least(0);
-    expect(item.value.limit).to.be.at.least(0);
-    expect(item.rate).to.be.at.least(0);
-  };
+  describe('Building Structure', function() {
+    const exp = { meadow: true, shelter: true, quarry: true };
 
-  it('Has Correct Resource Structure', function() {
-    _.forEach(Resources.all(), testResource);
-  });
+    describe('all expected resources', function() {
+      _.forEach(exp, function(b, k) {
+        it(`${k} is a building`, function() {
+          expect(Buildings.get(k)).to.be.ok;
+        });
+      });
+    });
 
-  it('Has Correct Building Structure', function() {
-    _.forEach(Buildings.all(), testStructure);
-  });
+    it('no additional resources', function() {
+      _.forEach(Buildings.keys(), function(k) {
+        it(`${k} is an expected building`, function() {
+          expect(exp[k]).to.be.true;
+        });
+      });
+    });
 
-  it('Has Correct Crafting Structure', function() {
-    _.forEach(Crafting.all(), testStructure);
-  });
-
-  it('Has Correct Tribe Structure', function() {
-    _.forEach(Tribe.all(), testStructure);
+    describe('valid buildings', function() {
+      _.forEach(exp, function(b, k) {
+        it(`${k} has valid info`, function() {
+          testStructure(Buildings.get(k));
+        });
+      });
+    });
   });
 });

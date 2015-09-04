@@ -264,6 +264,10 @@ angular.module('munchkins').service('Buildings', function () {
     return _.filter(buildings, {});
   };
 
+  this.keys = function () {
+    return Object.keys(buildings);
+  };
+
   this.get = function (key) {
     return buildings[key];
   };
@@ -486,6 +490,10 @@ angular.module('munchkins').service('Resources', function () {
 
   this.all = function () {
     return _.filter(resources, {});
+  };
+
+  this.keys = function () {
+    return Object.keys(resources);
   };
 
   this.get = function (key) {

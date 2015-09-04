@@ -31,11 +31,16 @@ angular
         description: 'Rocks are a by-product of farming',
         value: { current: 0, limit: 0 },
         rate: 0
-      }
+      },
+      test: {}
     };
 
     this.all = function() {
       return _.filter(resources, {});
+    };
+
+    this.keys = function() {
+      return Object.keys(resources);
     };
 
     this.get = function(key) {

@@ -65,6 +65,10 @@ angular
       return _.filter(buildings, {});
     };
 
+    this.keys = function() {
+      return Object.keys(buildings);
+    };
+
     this.get = function(key) {
       return buildings[key];
     };
