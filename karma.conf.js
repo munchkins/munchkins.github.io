@@ -19,6 +19,7 @@ module.exports = function(config) {
     plugins: [
       'karma-babel-preprocessor',
       'karma-mocha',
+      'karma-mocha-reporter',
       'karma-phantomjs-launcher',
       'karma-chai-plugins'
     ],
@@ -32,7 +33,7 @@ module.exports = function(config) {
     ],
 
     reporters: [
-      'dots'
+      'mocha'
     ],
 
     browsers: [
