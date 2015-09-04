@@ -29,7 +29,7 @@ angular
     };
 
     const priceMultiplier = function(item) {
-      return Math.pow(item.increase || 1, item.value.current);
+      return Math.pow(item.increase, item.value.current);
     };
 
     this.isBuyable = function(item) {

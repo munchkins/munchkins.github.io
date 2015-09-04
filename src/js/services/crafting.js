@@ -6,6 +6,7 @@ angular
         name: 'Collect Flowers',
         description: 'Flowers are the staple of the Munchkin diet, collect them',
         locked: false,
+        increase: 1,
         value: { current: 0, max: 0, level: 0 },
         requires: {},
         provides: {
@@ -18,6 +19,7 @@ angular
         name: 'Process Flowers',
         description: 'Processes flowers into petals and stems',
         locked: true,
+        increase: 1,
         value: { current: 0, max: 0, level: 0 },
         requires: {
           buildings: {
@@ -38,6 +40,7 @@ angular
         name: 'Press Petals',
         description: 'Process petals into paper',
         locked: true,
+        increase: 1,
         value: { current: 0, max: 0, level: 0 },
         requires: {
           resources: {
@@ -54,6 +57,10 @@ angular
 
     this.all = function() {
       return _.filter(crafting, {});
+    };
+
+    this.keys = function() {
+      return Object.keys(crafting);
     };
 
     this.get = function(key) {

@@ -117,7 +117,7 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
   };
 
   var priceMultiplier = function priceMultiplier(item) {
-    return Math.pow(item.increase || 1, item.value.current);
+    return Math.pow(item.increase, item.value.current);
   };
 
   this.isBuyable = function (item) {
@@ -297,6 +297,7 @@ angular.module('munchkins').service('Crafting', function () {
       name: 'Collect Flowers',
       description: 'Flowers are the staple of the Munchkin diet, collect them',
       locked: false,
+      increase: 1,
       value: { current: 0, max: 0, level: 0 },
       requires: {},
       provides: {
@@ -309,6 +310,7 @@ angular.module('munchkins').service('Crafting', function () {
       name: 'Process Flowers',
       description: 'Processes flowers into petals and stems',
       locked: true,
+      increase: 1,
       value: { current: 0, max: 0, level: 0 },
       requires: {
         buildings: {
@@ -329,6 +331,7 @@ angular.module('munchkins').service('Crafting', function () {
       name: 'Press Petals',
       description: 'Process petals into paper',
       locked: true,
+      increase: 1,
       value: { current: 0, max: 0, level: 0 },
       requires: {
         resources: {
@@ -345,6 +348,10 @@ angular.module('munchkins').service('Crafting', function () {
 
   this.all = function () {
     return _.filter(crafting, {});
+  };
+
+  this.keys = function () {
+    return Object.keys(crafting);
   };
 
   this.get = function (key) {
