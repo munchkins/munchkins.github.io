@@ -31,27 +31,27 @@ describe('Numeric Filter', function() {
     expect(filter(0.59)).to.eq('0.59');
   });
 
-  it('returns K', function() {
+  it('returns K values', function() {
     expect(filter(1100)).to.eq('1.10K');
     expect(filter(9990)).to.eq('9.99K');
   });
 
-  it('returns M', function() {
+  it('returns M values', function() {
     expect(filter(1100000)).to.eq('1.10M');
     expect(filter(9990000)).to.eq('9.99M');
   });
 
-  it('returns G', function() {
+  it('returns G values', function() {
     expect(filter(1100000000)).to.eq('1.10G');
     expect(filter(9990000000)).to.eq('9.99G');
   });
 
-  it('returns T', function() {
+  it('returns T values', function() {
     expect(filter(1100000000000)).to.eq('1.10T');
     expect(filter(9990000000000)).to.eq('9.99T');
   });
 
-  it('returns P', function() {
+  it('returns P values', function() {
     expect(filter(1100000000000000)).to.eq('1.10P');
     expect(filter(9990000000000000)).to.eq('9.99P');
   });
