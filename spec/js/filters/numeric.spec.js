@@ -4,8 +4,8 @@ describe('Numeric Filter', function() {
   beforeEach(function() {
     module('munchkins');
 
-    inject(function(_$filter_) {
-      filter = _$filter_('numeric');
+    inject(function($filter) {
+      filter = $filter('numeric');
     });
   });
 
@@ -18,7 +18,7 @@ describe('Numeric Filter', function() {
   });
 
   it('returns values with default precision', function() {
-    expect(filter(100)).to.eq('100.00');
+    expect(filter(123.456)).to.eq('123.46');
   });
 
   it('returns arbitrary precision', function() {
