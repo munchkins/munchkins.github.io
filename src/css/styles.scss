@@ -21,8 +21,8 @@ a {
   color: $link-color;
   text-decoration: none;
 
-  &.active {
-    color: $link-active;
+  &.active, &:hover {
+    text-shadow: 0px 0px 0.5em #99f;
   }
 }
 
@@ -78,7 +78,6 @@ a {
 
 .action-button {
   border: 1px solid $primary-color;
-  cursor: pointer;
   text-align: center;
   padding: 0.25em;
   border-radius: 4px;
@@ -87,6 +86,12 @@ a {
   &.inactive {
     color: $inactive-color;
     border: 1px solid $inactive-color;
+
+    a, a:hover {
+      color: $inactive-color;
+      cursor: default;
+      text-shadow: none;
+    }
   }
 
   .detail {

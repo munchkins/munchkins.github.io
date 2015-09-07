@@ -4,7 +4,7 @@ html{box-sizing:border-box}
 *,::after,::before{box-sizing:inherit}
 body{color:#333;font-family:"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;font-size:90%}
 a{margin-right:.5em;cursor:pointer;color:#33f;text-decoration:none}
-a.active{color:#339}
+a.active,a:hover{text-shadow:0 0 .5em #99f}
 .container{margin-right:2.35765%}
 .container:last-child{margin-right:0}
 .topbar{margin-right:2.35765%}
@@ -30,8 +30,9 @@ a.active{color:#339}
 .action-panel .building-panel:last-child{margin-right:0}
 .action-panel .building-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%}
 .action-panel .building-panel .action-button:last-child{margin-right:0}
-.action-button{border:1px solid #333;cursor:pointer;text-align:center;padding:.25em;border-radius:4px;margin:.15em .25em}
+.action-button{border:1px solid #333;text-align:center;padding:.25em;border-radius:4px;margin:.15em .25em}
 .action-button.inactive{color:#999;border:1px solid #999}
+.action-button.inactive a,.action-button.inactive a:hover{color:#999;cursor:default;text-shadow:none}
 .action-button .detail{font-size:70%;text-align:right}
 .action-button .detail .invalid{color:#933}
 table.empty{border:0}

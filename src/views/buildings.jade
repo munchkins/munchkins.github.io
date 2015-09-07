@@ -1,7 +1,7 @@
 div(ng-controller="Buildings as bldc")
   div(ng-repeat="building in bldc.buildings")
-    .action-button(ng-if="!building.locked" ng-click="bldc.buy(building)" ng-class="{ 'inactive': !bldc.isBuyable(building) }")
-      div {{building.name}} ({{building.value.current | numeric:0}})
+    .action-button(ng-if="!building.locked" ng-class="{ 'inactive': !bldc.isBuyable(building) }")
+      a(ng-click="bldc.buy(building)") {{building.name}} ({{building.value.current | numeric:0}})
       div.detail
         span(ng-repeat="price in bldc.prices(building)" ng-class="{ 'invalid': !price.affordable }")
           span(ng-if="price.$index") ,&nbsp;
