@@ -24,7 +24,7 @@ angular
 
       const resources = Resources.all();
       _.forEach(resources, function(resource) {
-        resource.value.current += resource.rate;
+        resource.value.current = Math.max(0, resource.rate + resource.value.current);
         if (resource.value.limit) {
           resource.value.current = Math.min(resource.value.current, resource.value.limit);
         }

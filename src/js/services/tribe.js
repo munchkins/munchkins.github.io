@@ -20,6 +20,9 @@ angular
               flowers: { value: 0, rate: 0.01, hyper: true },
               rocks: { value: 0, rate: 0.001, hyper: true }
             }
+          },
+          consumes: {
+            resources: {}
           }
         },
         tooler: {
@@ -35,8 +38,12 @@ angular
           },
           provides: {
             resources: {
-              tools: { value: 0, rate: 0.05, hyper: true },
-              rocks: { value: 0, rate: -0.005, hyper: false }
+              tools: { value: 0, rate: 0.05, hyper: true }
+            }
+          },
+          consumes: {
+            resources: {
+              rocks: { value: 0, rate: 0.5, hyper: false }
             }
           }
         }
