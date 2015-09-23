@@ -21,6 +21,24 @@ angular
               rocks: { value: 0, rate: 0.001, hyper: true }
             }
           }
+        },
+        tooler: {
+          name: 'Tool Maker',
+          description: 'Makes rock tools',
+          locked: true,
+          value: { current: 0 },
+          requires: {
+            buildings: {
+              quarry: { value: 1 }
+            },
+            tribe: 1
+          },
+          provides: {
+            resources: {
+              tools: { value: 0, rate: 0.05, hyper: true },
+              rocks: { value: 0, rate: -0.005, hyper: false }
+            }
+          }
         }
       }
     };
