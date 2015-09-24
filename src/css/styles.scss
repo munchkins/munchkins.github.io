@@ -12,6 +12,7 @@ $link-color: #33f;
 $link-active: #339;
 $hint-bg: rgba(51, 51, 255, 0.85);
 $hint-fg: #eee;
+$hint-invalid: #f99;
 
 body {
   color: $primary-color;
@@ -153,7 +154,8 @@ a {
         font-weight: bold;
       }
 
-      .content {
+      .invalid {
+        color: $hint-invalid;
       }
     }
   }
