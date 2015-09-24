@@ -606,7 +606,7 @@ angular.module('munchkins').service('Tribe', function () {
         provides: {
           resources: {
             tools: { value: 0, rate: 0.0125, hyper: true },
-            rocks: { value: 0, rate: -0.125 },
+            rocks: { value: 0, rate: -0.025 },
             food: { value: 0, rate: -0.001 }
           }
         }
