@@ -66,6 +66,7 @@ angular
         },
         provides: {
           resources: {
+            rocks: { value: 5, rate: 0 },
             food: { value: 25, rate: 0 }
           }
         }

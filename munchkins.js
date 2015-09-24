@@ -9,23 +9,6 @@ angular.module('munchkins', ['ngRoute']).constant('Defaults', {
 }]);
 'use strict';
 
-angular.module('munchkins').filter('numeric', function () {
-  var units = ['', 'K', 'M', 'G', 'T', 'P'];
-
-  return function (number, precision) {
-    var n = Math.abs(number) || 0;
-    var u = Math.floor(Math.log(n) / Math.log(1000));
-
-    var p = precision || (precision === 0 ? 0 : 2);
-    if (p === 0 && n >= 1000) {
-      p = 2;
-    }
-
-    return n < 1 ? n.toFixed(p) : (n / Math.pow(1000, Math.floor(u))).toFixed(p) + units[u];
-  };
-});
-'use strict';
-
 angular.module('munchkins').controller('Buildings', ["Actions", "Buildings", function (Actions, Buildings) {
   this.buildings = Buildings.all();
 
@@ -84,6 +67,23 @@ angular.module('munchkins').controller('Tribe', ["Actions", "Tribe", function (A
   this.isBuyable = Actions.isBuyable;
   this.prices = Actions.prices;
 }]);
+'use strict';
+
+angular.module('munchkins').filter('numeric', function () {
+  var units = ['', 'K', 'M', 'G', 'T', 'P'];
+
+  return function (number, precision) {
+    var n = Math.abs(number) || 0;
+    var u = Math.floor(Math.log(n) / Math.log(1000));
+
+    var p = precision || (precision === 0 ? 0 : 2);
+    if (p === 0 && n >= 1000) {
+      p = 2;
+    }
+
+    return n < 1 ? n.toFixed(p) : (n / Math.pow(1000, Math.floor(u))).toFixed(p) + units[u];
+  };
+});
 'use strict';
 
 angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resources", "Tribe", function (Buildings, Crafting, Resources, Tribe) {
@@ -373,6 +373,7 @@ angular.module('munchkins').service('Crafting', function () {
       },
       provides: {
         resources: {
+          rocks: { value: 5, rate: 0 },
           food: { value: 25, rate: 0 }
         }
       }
