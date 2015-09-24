@@ -1,10 +1,3 @@
 div(ng-controller="Buildings as bldc")
   div(ng-repeat="building in bldc.buildings")
-    .action-button(ng-if="!building.locked" ng-class="{ 'inactive': !bldc.isBuyable(building) }" ng-click="bldc.buy(building)")
-      a {{building.name}} ({{building.value.current | numeric:0}})
-      div.detail
-        span(ng-repeat="price in bldc.prices(building)" ng-class="{ 'invalid': !price.affordable }")
-          span(ng-if="$index") ,&nbsp;
-          span {{price.name}}@{{price.buynow | numeric}}
-        span &nbsp;
-      div.hint {{building.description}}
+    action-button(ctrl="bldc" item="building")

@@ -4,6 +4,11 @@ angular
     this.buildings = Buildings.all();
 
     this.buy = Actions.buy;
+
     this.isBuyable = Actions.isBuyable;
-    this.prices = Actions.prices;
+    this.hasRequires = Actions.hasRequires;
+    this.hasProvides = Actions.hasProvides;
+
+    this.requires = Actions.requires;
+    this.provides = Actions.provides;
   });

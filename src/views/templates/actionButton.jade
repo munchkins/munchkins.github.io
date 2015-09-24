@@ -1,0 +1,24 @@
+.action-button(ng-if="!item.locked" ng-class="{ 'inactive': !ctrl.isBuyable(item) }" ng-click="ctrl.buy(item)")
+  a {{item.name}} ({{item.value.current | numeric:0}})
+  
+  .detail
+    span(ng-repeat="require in ctrl.requires(item)" ng-class="{ 'invalid': !require.affordable }")
+      span(ng-if="$index") ,&nbsp;
+      span {{require.name}}@{{require.buynow | numeric}}
+    span &nbsp;
+  
+  .hint
+    .section.center
+      .content {{item.description}}
+    
+    .section(ng-if="ctrl.hasRequires(item)")
+      .heading Requires
+      .content(ng-repeat="require in ctrl.requires(item)")
+        span {{require.name}} @ {{require.buynow | numeric}}
+        
+    .section(ng-if="ctrl.hasProvides(item)")
+      .heading Provides
+      .content(ng-repeat="provide in ctrl.provides(item)") 
+        span(ng-if="provide.value") {{provide.value}} x {{provide.name}}
+        span(ng-if="provide.rate") {{provide.rate | numeric}}/tick x {{provide.name}}
+  

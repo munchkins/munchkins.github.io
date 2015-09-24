@@ -70,7 +70,35 @@ angular
       return true;
     };
 
-    this.prices = function(item) {
+    this.hasRequires = function(item) {
+      let has = false;
+
+      _.forEach(item.requires.resources, () => {
+        has = true;
+      });
+
+      return has;
+    };
+
+    this.hasProvides = function(item) {
+      let has = false;
+
+      _.forEach(item.provides.resources, () => {
+        has = true;
+      });
+
+      return has;
+    };
+
+    this.provides = function(item) {
+      _.forEach(item.provides.resources, function(r, k) {
+        r.name = Resources.get(k).name;
+      });
+
+      return _.filter(item.provides.resources, {});
+    };
+
+    this.requires = function(item) {
       const incr = priceMultiplier(item);
 
       _.forEach(item.requires.resources, function(r, k) {

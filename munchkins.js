@@ -13,8 +13,13 @@ angular.module('munchkins').controller('Buildings', ["Actions", "Buildings", fun
   this.buildings = Buildings.all();
 
   this.buy = Actions.buy;
+
   this.isBuyable = Actions.isBuyable;
-  this.prices = Actions.prices;
+  this.hasRequires = Actions.hasRequires;
+  this.hasProvides = Actions.hasProvides;
+
+  this.requires = Actions.requires;
+  this.provides = Actions.provides;
 }]);
 'use strict';
 
@@ -22,8 +27,13 @@ angular.module('munchkins').controller('Crafting', ["Actions", "Crafting", funct
   this.crafting = Crafting.all();
 
   this.buy = Actions.buy;
+
   this.isBuyable = Actions.isBuyable;
-  this.prices = Actions.prices;
+  this.hasRequires = Actions.hasRequires;
+  this.hasProvides = Actions.hasProvides;
+
+  this.requires = Actions.requires;
+  this.provides = Actions.provides;
 }]);
 'use strict';
 
@@ -64,9 +74,26 @@ angular.module('munchkins').controller('Tribe', ["Actions", "Tribe", function (A
   this.types = Tribe.all();
 
   this.buy = Actions.buy;
+
   this.isBuyable = Actions.isBuyable;
-  this.prices = Actions.prices;
+  this.hasRequires = Actions.hasRequires;
+  this.hasProvides = Actions.hasProvides;
+
+  this.requires = Actions.requires;
+  this.provides = Actions.provides;
 }]);
+'use strict';
+
+angular.module('munchkins').directive('actionButton', function () {
+  return {
+    restrict: 'E',
+    scope: {
+      ctrl: '=',
+      item: '='
+    },
+    templateUrl: 'views/templates/actionButton.html'
+  };
+});
 'use strict';
 
 angular.module('munchkins').filter('numeric', function () {
@@ -158,7 +185,35 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
     return true;
   };
 
-  this.prices = function (item) {
+  this.hasRequires = function (item) {
+    var has = false;
+
+    _.forEach(item.requires.resources, function () {
+      has = true;
+    });
+
+    return has;
+  };
+
+  this.hasProvides = function (item) {
+    var has = false;
+
+    _.forEach(item.provides.resources, function () {
+      has = true;
+    });
+
+    return has;
+  };
+
+  this.provides = function (item) {
+    _.forEach(item.provides.resources, function (r, k) {
+      r.name = Resources.get(k).name;
+    });
+
+    return _.filter(item.provides.resources, {});
+  };
+
+  this.requires = function (item) {
     var incr = priceMultiplier(item);
 
     _.forEach(item.requires.resources, function (r, k) {

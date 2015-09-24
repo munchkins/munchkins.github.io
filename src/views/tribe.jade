@@ -1,7 +1,4 @@
 div(ng-controller="Tribe as tribe")
   div(ng-repeat="type in tribe.types")
-    .action-button(ng-if="!type.locked" ng-class="{ 'inactive': !tribe.isBuyable(type) || !tribe.free() }", ng-click="tribe.free() && tribe.buy(type)")
-      a {{type.name}} ({{type.value.current | numeric:0}})
-      div.detail
-        span &nbsp;
-      div.hint {{type.description}}
+    action-button(ctrl="tribe" item="type")
+    
