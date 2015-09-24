@@ -102,7 +102,7 @@ describe('Exposed Services', function() {
 
   describe('Building Structure', function() {
     testStructure('Buildings', {
-      meadow: true, shelter: true, quarry: true
+      meadow: true, shelter: true, quarry: true, hut: true
     });
   });
 

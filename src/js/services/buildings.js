@@ -15,7 +15,8 @@ angular
         },
         provides: {
           resources: {
-            flowers: { value: 0, rate: 0.01 }
+            flowers: { value: 0, rate: 0.01 },
+            rocks: { value: 0, rate: 0.001 }
           }
         }
       },
@@ -49,6 +50,22 @@ angular
           resources: {
             rocks: { value: 0, rate: 0.01 }
           }
+        }
+      },
+      hut: {
+        name: 'Hut',
+        description: 'An shelter for 2 tribesmen',
+        locked: true,
+        increase: 1.125,
+        value: { current: 0, max: 0, level: 0 },
+        requires: {
+          resources: {
+            rocks: { value: 50, rate: 0 },
+            stems: { value: 150, rate: 0 }
+          }
+        },
+        provides: {
+          tribe: 2
         }
       }
     };
