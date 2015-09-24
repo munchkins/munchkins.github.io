@@ -4,7 +4,7 @@ angular
     const units = ['', 'K', 'M', 'G', 'T', 'P'];
 
     return function(number, precision) {
-      const n = number || 0;
+      const n = Math.abs(number) || 0;
       const u = Math.floor(Math.log(n) / Math.log(1000));
 
       let p = precision || ((precision === 0) ? 0 : 2);

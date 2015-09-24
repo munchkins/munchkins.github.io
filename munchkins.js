@@ -9,71 +9,11 @@ angular.module('munchkins', ['ngRoute']).constant('Defaults', {
 }]);
 'use strict';
 
-angular.module('munchkins').controller('Buildings', ["Actions", "Buildings", function (Actions, Buildings) {
-  this.buildings = Buildings.all();
-
-  this.buy = Actions.buy;
-  this.isBuyable = Actions.isBuyable;
-  this.prices = Actions.prices;
-}]);
-'use strict';
-
-angular.module('munchkins').controller('Crafting', ["Actions", "Crafting", function (Actions, Crafting) {
-  this.crafting = Crafting.all();
-
-  this.buy = Actions.buy;
-  this.isBuyable = Actions.isBuyable;
-  this.prices = Actions.prices;
-}]);
-'use strict';
-
-angular.module('munchkins').controller('Game', function () {});
-'use strict';
-
-angular.module('munchkins').controller('Log', function () {});
-'use strict';
-
-angular.module('munchkins').controller('Resources', ["Resources", function (Resources) {
-  this.resources = Resources.all();
-}]);
-'use strict';
-
-angular.module('munchkins').controller('Subbar', ["$location", "Buildings", "Tribe", function ($location, Buildings, Tribe) {
-  this.totalBuildings = Buildings.activeTotal;
-  this.totalTribe = Tribe.total;
-
-  this.allocTribe = function () {
-    return Tribe.total() - Tribe.free();
-  };
-
-  this.isOn = function (path) {
-    return $location.path() === path;
-  };
-}]);
-'use strict';
-
-angular.module('munchkins').controller('Topbar', ["Game", function (Game) {
-  this.save = Game.save;
-  this.calendar = Game.calendar;
-}]);
-'use strict';
-
-angular.module('munchkins').controller('Tribe', ["Actions", "Tribe", function (Actions, Tribe) {
-  this.total = Tribe.total;
-  this.free = Tribe.free;
-  this.types = Tribe.all();
-
-  this.buy = Actions.buy;
-  this.isBuyable = Actions.isBuyable;
-  this.prices = Actions.prices;
-}]);
-'use strict';
-
 angular.module('munchkins').filter('numeric', function () {
   var units = ['', 'K', 'M', 'G', 'T', 'P'];
 
   return function (number, precision) {
-    var n = number || 0;
+    var n = Math.abs(number) || 0;
     var u = Math.floor(Math.log(n) / Math.log(1000));
 
     var p = precision || (precision === 0 ? 0 : 2);
@@ -636,4 +576,64 @@ angular.module('munchkins').service('Tribe', function () {
     });
   };
 });
+'use strict';
+
+angular.module('munchkins').controller('Buildings', ["Actions", "Buildings", function (Actions, Buildings) {
+  this.buildings = Buildings.all();
+
+  this.buy = Actions.buy;
+  this.isBuyable = Actions.isBuyable;
+  this.prices = Actions.prices;
+}]);
+'use strict';
+
+angular.module('munchkins').controller('Crafting', ["Actions", "Crafting", function (Actions, Crafting) {
+  this.crafting = Crafting.all();
+
+  this.buy = Actions.buy;
+  this.isBuyable = Actions.isBuyable;
+  this.prices = Actions.prices;
+}]);
+'use strict';
+
+angular.module('munchkins').controller('Game', function () {});
+'use strict';
+
+angular.module('munchkins').controller('Log', function () {});
+'use strict';
+
+angular.module('munchkins').controller('Resources', ["Resources", function (Resources) {
+  this.resources = Resources.all();
+}]);
+'use strict';
+
+angular.module('munchkins').controller('Subbar', ["$location", "Buildings", "Tribe", function ($location, Buildings, Tribe) {
+  this.totalBuildings = Buildings.activeTotal;
+  this.totalTribe = Tribe.total;
+
+  this.allocTribe = function () {
+    return Tribe.total() - Tribe.free();
+  };
+
+  this.isOn = function (path) {
+    return $location.path() === path;
+  };
+}]);
+'use strict';
+
+angular.module('munchkins').controller('Topbar', ["Game", function (Game) {
+  this.save = Game.save;
+  this.calendar = Game.calendar;
+}]);
+'use strict';
+
+angular.module('munchkins').controller('Tribe', ["Actions", "Tribe", function (Actions, Tribe) {
+  this.total = Tribe.total;
+  this.free = Tribe.free;
+  this.types = Tribe.all();
+
+  this.buy = Actions.buy;
+  this.isBuyable = Actions.isBuyable;
+  this.prices = Actions.prices;
+}]);
 //# sourceMappingURL=.munchkins.js.map

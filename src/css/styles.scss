@@ -5,7 +5,7 @@
 $primary-color: #333;
 $sub-color: #666;
 $inactive-color: #999;
-$error-color: #933;
+$error-color: #c33;
 $link-color: #33f;
 $link-active: #339;
 
@@ -24,6 +24,10 @@ a {
   &.active, &:hover {
     text-shadow: 0px 0px 0.5em #99f;
   }
+}
+
+.invalid {
+  color: $error-color;
 }
 
 .container {
@@ -95,12 +99,9 @@ a {
   }
 
   .detail {
+    margin-top: 0.25em;
     font-size: 70%;
     text-align: right;
-
-    .invalid {
-      color: $error-color;
-    }
   }
 }
 

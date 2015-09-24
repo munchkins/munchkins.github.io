@@ -6,5 +6,5 @@ div(ng-controller="Resources as resc")
           span {{resource.name}}:
         td.right 
           span {{resource.value.current | numeric}}
-        td.right
-          span(ng-if="resource.rate > 0") ({{resource.rate | numeric}}/tick)
+        td.right(ng-class="{ 'invalid': resource.rate < 0 }")
+          span(ng-if="resource.rate != 0") ({{resource.rate | numeric}}/tick)
