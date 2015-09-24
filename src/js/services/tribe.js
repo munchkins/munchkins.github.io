@@ -6,7 +6,7 @@ angular
       types: {
         farmer: {
           name: 'Farmer',
-          description: 'A farmer that works the meadows for additional production',
+          description: 'A farmer works the meadows for additional production of producable resources',
           locked: true,
           value: { current: 0 },
           requires: {
@@ -25,7 +25,7 @@ angular
         },
         tooler: {
           name: 'Tool Maker',
-          description: 'Makes rock tools',
+          description: 'The tribe member creates rock tools for use in hunting, cooking and farming',
           locked: true,
           value: { current: 0 },
           requires: {

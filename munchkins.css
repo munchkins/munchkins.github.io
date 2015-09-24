@@ -31,9 +31,12 @@ a.active,a:hover{text-shadow:0 0 .5em #99f}
 .action-panel .building-panel:last-child{margin-right:0}
 .action-panel .building-panel .action-button{float:left;display:block;margin-right:2.35765%;width:48.82117%}
 .action-panel .building-panel .action-button:last-child{margin-right:0}
-.action-button{border:1px solid #333;text-align:center;padding:.25em;border-radius:4px;margin:.15em .25em}
+.action-button{border:1px solid #333;text-align:center;padding:.25em;border-radius:4px;margin:.15em .25em;position:relative}
+.action-button .detail{margin-top:.25em;font-size:70%;text-align:right}
+.action-button .hint{display:none;position:absolute;background:rgba(80,80,160,.95);color:#eee;border-radius:2px;padding:.5em;top:2.5em;left:5%;width:90%;font-size:70%;z-index:1}
 .action-button.inactive{color:#999;border:1px solid #999}
 .action-button.inactive a,.action-button.inactive a:hover{color:#999;cursor:default;text-shadow:none}
-.action-button .detail{margin-top:.25em;font-size:70%;text-align:right}
+.action-button:hover{background:rgba(120,120,255,.25)}
+.action-button:hover .hint{display:block}
 table.empty{border:0}
 td.right{text-align:right}

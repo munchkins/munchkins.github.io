@@ -17,7 +17,7 @@ angular
       },
       processing: {
         name: 'Process Flowers',
-        description: 'Processes flowers into petals and stems',
+        description: 'Processes and deconstructs flowers into petals and stems',
         locked: true,
         increase: 1,
         value: { current: 0, max: 0, level: 0 },
@@ -38,7 +38,7 @@ angular
       },
       press: {
         name: 'Press Petals',
-        description: 'Process petals into paper',
+        description: 'Process flower petals into petal paper',
         locked: true,
         increase: 1,
         value: { current: 0, max: 0, level: 0 },
@@ -55,7 +55,7 @@ angular
       },
       hunt: {
         name: 'Hunt & Gather',
-        description: 'Search for food',
+        description: 'Search for food, resources and items outside of the community',
         locked: true,
         increase: 1,
         value: { current: 0, max: 0, level: 0 },

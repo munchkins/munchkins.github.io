@@ -9,6 +9,23 @@ angular.module('munchkins', ['ngRoute']).constant('Defaults', {
 }]);
 'use strict';
 
+angular.module('munchkins').filter('numeric', function () {
+  var units = ['', 'K', 'M', 'G', 'T', 'P'];
+
+  return function (number, precision) {
+    var n = Math.abs(number) || 0;
+    var u = Math.floor(Math.log(n) / Math.log(1000));
+
+    var p = precision || (precision === 0 ? 0 : 2);
+    if (p === 0 && n >= 1000) {
+      p = 2;
+    }
+
+    return n < 1 ? n.toFixed(p) : (n / Math.pow(1000, Math.floor(u))).toFixed(p) + units[u];
+  };
+});
+'use strict';
+
 angular.module('munchkins').controller('Buildings', ["Actions", "Buildings", function (Actions, Buildings) {
   this.buildings = Buildings.all();
 
@@ -67,23 +84,6 @@ angular.module('munchkins').controller('Tribe', ["Actions", "Tribe", function (A
   this.isBuyable = Actions.isBuyable;
   this.prices = Actions.prices;
 }]);
-'use strict';
-
-angular.module('munchkins').filter('numeric', function () {
-  var units = ['', 'K', 'M', 'G', 'T', 'P'];
-
-  return function (number, precision) {
-    var n = Math.abs(number) || 0;
-    var u = Math.floor(Math.log(n) / Math.log(1000));
-
-    var p = precision || (precision === 0 ? 0 : 2);
-    if (p === 0 && n >= 1000) {
-      p = 2;
-    }
-
-    return n < 1 ? n.toFixed(p) : (n / Math.pow(1000, Math.floor(u))).toFixed(p) + units[u];
-  };
-});
 'use strict';
 
 angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resources", "Tribe", function (Buildings, Crafting, Resources, Tribe) {
@@ -202,7 +202,7 @@ angular.module('munchkins').service('Buildings', function () {
   var buildings = {
     meadow: {
       name: 'Meadow',
-      description: 'A naturally growing field of flowers',
+      description: 'A naturally growing field of flowers which can be harvested',
       locked: true,
       increase: 1.11,
       value: { current: 0, max: 0, level: 0 },
@@ -220,7 +220,7 @@ angular.module('munchkins').service('Buildings', function () {
     },
     shelter: {
       name: 'Shelter',
-      description: 'A basic shelter made from flower stems',
+      description: 'A basic shelter made from flower stems with space for one Munchkin',
       locked: true,
       increase: 1.11,
       value: { current: 0, max: 0, level: 0 },
@@ -235,7 +235,7 @@ angular.module('munchkins').service('Buildings', function () {
     },
     quarry: {
       name: 'Rock Quarry',
-      description: 'An area where rocks can be harvested',
+      description: 'An area where rocks can be harvested for use in buildings and tools',
       locked: true,
       increase: 1.11,
       value: { current: 0, max: 0, level: 0 },
@@ -252,7 +252,7 @@ angular.module('munchkins').service('Buildings', function () {
     },
     hut: {
       name: 'Hut',
-      description: 'An shelter for 2 tribesmen',
+      description: 'A rock and stem shelter that has space for two additional Munchkins',
       locked: true,
       increase: 1.125,
       value: { current: 0, max: 0, level: 0 },
@@ -324,7 +324,7 @@ angular.module('munchkins').service('Crafting', function () {
     },
     processing: {
       name: 'Process Flowers',
-      description: 'Processes flowers into petals and stems',
+      description: 'Processes and deconstructs flowers into petals and stems',
       locked: true,
       increase: 1,
       value: { current: 0, max: 0, level: 0 },
@@ -345,7 +345,7 @@ angular.module('munchkins').service('Crafting', function () {
     },
     press: {
       name: 'Press Petals',
-      description: 'Process petals into paper',
+      description: 'Process flower petals into petal paper',
       locked: true,
       increase: 1,
       value: { current: 0, max: 0, level: 0 },
@@ -362,7 +362,7 @@ angular.module('munchkins').service('Crafting', function () {
     },
     hunt: {
       name: 'Hunt & Gather',
-      description: 'Search for food',
+      description: 'Search for food, resources and items outside of the community',
       locked: true,
       increase: 1,
       value: { current: 0, max: 0, level: 0 },
@@ -498,31 +498,31 @@ angular.module('munchkins').service('Resources', function () {
   var resources = {
     flowers: {
       name: 'Flowers',
-      description: 'Flowers are the staple of the Munchkin diet',
+      description: 'Flowers are the staple of the Munchkin economy, diet and production',
       value: { current: 0, limit: 0 },
       rate: 0
     },
     stems: {
       name: 'Stems',
-      description: 'Flower stems act as a basic building block',
+      description: 'Flower stems act as a basic building block for light structures',
       value: { current: 0, limit: 0 },
       rate: 0
     },
     petals: {
       name: 'Petals',
-      description: 'Flower petals are a decoration with various uses',
+      description: 'Flower petals are a decoration with various uses in and around the house and community',
       value: { current: 0, limit: 0 },
       rate: 0
     },
     paper: {
       name: 'Paper',
-      description: 'Petal paper',
+      description: 'Petal paper are a fine resource',
       value: { current: 0, limit: 0 },
       rate: 0
     },
     rocks: {
       name: 'Rocks',
-      description: 'Rocks are a by-product of farming',
+      description: 'Rocks are a by-product of farming and produced by mining',
       value: { current: 0, limit: 0 },
       rate: 0
     },
@@ -574,7 +574,7 @@ angular.module('munchkins').service('Tribe', function () {
     types: {
       farmer: {
         name: 'Farmer',
-        description: 'A farmer that works the meadows for additional production',
+        description: 'A farmer works the meadows for additional production of producable resources',
         locked: true,
         value: { current: 0 },
         requires: {
@@ -593,7 +593,7 @@ angular.module('munchkins').service('Tribe', function () {
       },
       tooler: {
         name: 'Tool Maker',
-        description: 'Makes rock tools',
+        description: 'The tribe member creates rock tools for use in hunting, cooking and farming',
         locked: true,
         value: { current: 0 },
         requires: {

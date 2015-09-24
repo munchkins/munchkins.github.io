@@ -4,7 +4,7 @@ angular
     const buildings = {
       meadow: {
         name: 'Meadow',
-        description: 'A naturally growing field of flowers',
+        description: 'A naturally growing field of flowers which can be harvested',
         locked: true,
         increase: 1.11,
         value: { current: 0, max: 0, level: 0 },
@@ -22,7 +22,7 @@ angular
       },
       shelter: {
         name: 'Shelter',
-        description: 'A basic shelter made from flower stems',
+        description: 'A basic shelter made from flower stems with space for one Munchkin',
         locked: true,
         increase: 1.11,
         value: { current: 0, max: 0, level: 0 },
@@ -37,7 +37,7 @@ angular
       },
       quarry: {
         name: 'Rock Quarry',
-        description: 'An area where rocks can be harvested',
+        description: 'An area where rocks can be harvested for use in buildings and tools',
         locked: true,
         increase: 1.11,
         value: { current: 0, max: 0, level: 0 },
@@ -54,7 +54,7 @@ angular
       },
       hut: {
         name: 'Hut',
-        description: 'An shelter for 2 tribesmen',
+        description: 'A rock and stem shelter that has space for two additional Munchkins',
         locked: true,
         increase: 1.125,
         value: { current: 0, max: 0, level: 0 },

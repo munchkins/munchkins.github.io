@@ -4,3 +4,4 @@ div(ng-controller="Tribe as tribe")
       a(ng-click="tribe.free() && tribe.buy(type)") {{type.name}} ({{type.value.current | numeric:0}})
       div.detail
         span &nbsp;
+      div.hint {{type.description}}

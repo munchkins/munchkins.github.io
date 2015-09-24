@@ -5,9 +5,12 @@
 $primary-color: #333;
 $sub-color: #666;
 $inactive-color: #999;
+$hover-bg: rgba(120, 120, 255, 0.25);
 $error-color: #c33;
 $link-color: #33f;
 $link-active: #339;
+$hint-bg: rgba(80, 80, 160, 0.95);
+$hint-fg: #eee;
 
 body {
   color: $primary-color;
@@ -86,6 +89,28 @@ a {
   padding: 0.25em;
   border-radius: 4px;
   margin: 0.15em 0.25em;
+  position: relative;
+
+  .detail {
+    margin-top: 0.25em;
+    font-size: 70%;
+    text-align: right;
+  }
+
+  .hint {
+    display: none;
+    position: absolute;
+    top: 30px;
+    background: $hint-bg;
+    color: $hint-fg;
+    border-radius: 2px;
+    padding: 0.5em;
+    top: 2.5em;
+    left: 5%;
+    width: 90%;
+    font-size: 70%;
+    z-index: 1;
+  }
 
   &.inactive {
     color: $inactive-color;
@@ -98,10 +123,12 @@ a {
     }
   }
 
-  .detail {
-    margin-top: 0.25em;
-    font-size: 70%;
-    text-align: right;
+  &:hover {
+    background: $hover-bg;
+
+    .hint {
+      display: block;
+    }
   }
 }
 

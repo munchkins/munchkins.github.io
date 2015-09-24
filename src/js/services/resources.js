@@ -4,31 +4,31 @@ angular
     const resources = {
       flowers: {
         name: 'Flowers',
-        description: 'Flowers are the staple of the Munchkin diet',
+        description: 'Flowers are the staple of the Munchkin economy, diet and production',
         value: { current: 0, limit: 0 },
         rate: 0
       },
       stems: {
         name: 'Stems',
-        description: 'Flower stems act as a basic building block',
+        description: 'Flower stems act as a basic building block for light structures',
         value: { current: 0, limit: 0 },
         rate: 0
       },
       petals: {
         name: 'Petals',
-        description: 'Flower petals are a decoration with various uses',
+        description: 'Flower petals are a decoration with various uses in and around the house and community',
         value: { current: 0, limit: 0 },
         rate: 0
       },
       paper: {
         name: 'Paper',
-        description: 'Petal paper',
+        description: 'Petal paper are a fine resource',
         value: { current: 0, limit: 0 },
         rate: 0
       },
       rocks: {
         name: 'Rocks',
-        description: 'Rocks are a by-product of farming',
+        description: 'Rocks are a by-product of farming and produced by mining',
         value: { current: 0, limit: 0 },
         rate: 0
       },
