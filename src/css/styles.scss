@@ -49,6 +49,11 @@ a {
   .menu {
     @include span-columns(6);
     text-align: right;
+
+    .version {
+      font-size: 75%;
+      color: $sub-color;
+    }
   }
 }
 

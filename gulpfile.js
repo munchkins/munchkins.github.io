@@ -2,19 +2,18 @@
 
 /* eslint no-var:0 */
 var gulp = require('gulp');
-var eslint = require('gulp-eslint');
 var babel = require('gulp-babel');
 var bower = require('gulp-bower');
 var concat = require('gulp-concat');
-var newer = require('gulp-newer');
-var annotate = require('gulp-ng-annotate');
-var jade = require('gulp-jade');
-var karma = require('karma');
-var sourcemaps = require('gulp-sourcemaps');
-var uglify = require('gulp-uglify');
-var sass = require('gulp-sass');
 var cssmin = require('gulp-cssmin');
+var eslint = require('gulp-eslint');
 var ignore = require('gulp-ignore');
+var jade = require('gulp-jade');
+var annotate = require('gulp-ng-annotate');
+var replace = require('gulp-replace');
+var sourcemaps = require('gulp-sourcemaps');
+var sass = require('gulp-sass');
+var karma = require('karma');
 
 var errcb = function(err) {
   console.error(err.stack || err.message || err);
@@ -24,11 +23,9 @@ var errcb = function(err) {
 gulp.task('js-babel', function() {
   return gulp
     .src(['src/js/**/*.js'])
-    .pipe(newer('munchkins.js'))
     .pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(annotate())
-    //.pipe(uglify())
     .pipe(concat('munchkins.js'))
     .pipe(sourcemaps.write('.', {
       sourceRoot: '.',
@@ -45,12 +42,16 @@ gulp.task('js-eslint', function() {
 });
 
 gulp.task('html-jade', function() {
+  var two = function(val) {
+    return ('00' + val).slice(-2);
+  };
+
+  var d = new Date();
+  var version = d.getFullYear() + two(d.getMonth() + 1) + two(d.getDate()) + '-' + two(d.getHours()) + two(d.getMinutes());
+
   return gulp
     .src(['src/**/*.jade'])
-    .pipe(newer({
-      dest: '.',
-      ext: '.html'
-    }))
+    .pipe(replace(/MUNCHKINSVERSION/g, version))
     .pipe(jade())
     .on('error', errcb)
     .pipe(gulp.dest('.'));
@@ -60,7 +61,6 @@ gulp.task('css-sass', function() {
   var nm = __dirname + '/node_modules';
 
   return gulp.src(['src/css/**/*.scss'])
-    .pipe(newer('munchkins.css'))
     .pipe(sass({
       indentedSyntax: false,
       sourceComments: 'normal',
