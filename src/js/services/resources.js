@@ -37,6 +37,12 @@ angular
         description: 'Tools makes hard tasks easier',
         value: { current: 0, limit: 0 },
         rate: 0
+      },
+      food: {
+        name: 'Food',
+        description: 'Food is always needed, this planet or another',
+        value: { current: 0, limit: 0 },
+        rate: 0
       }
     };
 

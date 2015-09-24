@@ -52,6 +52,23 @@ angular
             paper: { value: 1, rate: 0 }
           }
         }
+      },
+      hunt: {
+        name: 'Hunt & Gather',
+        description: 'Search for food',
+        locked: true,
+        increase: 1,
+        value: { current: 0, max: 0, level: 0 },
+        requires: {
+          resources: {
+            tools: { value: 50, rate: 0 }
+          }
+        },
+        provides: {
+          resources: {
+            food: { value: 25, rate: 0 }
+          }
+        }
       }
     };
 

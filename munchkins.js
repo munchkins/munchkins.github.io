@@ -342,6 +342,23 @@ angular.module('munchkins').service('Crafting', function () {
           paper: { value: 1, rate: 0 }
         }
       }
+    },
+    hunt: {
+      name: 'Hunt & Gather',
+      description: 'Search for food',
+      locked: true,
+      increase: 1,
+      value: { current: 0, max: 0, level: 0 },
+      requires: {
+        resources: {
+          tools: { value: 50, rate: 0 }
+        }
+      },
+      provides: {
+        resources: {
+          food: { value: 25, rate: 0 }
+        }
+      }
     }
   };
 
@@ -497,6 +514,12 @@ angular.module('munchkins').service('Resources', function () {
       description: 'Tools makes hard tasks easier',
       value: { current: 0, limit: 0 },
       rate: 0
+    },
+    food: {
+      name: 'Food',
+      description: 'Food is always needed, this planet or another',
+      value: { current: 0, limit: 0 },
+      rate: 0
     }
   };
 
@@ -546,11 +569,9 @@ angular.module('munchkins').service('Tribe', function () {
         provides: {
           resources: {
             flowers: { value: 0, rate: 0.01, hyper: true },
-            rocks: { value: 0, rate: 0.001, hyper: true }
+            rocks: { value: 0, rate: 0.001, hyper: true },
+            food: { value: 0, rate: -0.001 }
           }
-        },
-        consumes: {
-          resources: {}
         }
       },
       tooler: {
@@ -566,12 +587,9 @@ angular.module('munchkins').service('Tribe', function () {
         },
         provides: {
           resources: {
-            tools: { value: 0, rate: 0.05, hyper: true }
-          }
-        },
-        consumes: {
-          resources: {
-            rocks: { value: 0, rate: 0.5 }
+            tools: { value: 0, rate: 0.0125, hyper: true },
+            rocks: { value: 0, rate: -0.125 },
+            food: { value: 0, rate: -0.001 }
           }
         }
       }
