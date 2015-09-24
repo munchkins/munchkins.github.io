@@ -67,6 +67,20 @@ angular
         provides: {
           tribe: 2
         }
+      },
+      monolith: {
+        name: 'Monolith',
+        description: 'A large religious structure that is made of rock, used in ceremonies accross Munchkinland',
+        locked: true,
+        increase: 1.125,
+        value: { current: 0, max: 0, level: 0 },
+        requires: {
+          resources: {
+            rocks: { value: 1000, rate: 0 },
+            tools: { value: 500, rate: 0 }
+          }
+        },
+        provides: {}
       }
     };
 
