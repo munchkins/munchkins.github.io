@@ -607,6 +607,12 @@ angular.module('munchkins').service('Resources', function () {
       description: 'Food is always needed, this planet or another',
       value: { current: 0, limit: 0 },
       rate: 0
+    },
+    faith: {
+      name: 'Faith',
+      description: 'A core ingrediesnt in any religious ceremony, required for any festivals',
+      value: { current: 0, limit: 0 },
+      rate: 0
     }
   };
 
@@ -676,6 +682,25 @@ angular.module('munchkins').service('Tribe', function () {
           resources: {
             tools: { value: 0, rate: 0.0125, hyper: true },
             rocks: { value: 0, rate: -0.025 },
+            food: { value: 0, rate: -0.001 }
+          }
+        }
+      },
+      priest: {
+        name: 'Priest',
+        description: 'A core member of any religious ceremony, providing direct access to another world',
+        locked: true,
+        value: { current: 0 },
+        requires: {
+          buildings: {
+            monolith: { value: 1 }
+          },
+          tribe: 1
+        },
+        provides: {
+          resources: {
+            faith: { value: 0, rate: 0.0025, hyper: true },
+            tools: { value: 0, rate: -0.001 },
             food: { value: 0, rate: -0.001 }
           }
         }

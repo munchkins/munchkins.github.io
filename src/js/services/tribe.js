@@ -41,6 +41,25 @@ angular
               food: { value: 0, rate: -0.001 }
             }
           }
+        },
+        priest: {
+          name: 'Priest',
+          description: 'A core member of any religious ceremony, providing direct access to another world',
+          locked: true,
+          value: { current: 0 },
+          requires: {
+            buildings: {
+              monolith: { value: 1 }
+            },
+            tribe: 1
+          },
+          provides: {
+            resources: {
+              faith: { value: 0, rate: 0.0025, hyper: true },
+              tools: { value: 0, rate: -0.001 },
+              food: { value: 0, rate: -0.001 }
+            }
+          }
         }
       }
     };

@@ -96,7 +96,7 @@ describe('Exposed Services', function() {
 
   describe('Resource Structure', function() {
     testResources('Resources', {
-      flowers: true, stems: true, petals: true, paper: true, rocks: true, tools: true, food: true
+      flowers: true, stems: true, petals: true, paper: true, rocks: true, tools: true, food: true, faith: true
     });
   });
 
@@ -114,7 +114,7 @@ describe('Exposed Services', function() {
 
   /*describe('Tribe Structure', function() {
     testStructure('Tribe', {
-      farmer: true, tooler: true
+      farmer: true, tooler: true, priest: true
     });
   });*/
 });

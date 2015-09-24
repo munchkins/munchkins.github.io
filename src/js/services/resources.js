@@ -43,6 +43,12 @@ angular
         description: 'Food is always needed, this planet or another',
         value: { current: 0, limit: 0 },
         rate: 0
+      },
+      faith: {
+        name: 'Faith',
+        description: 'A core ingrediesnt in any religious ceremony, required for any festivals',
+        value: { current: 0, limit: 0 },
+        rate: 0
       }
     };
 
