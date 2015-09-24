@@ -5,11 +5,11 @@
 $primary-color: #333;
 $sub-color: #666;
 $inactive-color: #999;
-$hover-bg: rgba(120, 120, 255, 0.25);
+$hover-bg: rgba(120, 120, 255, 0.15);
 $error-color: #c33;
 $link-color: #33f;
 $link-active: #339;
-$hint-bg: rgba(80, 80, 160, 0.95);
+$hint-bg: rgba(60, 60, 180, 0.95);
 $hint-fg: #eee;
 
 body {
@@ -90,6 +90,10 @@ a {
   border-radius: 4px;
   margin: 0.15em 0.25em;
   position: relative;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none; 
 
   .detail {
     margin-top: 0.25em;
@@ -103,18 +107,32 @@ a {
     top: 30px;
     background: $hint-bg;
     color: $hint-fg;
-    border-radius: 2px;
+    border-radius: 3px;
     padding: 0.5em;
     top: 2.5em;
-    left: 5%;
-    width: 90%;
+    right: 5%;
+    width: 65%;
     font-size: 70%;
     z-index: 1;
+
+    &:after {
+      bottom: 100%;
+      right: 10%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: white;
+      border-bottom-color: $hint-bg;
+      border-width: 6px;
+      margin-left: -6px;
+    }
   }
 
   &.inactive {
     color: $inactive-color;
-    border: 1px solid $inactive-color;
+    border-color: $inactive-color;
 
     a, a:hover {
       color: $inactive-color;
@@ -125,9 +143,19 @@ a {
 
   &:hover {
     background: $hover-bg;
+    border-color: $link-color;
 
     .hint {
       display: block;
+    }
+  }
+
+  &.inactive:hover {
+    background: inherit;
+    border-color: $inactive-color;
+
+    .hint {
+      display: none;
     }
   }
 }
