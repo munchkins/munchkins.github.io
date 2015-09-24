@@ -18,7 +18,7 @@ $hint-invalid: $error-color;
 body {
   color: $primary-color;
   font-family: $helvetica;
-  font-size: 90%;
+  font-size: 80%;
 }
 
 a {
@@ -59,7 +59,7 @@ a {
 
 .version {
   @include span-columns(12);
-  font-size: 75%;
+  font-size: 80%;
   color: $inactive-color;
   text-align: right;
 }
@@ -80,6 +80,7 @@ a {
 
 .resource-panel {
   @include span-columns(3);
+  font-size: 80%;
 }
 
 .action-panel {
@@ -115,7 +116,7 @@ a {
 
   .detail {
     margin-top: 0.25em;
-    font-size: 70%;
+    font-size: 80%;
     text-align: right;
   }
 
@@ -130,11 +131,11 @@ a {
     border: 1px solid $hint-border;
     border-top: 1px solid transparent;
     padding: 0.5em 0.5em 0 0.5em;
-    top: 2.5em;
+    top: 2.25em;
     right: -1px;
     left: -1px;
     //width: 100;
-    font-size: 70%;
+    font-size: 80%;
     z-index: 1;
 
     /*&:after, &:before {
@@ -191,6 +192,10 @@ a {
   &:hover {
     background: $hover-bg;
     border-color: $link-color;
+
+    .detail {
+      color: transparent;
+    }
 
     .hint {
       display: block;
