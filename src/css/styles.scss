@@ -6,13 +6,13 @@ $primary-color: #333;
 $border-color: #88a;
 $sub-color: #666;
 $inactive-color: #888;
-$hover-bg: rgba(120, 120, 255, 0.05);
+$hover-bg: rgba(245, 245, 255, 0.9);
 $error-color: #c33;
 $link-color: #33f;
 $link-active: #339;
-$hint-bg: rgba(51, 51, 255, 0.85);
-$hint-fg: #eee;
-$hint-invalid: #f99;
+$hint-bg: $hover-bg;
+$hint-fg: $primary-color;
+$hint-invalid: $error-color;
 
 body {
   color: $primary-color;
@@ -126,6 +126,7 @@ a {
     background: $hint-bg;
     color: $hint-fg;
     border-radius: 3px;
+    border: 1px solid $border-color;
     padding: 0.5em 0.5em 0 0.5em;
     top: 2.5em;
     right: 5%;
@@ -133,7 +134,7 @@ a {
     font-size: 70%;
     z-index: 1;
 
-    &:after {
+    &:after, &:before {
       bottom: 100%;
       right: 10%;
       border: solid transparent;
@@ -141,10 +142,21 @@ a {
       height: 0;
       width: 0;
       position: absolute;
-      pointer-events: white;
+      pointer-events: none;
+    }
+
+    &:after {
+      border-color: rgba(255, 255, 255, 0);
       border-bottom-color: $hint-bg;
       border-width: 6px;
       margin-left: -6px;
+    }
+
+    &:before {
+      border-color: rgba(136, 136, 170, 0);
+      border-bottom-color: $border-color;
+      border-width: 7px;
+      margin-left: -7px;
     }
 
     .section {
