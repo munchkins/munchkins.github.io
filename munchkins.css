@@ -15,7 +15,8 @@ a.active,a:hover{text-shadow:0 0 .5em #99f}
 .topbar .info:last-child{margin-right:0}
 .topbar .menu{margin-right:2.35765%;text-align:right}
 .topbar .menu:last-child{margin-right:0}
-.topbar .menu .version{font-size:75%;color:#666}
+.version{float:left;display:block;margin-right:2.35765%;width:100%;font-size:75%;color:#888;text-align:right}
+.version:last-child{margin-right:0}
 .subbar{float:left;display:block;margin-right:2.35765%;width:74.41059%}
 .subbar:last-child{margin-right:0}
 .subbar .nav{margin-left:51.17883%;float:left;display:block;margin-right:2.35765%;width:48.82117%}

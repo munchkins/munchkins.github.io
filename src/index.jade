@@ -12,6 +12,8 @@ html(lang="en" ng-app="munchkins")
       
   body.ng-cloak(ng-controller="Game as game")
     .container(ng-include="'views/topbar.html'")
+    .container
+      .version MUNCHKINSVERSION
     .container(ng-include="'views/subbar.html'")
     .container
       .action-panel
