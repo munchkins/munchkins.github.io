@@ -130,12 +130,12 @@ a {
     border: 1px solid $hint-border;
     padding: 0.5em 0.5em 0 0.5em;
     top: 2.5em;
-    right: 10%;
-    width: 80%;
+    right: 2%;
+    width: 96%;
     font-size: 70%;
     z-index: 1;
 
-    &:after, &:before {
+    /*&:after, &:before {
       bottom: 100%;
       right: 50%;
       border: solid transparent;
@@ -158,7 +158,7 @@ a {
       border-bottom-color: $hint-border;
       border-width: 7px;
       margin-left: -7px;
-    }
+    }*/
 
     .section {
       margin-bottom: 0.5em;
