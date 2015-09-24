@@ -4,7 +4,7 @@ div(ng-controller="Crafting as craftc")
       a {{building.name}}
       div.detail
         span(ng-repeat="(p, price) in craftc.prices(building)" ng-class="{ 'invalid': !price.affordable }")
-          span(ng-if="price.$index") ,&nbsp;
+          span(ng-if="$index") ,&nbsp;
           span {{price.name}}@{{price.buynow | numeric}}
         span &nbsp;
       div.hint {{building.description}}

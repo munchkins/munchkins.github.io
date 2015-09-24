@@ -4,7 +4,7 @@ div(ng-controller="Buildings as bldc")
       a {{building.name}} ({{building.value.current | numeric:0}})
       div.detail
         span(ng-repeat="price in bldc.prices(building)" ng-class="{ 'invalid': !price.affordable }")
-          span(ng-if="price.$index") ,&nbsp;
+          span(ng-if="$index") ,&nbsp;
           span {{price.name}}@{{price.buynow | numeric}}
         span &nbsp;
       div.hint {{building.description}}
