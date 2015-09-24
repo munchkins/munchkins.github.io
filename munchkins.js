@@ -100,7 +100,6 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
           });
 
           _.forEach(item.requires.resources, function (r, k) {
-            console.log(item.name, r, k);
             if (!locked) {
               locked = !(Resources.get(k).value.current >= r.value);
             }
@@ -401,7 +400,7 @@ angular.module('munchkins').service('Game', ["$interval", "Actions", "Buildings"
 
     var resources = Resources.all();
     _.forEach(resources, function (resource) {
-      resource.value.current += resource.rate;
+      resource.value.current = Math.max(0, resource.rate + resource.value.current);
       if (resource.value.limit) {
         resource.value.current = Math.min(resource.value.current, resource.value.limit);
       }
@@ -492,6 +491,12 @@ angular.module('munchkins').service('Resources', function () {
       description: 'Rocks are a by-product of farming',
       value: { current: 0, limit: 0 },
       rate: 0
+    },
+    tools: {
+      name: 'Tools',
+      description: 'Tools makes hard tasks easier',
+      value: { current: 0, limit: 0 },
+      rate: 0
     }
   };
 
@@ -542,6 +547,31 @@ angular.module('munchkins').service('Tribe', function () {
           resources: {
             flowers: { value: 0, rate: 0.01, hyper: true },
             rocks: { value: 0, rate: 0.001, hyper: true }
+          }
+        },
+        consumes: {
+          resources: {}
+        }
+      },
+      tooler: {
+        name: 'Tool Maker',
+        description: 'Makes rock tools',
+        locked: true,
+        value: { current: 0 },
+        requires: {
+          buildings: {
+            quarry: { value: 1 }
+          },
+          tribe: 1
+        },
+        provides: {
+          resources: {
+            tools: { value: 0, rate: 0.05, hyper: true }
+          }
+        },
+        consumes: {
+          resources: {
+            rocks: { value: 0, rate: 0.5 }
           }
         }
       }

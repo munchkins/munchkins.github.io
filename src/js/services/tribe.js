@@ -43,7 +43,7 @@ angular
           },
           consumes: {
             resources: {
-              rocks: { value: 0, rate: 0.5, hyper: false }
+              rocks: { value: 0, rate: 0.5 }
             }
           }
         }

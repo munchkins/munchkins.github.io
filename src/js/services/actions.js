@@ -13,7 +13,6 @@ angular
           });
 
           _.forEach(item.requires.resources, function(r, k) {
-            console.log(item.name, r, k);
             if (!locked) {
               locked = !(Resources.get(k).value.current >= r.value);
             }
