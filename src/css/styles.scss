@@ -6,13 +6,13 @@ $primary-color: #333;
 $border-color: #88a;
 $sub-color: #666;
 $inactive-color: #888;
-$hover-bg: rgba(245, 245, 255, 0.9);
+$hover-bg: rgba(245, 245, 255, 1.0);
 $error-color: #c33;
 $link-color: #33f;
 $link-active: #339;
 $hint-bg: $hover-bg;
 $hint-fg: $primary-color;
-$hint-border: rgba(124, 124, 255, 0.5);
+$hint-border: $link-color; //rgba(124, 124, 255, 0.5);
 $hint-invalid: $error-color;
 
 body {
@@ -126,12 +126,14 @@ a {
     top: 30px;
     background: $hint-bg;
     color: $hint-fg;
-    border-radius: 3px;
+    border-radius: 0 0 4px 4px;
     border: 1px solid $hint-border;
+    border-top: 1px solid transparent;
     padding: 0.5em 0.5em 0 0.5em;
     top: 2.5em;
-    right: 2%;
-    width: 96%;
+    right: -1px;
+    left: -1px;
+    //width: 100;
     font-size: 70%;
     z-index: 1;
 

@@ -37,13 +37,13 @@ a.active,a:hover{text-shadow:0 0 .5em #99f}
 .action-panel .building-panel .action-button:last-child{margin-right:0}
 .action-button{border:1px solid #88a;text-align:center;padding:.25em;border-radius:4px;margin:.15em .25em;position:relative;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
 .action-button .detail{margin-top:.25em;font-size:70%;text-align:right}
-.action-button .hint{text-align:left;display:none;position:absolute;background:rgba(245,245,255,.9);color:#333;border-radius:3px;border:1px solid rgba(124,124,255,.5);padding:.5em .5em 0;top:2.5em;right:2%;width:96%;font-size:70%;z-index:1}
+.action-button .hint{text-align:left;display:none;position:absolute;background:#f5f5ff;color:#333;border-radius:0 0 4px 4px;border:1px solid #33f;border-top:1px solid transparent;padding:.5em .5em 0;top:2.5em;right:-1px;left:-1px;font-size:70%;z-index:1}
 .action-button .hint .section{margin-bottom:.5em}
 .action-button .hint .section .heading{font-weight:700}
 .action-button .hint .section .invalid{color:#c33}
 .action-button.inactive{color:#888;border-color:#888;cursor:pointer;opacity:.5}
 .action-button.inactive a,.action-button.inactive a:hover{color:#888;cursor:default;text-shadow:none}
-.action-button:hover{background:rgba(245,245,255,.9);border-color:#33f}
+.action-button:hover{background:#f5f5ff;border-color:#33f}
 .action-button:hover .hint{display:block}
 .action-button:hover a{text-shadow:0 0 .5em #99f}
 .action-button.inactive:hover{background:inherit;border-color:#888;cursor:default}
