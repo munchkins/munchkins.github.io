@@ -3,9 +3,9 @@
 @import "neat";
 
 $primary-color: #333;
-$border-color: #666;
+$border-color: #88a;
 $sub-color: #666;
-$inactive-color: #999;
+$inactive-color: #888;
 $hover-bg: rgba(120, 120, 255, 0.05);
 $error-color: #c33;
 $link-color: #33f;
@@ -136,6 +136,7 @@ a {
     color: $inactive-color;
     border-color: $inactive-color;
     cursor: pointer;
+    opacity: 0.5;
 
     a, a:hover {
       color: $inactive-color;
