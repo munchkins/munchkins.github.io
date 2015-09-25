@@ -2,21 +2,23 @@
 @import "neat-helpers";
 @import "neat";
 
-$primary-color: #333;
+$primary-fg: #333;
+$primary-bg: #fff;
 $border-color: #88a;
 $sub-color: #666;
-$inactive-color: #888;
+$inactive-color: #aaa;
 $hover-bg: rgba(245, 245, 255, 1.0);
-$error-color: #c33;
+$error-color: #d55;
 $link-color: #33f;
 $link-active: #339;
 $hint-bg: $hover-bg;
-$hint-fg: $primary-color;
+$hint-fg: $primary-fg;
 $hint-border: $link-color; //rgba(124, 124, 255, 0.5);
 $hint-invalid: $error-color;
 
 body {
-  color: $primary-color;
+  background: $primary-bg;
+  color: $primary-fg;
   font-family: $helvetica;
   font-size: 80%;
 }
@@ -138,39 +140,13 @@ a {
     color: $hint-fg;
     border-radius: 0 0 4px 4px;
     border: 1px solid $hint-border;
-    border-top: 1px solid transparent;
+    border-top-color: transparent;
     padding: 0.5em 0.5em 0 0.5em;
-    top: 2.25em;
+    top: 2em;
     right: -1px;
     left: -1px;
-    //width: 100;
     font-size: 80%;
     z-index: 1;
-
-    /*&:after, &:before {
-      bottom: 100%;
-      right: 50%;
-      border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-    }
-
-    &:after {
-      border-color: rgba(255, 255, 255, 0);
-      border-bottom-color: $hint-bg;
-      border-width: 6px;
-      margin-left: -6px;
-    }
-
-    &:before {
-      border-color: rgba(136, 136, 170, 0);
-      border-bottom-color: $hint-border;
-      border-width: 7px;
-      margin-left: -7px;
-    }*/
 
     .section {
       margin-bottom: 0.5em;
@@ -189,7 +165,6 @@ a {
     color: $inactive-color;
     border-color: $inactive-color;
     cursor: pointer;
-    opacity: 0.5;
 
     a, a:hover {
       color: $inactive-color;
@@ -198,12 +173,16 @@ a {
     }
   }
 
-  &:hover {
+  &:hover, &.inactive:hover {
     background: $hover-bg;
     border-color: $link-color;
 
     .detail {
       color: transparent;
+
+      .invactive {
+        color: transparent;
+      }
     }
 
     .hint {
@@ -221,7 +200,15 @@ a {
     cursor: default;
 
     .hint {
-      display: none;
+      background: $primary-bg;
+      color: $inactive-color;
+      border-radius: 0 0 4px 4px;
+      border-color: $inactive-color;
+      border-top-color: transparent;
+
+      .inactive {
+        color: $error-color;
+      }
     }
 
     a {

@@ -14,7 +14,7 @@
     
     .section(ng-if="item.hasRequires")
       .heading Required
-      .content(ng-repeat="require in ctrl.requires(item)")
+      .content(ng-repeat="require in ctrl.requires(item)" ng-class="{ 'inactive': !require.affordable }")
         span {{require.name}}&nbsp;@&nbsp;
         span(ng-if="require.buynow") {{require.buynow | numeric}}
         span(ng-if="require.buynow && require.rate") &nbsp;&amp;&nbsp;
