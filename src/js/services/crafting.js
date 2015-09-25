@@ -6,9 +6,6 @@ angular
         name: 'Collect Flowers',
         description: 'Flowers are the staple of the Munchkin diet, collect them',
         locked: false,
-        increase: 1,
-        value: { current: 0, max: 0, level: 0 },
-        requires: {},
         provides: {
           resources: {
             flowers: { value: 1, rate: 0 }
@@ -18,9 +15,6 @@ angular
       processing: {
         name: 'Process Flowers',
         description: 'Processes and deconstructs flowers into petals and stems',
-        locked: true,
-        increase: 1,
-        value: { current: 0, max: 0, level: 0 },
         requires: {
           buildings: {
             meadow: { value: 1 }
@@ -39,9 +33,6 @@ angular
       press: {
         name: 'Press Petals',
         description: 'Process flower petals into petal paper',
-        locked: true,
-        increase: 1,
-        value: { current: 0, max: 0, level: 0 },
         requires: {
           resources: {
             petals: { value: 1000, rate: 0 }
@@ -56,9 +47,6 @@ angular
       hunt: {
         name: 'Hunt & Gather',
         description: 'Search for food, resources and items outside of the community',
-        locked: true,
-        increase: 1,
-        value: { current: 0, max: 0, level: 0 },
         requires: {
           resources: {
             tools: { value: 50, rate: 0 }
@@ -72,6 +60,18 @@ angular
         }
       }
     };
+
+    _.forEach(crafting, function(item) {
+      item.increase = item.increase || 1.0;
+      item.locked = _.isUndefined(item.locked) ? true : item.locked;
+      item.value = item.value || { current: 0, max: 0, level: 0 };
+
+      item.requires = item.requires || {};
+      item.hasRequires = !!Object.keys(item.requires).length;
+
+      item.provides = item.provides || {};
+      item.hasProvides = !!Object.keys(item.provides).length;
+    });
 
     this.all = function() {
       return _.filter(crafting, {});

@@ -4,53 +4,42 @@ angular
     const resources = {
       flowers: {
         name: 'Flowers',
-        description: 'Flowers are the staple of the Munchkin economy, diet and production',
-        value: { current: 0, limit: 0 },
-        rate: 0
+        description: 'Flowers are the staple of the Munchkin economy, diet and production'
       },
       stems: {
         name: 'Stems',
-        description: 'Flower stems act as a basic building block for light structures',
-        value: { current: 0, limit: 0 },
-        rate: 0
+        description: 'Flower stems act as a basic building block for light structures'
       },
       petals: {
         name: 'Petals',
-        description: 'Flower petals are a decoration with various uses in and around the house and community',
-        value: { current: 0, limit: 0 },
-        rate: 0
+        description: 'Flower petals are a decoration with various uses in and around the house and community'
       },
       paper: {
         name: 'Paper',
-        description: 'Petal paper are a fine resource',
-        value: { current: 0, limit: 0 },
-        rate: 0
+        description: 'Petal paper are a fine resource'
       },
       rocks: {
         name: 'Rocks',
-        description: 'Rocks are a by-product of farming and produced by mining',
-        value: { current: 0, limit: 0 },
-        rate: 0
+        description: 'Rocks are a by-product of farming and produced by mining'
       },
       tools: {
         name: 'Tools',
-        description: 'Tools makes hard tasks easier',
-        value: { current: 0, limit: 0 },
-        rate: 0
+        description: 'Tools makes hard tasks easier'
       },
       food: {
         name: 'Food',
-        description: 'Food is always needed, this planet or another',
-        value: { current: 0, limit: 0 },
-        rate: 0
+        description: 'Food is always needed, this planet or another'
       },
       faith: {
         name: 'Faith',
-        description: 'A core ingrediesnt in any religious ceremony, required for any festivals',
-        value: { current: 0, limit: 0 },
-        rate: 0
+        description: 'A core ingrediesnt in any religious ceremony, required for any festivals'
       }
     };
+
+    _.forEach(resources, function(item) {
+      item.rate = item.rate || 0;
+      item.value = item.value || { current: 0, limit: 0 };
+    });
 
     this.all = function() {
       return _.filter(resources, {});

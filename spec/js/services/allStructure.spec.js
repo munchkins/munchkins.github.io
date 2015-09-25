@@ -25,6 +25,7 @@ describe('Exposed Services', function() {
       name: true, description: true, rate: true,
       value: { current: true, limit: true }
     };
+
     describe('containing', function() {
       _.forEach(exp, function(b, k) {
         it(`${k} has valid fields`, inject(function($injector) {
@@ -62,8 +63,9 @@ describe('Exposed Services', function() {
     const fields = {
       name: true, description: true, locked: true, increase: true,
       value: { current: true, limit: true, level: true },
-      requires: true, provides: true
+      requires: true, provides: true, hasRequires: true, hasProvides: true
     };
+
     describe('containing', function() {
       _.forEach(exp, function(b, k) {
         it(`${k} has valid fields`, inject(function($injector) {
@@ -112,9 +114,9 @@ describe('Exposed Services', function() {
     });
   });
 
-  /*describe('Tribe Structure', function() {
+  describe('Tribe Structure', function() {
     testStructure('Tribe', {
       farmer: true, tooler: true, priest: true
     });
-  });*/
+  });
 });

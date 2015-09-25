@@ -258,9 +258,7 @@ angular.module('munchkins').service('Buildings', function () {
     meadow: {
       name: 'Meadow',
       description: 'A naturally growing field of flowers which can be harvested',
-      locked: true,
       increase: 1.11,
-      value: { current: 0, max: 0, level: 0 },
       requires: {
         resources: {
           flowers: { value: 100, rate: 0 }
@@ -276,9 +274,7 @@ angular.module('munchkins').service('Buildings', function () {
     shelter: {
       name: 'Shelter',
       description: 'A basic shelter made from flower stems with space for one Munchkin',
-      locked: true,
       increase: 1.11,
-      value: { current: 0, max: 0, level: 0 },
       requires: {
         resources: {
           stems: { value: 100, rate: 0 }
@@ -291,9 +287,7 @@ angular.module('munchkins').service('Buildings', function () {
     quarry: {
       name: 'Rock Quarry',
       description: 'An area where rocks can be harvested for use in buildings and tools',
-      locked: true,
       increase: 1.11,
-      value: { current: 0, max: 0, level: 0 },
       requires: {
         resources: {
           rocks: { value: 50, rate: 0 }
@@ -308,9 +302,7 @@ angular.module('munchkins').service('Buildings', function () {
     hut: {
       name: 'Hut',
       description: 'A rock and stem shelter that has space for two additional Munchkins',
-      locked: true,
       increase: 1.125,
-      value: { current: 0, max: 0, level: 0 },
       requires: {
         resources: {
           rocks: { value: 50, rate: 0 },
@@ -324,18 +316,27 @@ angular.module('munchkins').service('Buildings', function () {
     monolith: {
       name: 'Monolith',
       description: 'A large religious structure that is made of rock, used in ceremonies accross Munchkinland',
-      locked: true,
       increase: 1.125,
-      value: { current: 0, max: 0, level: 0 },
       requires: {
         resources: {
           rocks: { value: 1000, rate: 0 },
           tools: { value: 500, rate: 0 }
         }
-      },
-      provides: {}
+      }
     }
   };
+
+  _.forEach(buildings, function (item) {
+    item.increase = item.increase || 1.0;
+    item.locked = _.isUndefined(item.locked) ? true : item.locked;
+    item.value = item.value || { current: 0, max: 0, level: 0 };
+
+    item.requires = item.requires || {};
+    item.hasRequires = !!Object.keys(item.requires).length;
+
+    item.provides = item.provides || {};
+    item.hasProvides = !!Object.keys(item.provides).length;
+  });
 
   this.activeTotal = function () {
     var total = 0;
@@ -382,9 +383,6 @@ angular.module('munchkins').service('Crafting', function () {
       name: 'Collect Flowers',
       description: 'Flowers are the staple of the Munchkin diet, collect them',
       locked: false,
-      increase: 1,
-      value: { current: 0, max: 0, level: 0 },
-      requires: {},
       provides: {
         resources: {
           flowers: { value: 1, rate: 0 }
@@ -394,9 +392,6 @@ angular.module('munchkins').service('Crafting', function () {
     processing: {
       name: 'Process Flowers',
       description: 'Processes and deconstructs flowers into petals and stems',
-      locked: true,
-      increase: 1,
-      value: { current: 0, max: 0, level: 0 },
       requires: {
         buildings: {
           meadow: { value: 1 }
@@ -415,9 +410,6 @@ angular.module('munchkins').service('Crafting', function () {
     press: {
       name: 'Press Petals',
       description: 'Process flower petals into petal paper',
-      locked: true,
-      increase: 1,
-      value: { current: 0, max: 0, level: 0 },
       requires: {
         resources: {
           petals: { value: 1000, rate: 0 }
@@ -432,9 +424,6 @@ angular.module('munchkins').service('Crafting', function () {
     hunt: {
       name: 'Hunt & Gather',
       description: 'Search for food, resources and items outside of the community',
-      locked: true,
-      increase: 1,
-      value: { current: 0, max: 0, level: 0 },
       requires: {
         resources: {
           tools: { value: 50, rate: 0 }
@@ -448,6 +437,18 @@ angular.module('munchkins').service('Crafting', function () {
       }
     }
   };
+
+  _.forEach(crafting, function (item) {
+    item.increase = item.increase || 1.0;
+    item.locked = _.isUndefined(item.locked) ? true : item.locked;
+    item.value = item.value || { current: 0, max: 0, level: 0 };
+
+    item.requires = item.requires || {};
+    item.hasRequires = !!Object.keys(item.requires).length;
+
+    item.provides = item.provides || {};
+    item.hasProvides = !!Object.keys(item.provides).length;
+  });
 
   this.all = function () {
     return _.filter(crafting, {});
@@ -568,53 +569,42 @@ angular.module('munchkins').service('Resources', function () {
   var resources = {
     flowers: {
       name: 'Flowers',
-      description: 'Flowers are the staple of the Munchkin economy, diet and production',
-      value: { current: 0, limit: 0 },
-      rate: 0
+      description: 'Flowers are the staple of the Munchkin economy, diet and production'
     },
     stems: {
       name: 'Stems',
-      description: 'Flower stems act as a basic building block for light structures',
-      value: { current: 0, limit: 0 },
-      rate: 0
+      description: 'Flower stems act as a basic building block for light structures'
     },
     petals: {
       name: 'Petals',
-      description: 'Flower petals are a decoration with various uses in and around the house and community',
-      value: { current: 0, limit: 0 },
-      rate: 0
+      description: 'Flower petals are a decoration with various uses in and around the house and community'
     },
     paper: {
       name: 'Paper',
-      description: 'Petal paper are a fine resource',
-      value: { current: 0, limit: 0 },
-      rate: 0
+      description: 'Petal paper are a fine resource'
     },
     rocks: {
       name: 'Rocks',
-      description: 'Rocks are a by-product of farming and produced by mining',
-      value: { current: 0, limit: 0 },
-      rate: 0
+      description: 'Rocks are a by-product of farming and produced by mining'
     },
     tools: {
       name: 'Tools',
-      description: 'Tools makes hard tasks easier',
-      value: { current: 0, limit: 0 },
-      rate: 0
+      description: 'Tools makes hard tasks easier'
     },
     food: {
       name: 'Food',
-      description: 'Food is always needed, this planet or another',
-      value: { current: 0, limit: 0 },
-      rate: 0
+      description: 'Food is always needed, this planet or another'
     },
     faith: {
       name: 'Faith',
-      description: 'A core ingrediesnt in any religious ceremony, required for any festivals',
-      value: { current: 0, limit: 0 },
-      rate: 0
+      description: 'A core ingrediesnt in any religious ceremony, required for any festivals'
     }
   };
+
+  _.forEach(resources, function (item) {
+    item.rate = item.rate || 0;
+    item.value = item.value || { current: 0, limit: 0 };
+  });
 
   this.all = function () {
     return _.filter(resources, {});
@@ -645,71 +635,87 @@ angular.module('munchkins').service('Resources', function () {
 'use strict';
 
 angular.module('munchkins').service('Tribe', function () {
-  var tribe = {
-    free: 0,
-    types: {
-      farmer: {
-        name: 'Farmer',
-        description: 'A farmer works the meadows for additional production of producable resources',
-        locked: true,
-        value: { current: 0 },
-        requires: {
-          buildings: {
-            meadow: { value: 1 }
-          },
-          tribe: 1
+  var types = {
+    farmer: {
+      name: 'Farmer',
+      description: 'A farmer works the meadows for additional production of producable resources',
+      requires: {
+        buildings: {
+          meadow: { value: 1 }
         },
-        provides: {
-          resources: {
-            flowers: { value: 0, rate: 0.01, hyper: true },
-            rocks: { value: 0, rate: 0.001, hyper: true },
-            food: { value: 0, rate: -0.001 }
-          }
-        }
+        tribe: 1
       },
-      tooler: {
-        name: 'Tool Maker',
-        description: 'The tribe member creates rock tools for use in hunting, cooking and farming',
-        locked: true,
-        value: { current: 0 },
-        requires: {
-          buildings: {
-            quarry: { value: 1 }
-          },
-          tribe: 1
-        },
-        provides: {
-          resources: {
-            tools: { value: 0, rate: 0.0125, hyper: true },
-            rocks: { value: 0, rate: -0.025 },
-            food: { value: 0, rate: -0.001 }
-          }
+      provides: {
+        resources: {
+          flowers: { value: 0, rate: 0.01, hyper: true },
+          rocks: { value: 0, rate: 0.001, hyper: true },
+          food: { value: 0, rate: -0.001 }
         }
-      },
-      priest: {
-        name: 'Priest',
-        description: 'A core member of any religious ceremony, providing direct access to another world',
-        locked: true,
-        value: { current: 0 },
-        requires: {
-          buildings: {
-            monolith: { value: 1 }
-          },
-          tribe: 1
+      }
+    },
+    tooler: {
+      name: 'Tool Maker',
+      description: 'The tribe member creates rock tools for use in hunting, cooking and farming',
+      requires: {
+        buildings: {
+          quarry: { value: 1 }
         },
-        provides: {
-          resources: {
-            faith: { value: 0, rate: 0.0025, hyper: true },
-            tools: { value: 0, rate: -0.001 },
-            food: { value: 0, rate: -0.001 }
-          }
+        tribe: 1
+      },
+      provides: {
+        resources: {
+          tools: { value: 0, rate: 0.0125, hyper: true },
+          rocks: { value: 0, rate: -0.025 },
+          food: { value: 0, rate: -0.001 }
+        }
+      }
+    },
+    priest: {
+      name: 'Priest',
+      description: 'A core member of any religious ceremony, providing direct access to another world',
+      requires: {
+        buildings: {
+          monolith: { value: 1 }
+        },
+        tribe: 1
+      },
+      provides: {
+        resources: {
+          faith: { value: 0, rate: 0.0025, hyper: true },
+          tools: { value: 0, rate: -0.001 },
+          food: { value: 0, rate: -0.001 }
         }
       }
     }
   };
 
+  var tribe = {
+    free: 0,
+    types: types
+  };
+
+  _.forEach(types, function (item) {
+    item.increase = item.increase || 1.0;
+    item.locked = _.isUndefined(item.locked) ? true : item.locked;
+    item.value = item.value || { current: 0, max: 0, level: 0 };
+
+    item.requires = item.requires || {};
+    item.hasRequires = !!Object.keys(item.requires).length;
+
+    item.provides = item.provides || {};
+    item.hasProvides = !!Object.keys(item.provides).length;
+  });
+
   this.all = function () {
-    return _.filter(tribe.types, {});
+    return _.filter(types, {});
+  };
+
+  this.keys = function () {
+    return Object.keys(types);
+  };
+
+  this.get = function (type) {
+    return types[type];
   };
 
   this.add = function (number) {
@@ -722,7 +728,7 @@ angular.module('munchkins').service('Tribe', function () {
 
   this.total = function () {
     var count = 0;
-    _.forEach(tribe.types, function (type) {
+    _.forEach(types, function (type) {
       count += type.value.current;
     });
     return tribe.free + count;
@@ -731,7 +737,7 @@ angular.module('munchkins').service('Tribe', function () {
   this.save = function (to) {
     to.free = tribe.free;
     to.types = {};
-    _.forEach(tribe.types, function (type, key) {
+    _.forEach(types, function (type, key) {
       to.types[key] = {
         locked: type.locked,
         value: type.value
@@ -742,7 +748,7 @@ angular.module('munchkins').service('Tribe', function () {
   this.load = function (from) {
     tribe.free = from.free || tribe.free;
     _.forEach(from.types, function (t, k) {
-      var type = tribe.types[k];
+      var type = types[k];
       type.locked = t.locked;
       type.value = t.value;
     });

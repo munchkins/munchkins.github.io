@@ -11,16 +11,16 @@
     .section.center
       .content {{item.description}}
     
-    .section(ng-if="ctrl.hasRequires(item)")
+    .section(ng-if="item.hasRequires")
       .heading Required
       .content(ng-repeat="require in ctrl.requires(item)")
         span {{require.name}} @ {{require.buynow | numeric}}
         
-    .section(ng-if="ctrl.hasProvides(item)")
+    .section(ng-if="item.hasProvides")
       .heading
         span Provides/
         span.invalid Consumes
-      .content(ng-repeat="provide in ctrl.provides(item)") 
+      .content(ng-repeat="provide in ctrl.provides(item)")
         span(ng-if="provide.value") {{provide.value}} x {{provide.name}}
         span(ng-if="provide.rate" ng-class="{ 'invalid': provide.rate < 0 }") {{provide.rate | numeric}}/tick x {{provide.name}}
   

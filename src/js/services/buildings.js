@@ -5,9 +5,7 @@ angular
       meadow: {
         name: 'Meadow',
         description: 'A naturally growing field of flowers which can be harvested',
-        locked: true,
         increase: 1.11,
-        value: { current: 0, max: 0, level: 0 },
         requires: {
           resources: {
             flowers: { value: 100, rate: 0 }
@@ -23,9 +21,7 @@ angular
       shelter: {
         name: 'Shelter',
         description: 'A basic shelter made from flower stems with space for one Munchkin',
-        locked: true,
         increase: 1.11,
-        value: { current: 0, max: 0, level: 0 },
         requires: {
           resources: {
             stems: { value: 100, rate: 0 }
@@ -38,9 +34,7 @@ angular
       quarry: {
         name: 'Rock Quarry',
         description: 'An area where rocks can be harvested for use in buildings and tools',
-        locked: true,
         increase: 1.11,
-        value: { current: 0, max: 0, level: 0 },
         requires: {
           resources: {
             rocks: { value: 50, rate: 0 }
@@ -55,9 +49,7 @@ angular
       hut: {
         name: 'Hut',
         description: 'A rock and stem shelter that has space for two additional Munchkins',
-        locked: true,
         increase: 1.125,
-        value: { current: 0, max: 0, level: 0 },
         requires: {
           resources: {
             rocks: { value: 50, rate: 0 },
@@ -71,18 +63,27 @@ angular
       monolith: {
         name: 'Monolith',
         description: 'A large religious structure that is made of rock, used in ceremonies accross Munchkinland',
-        locked: true,
         increase: 1.125,
-        value: { current: 0, max: 0, level: 0 },
         requires: {
           resources: {
             rocks: { value: 1000, rate: 0 },
             tools: { value: 500, rate: 0 }
           }
-        },
-        provides: {}
+        }
       }
     };
+
+    _.forEach(buildings, function(item) {
+      item.increase = item.increase || 1.0;
+      item.locked = _.isUndefined(item.locked) ? true : item.locked;
+      item.value = item.value || { current: 0, max: 0, level: 0 };
+
+      item.requires = item.requires || {};
+      item.hasRequires = !!Object.keys(item.requires).length;
+
+      item.provides = item.provides || {};
+      item.hasProvides = !!Object.keys(item.provides).length;
+    });
 
     this.activeTotal = function() {
       let total = 0;

@@ -1,71 +1,87 @@
 angular
   .module('munchkins')
   .service('Tribe', function() {
-    const tribe = {
-      free: 0,
-      types: {
-        farmer: {
-          name: 'Farmer',
-          description: 'A farmer works the meadows for additional production of producable resources',
-          locked: true,
-          value: { current: 0 },
-          requires: {
-            buildings: {
-              meadow: { value: 1 }
-            },
-            tribe: 1
+    const types = {
+      farmer: {
+        name: 'Farmer',
+        description: 'A farmer works the meadows for additional production of producable resources',
+        requires: {
+          buildings: {
+            meadow: { value: 1 }
           },
-          provides: {
-            resources: {
-              flowers: { value: 0, rate: 0.01, hyper: true },
-              rocks: { value: 0, rate: 0.001, hyper: true },
-              food: { value: 0, rate: -0.001 }
-            }
-          }
+          tribe: 1
         },
-        tooler: {
-          name: 'Tool Maker',
-          description: 'The tribe member creates rock tools for use in hunting, cooking and farming',
-          locked: true,
-          value: { current: 0 },
-          requires: {
-            buildings: {
-              quarry: { value: 1 }
-            },
-            tribe: 1
-          },
-          provides: {
-            resources: {
-              tools: { value: 0, rate: 0.0125, hyper: true },
-              rocks: { value: 0, rate: -0.025 },
-              food: { value: 0, rate: -0.001 }
-            }
+        provides: {
+          resources: {
+            flowers: { value: 0, rate: 0.01, hyper: true },
+            rocks: { value: 0, rate: 0.001, hyper: true },
+            food: { value: 0, rate: -0.001 }
           }
-        },
-        priest: {
-          name: 'Priest',
-          description: 'A core member of any religious ceremony, providing direct access to another world',
-          locked: true,
-          value: { current: 0 },
-          requires: {
-            buildings: {
-              monolith: { value: 1 }
-            },
-            tribe: 1
+        }
+      },
+      tooler: {
+        name: 'Tool Maker',
+        description: 'The tribe member creates rock tools for use in hunting, cooking and farming',
+        requires: {
+          buildings: {
+            quarry: { value: 1 }
           },
-          provides: {
-            resources: {
-              faith: { value: 0, rate: 0.0025, hyper: true },
-              tools: { value: 0, rate: -0.001 },
-              food: { value: 0, rate: -0.001 }
-            }
+          tribe: 1
+        },
+        provides: {
+          resources: {
+            tools: { value: 0, rate: 0.0125, hyper: true },
+            rocks: { value: 0, rate: -0.025 },
+            food: { value: 0, rate: -0.001 }
+          }
+        }
+      },
+      priest: {
+        name: 'Priest',
+        description: 'A core member of any religious ceremony, providing direct access to another world',
+        requires: {
+          buildings: {
+            monolith: { value: 1 }
+          },
+          tribe: 1
+        },
+        provides: {
+          resources: {
+            faith: { value: 0, rate: 0.0025, hyper: true },
+            tools: { value: 0, rate: -0.001 },
+            food: { value: 0, rate: -0.001 }
           }
         }
       }
     };
 
+    const tribe = {
+      free: 0,
+      types: types
+    };
+
+    _.forEach(types, function(item) {
+      item.increase = item.increase || 1.0;
+      item.locked = _.isUndefined(item.locked) ? true : item.locked;
+      item.value = item.value || { current: 0, max: 0, level: 0 };
+
+      item.requires = item.requires || {};
+      item.hasRequires = !!Object.keys(item.requires).length;
+
+      item.provides = item.provides || {};
+      item.hasProvides = !!Object.keys(item.provides).length;
+    });
+
     this.all = function() {
-      return _.filter(tribe.types, {});
+      return _.filter(types, {});
+    };
+
+    this.keys = function() {
+      return Object.keys(types);
+    };
+
+    this.get = function(type) {
+      return types[type];
     };
 
     this.add = function(number) {
@@ -78,7 +94,7 @@ angular
 
     this.total = function() {
       let count = 0;
-      _.forEach(tribe.types, function(type) {
+      _.forEach(types, function(type) {
         count += type.value.current;
       });
       return tribe.free + count;
@@ -87,7 +103,7 @@ angular
     this.save = function(to) {
       to.free = tribe.free;
       to.types = {};
-      _.forEach(tribe.types, function(type, key) {
+      _.forEach(types, function(type, key) {
         to.types[key] = {
           locked: type.locked,
           value: type.value
@@ -98,7 +114,7 @@ angular
     this.load = function(from) {
       tribe.free = from.free || tribe.free;
       _.forEach(from.types, function(t, k) {
-        const type = tribe.types[k];
+        const type = types[k];
         type.locked = t.locked;
         type.value = t.value;
       });
