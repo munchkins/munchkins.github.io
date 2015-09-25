@@ -709,7 +709,7 @@ angular.module('munchkins').service('Tribe', function () {
 
     item.requires = item.requires || {};
     item.requires.resources = item.requires.resources || {};
-    item.requires.resources.food = { value: 0, rate: 0.01 };
+    item.requires.resources.food = { value: 0, rate: 0.0025 };
     item.hasRequires = !!Object.keys(item.requires.resources).length;
 
     item.provides = item.provides || {};
