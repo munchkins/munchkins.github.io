@@ -98,13 +98,13 @@ describe('Exposed Services', function() {
 
   describe('Resource Structure', function() {
     testResources('Resources', {
-      flowers: true, stems: true, petals: true, paper: true, rocks: true, tools: true, food: true, faith: true, happiness: true, charcoal: true, furs: true
+      flowers: true, stems: true, petals: true, paper: true, rocks: true, tools: true, seeds: true, faith: true, happiness: true, charcoal: true, furs: true
     });
   });
 
   describe('Building Structure', function() {
     testStructure('Buildings', {
-      meadow: true, shelter: true, quarry: true, hut: true, monolith: true, fire: true, trap: true
+      garden: true, shelter: true, quarry: true, hut: true, monolith: true, fire: true, trap: true
     });
   });
 

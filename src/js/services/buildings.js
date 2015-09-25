@@ -13,7 +13,6 @@ angular
         },
         provides: {
           resources: {
-            food: { value: 0, rate: 0.01 },
             happiness: { value: 1, rate: 0.001 },
             charcoal: { value: 0, rate: 0.0015 }
           }
@@ -35,29 +34,28 @@ angular
       },
       trap: {
         name: 'Trap',
-        description: 'A small trap used to catch small animals that wander across the path',
+        description: 'A small trap used to catch animals that wander across the path',
         increase: 1.11,
         requires: {
           resources: {
             stems: { value: 20, rate: 0 },
-            food: { value: 2, rate: 0 }
+            seeds: { value: 5, rate: 0 }
           }
         },
         provides: {
           resources: {
-            food: { value: 0, rate: 0.001 },
             furs: { value: 0, rate: 0.001 }
           },
           tribe: 1
         }
       },
-      meadow: {
-        name: 'Meadow',
+      garden: {
+        name: 'Garden',
         description: 'A naturally growing field of flowers which can be harvested',
         increase: 1.11,
         requires: {
           resources: {
-            flowers: { value: 100, rate: 0 }
+            seeds: { value: 100, rate: 0 }
           }
         },
         provides: {
@@ -156,8 +154,10 @@ angular
     this.load = function(from) {
       _.forEach(from, function(b, k) {
         const building = buildings[k];
-        building.value = b.value;
-        building.locked = b.locked;
+        if (building) {
+          building.value = b.value;
+          building.locked = b.locked;
+        }
       });
     };
   });

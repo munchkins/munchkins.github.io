@@ -34,9 +34,9 @@ angular
         name: 'Tools',
         description: 'Tools makes hard tasks easier'
       },
-      food: {
-        name: 'Food',
-        description: 'Food is always needed, this planet or another'
+      seeds: {
+        name: 'Seeds',
+        description: 'Seeds are is always needed as an edible resource, on this planet or another'
       },
       happiness: {
         name: 'Happiness',
@@ -75,7 +75,10 @@ angular
 
     this.load = function(from) {
       _.forEach(from, function(r, k) {
-        resources[k].value = r.value;
+        const resource = resources[k];
+        if (resource) {
+          resource.value = r.value;
+        }
       });
     };
   });

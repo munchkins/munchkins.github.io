@@ -4,10 +4,10 @@ angular
     const types = {
       farmer: {
         name: 'Farmer',
-        description: 'A farmer works the meadows for additional production of producable resources',
+        description: 'A farmer works the gardens for additional production of producable resources',
         requires: {
           buildings: {
-            meadow: { value: 1 }
+            garden: { value: 1 }
           },
           tribe: 1
         },
@@ -68,7 +68,7 @@ angular
 
       item.requires = item.requires || {};
       item.requires.resources = item.requires.resources || {};
-      item.requires.resources.food = { value: 0, rate: 0.0025 };
+      item.requires.resources.seeds = { value: 0, rate: 0.0025 };
       item.hasRequires = !!Object.keys(item.requires.resources).length;
 
       item.provides = item.provides || {};
@@ -119,8 +119,10 @@ angular
       tribe.free = from.free || tribe.free;
       _.forEach(from.types, function(t, k) {
         const type = types[k];
-        type.locked = t.locked;
-        type.value = t.value;
+        if (type) {
+          type.locked = t.locked;
+          type.value = t.value;
+        }
       });
     };
   });

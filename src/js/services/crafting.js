@@ -16,16 +16,13 @@ angular
         name: 'Process Flowers',
         description: 'Processes and deconstructs flowers into petals, stems & edible components',
         requires: {
-          buildings: {
-            meadow: { value: 1 }
-          },
           resources: {
             flowers: { value: 10, rate: 0 }
           }
         },
         provides: {
           resources: {
-            food: { value: 2, rate: 0 },
+            seeds: { value: 2, rate: 0 },
             stems: { value: 9, rate: 0 },
             petals: { value: 75, rate: 0 }
           }
@@ -56,7 +53,8 @@ angular
         provides: {
           resources: {
             rocks: { value: 5, rate: 0 },
-            food: { value: 25, rate: 0 }
+            seeds: { value: 25, rate: 0 },
+            furs: { value: 7, rate: 0 }
           }
         }
       }
@@ -100,8 +98,10 @@ angular
     this.load = function(from) {
       _.forEach(from, function(c, k) {
         const craft = crafting[k];
-        craft.value = c.value;
-        craft.locked = c.locked;
+        if (craft) {
+          craft.value = c.value;
+          craft.locked = c.locked;
+        }
       });
     };
   });

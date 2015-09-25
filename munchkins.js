@@ -248,7 +248,6 @@ angular.module('munchkins').service('Buildings', function () {
       },
       provides: {
         resources: {
-          food: { value: 0, rate: 0.01 },
           happiness: { value: 1, rate: 0.001 },
           charcoal: { value: 0, rate: 0.0015 }
         }
@@ -270,29 +269,28 @@ angular.module('munchkins').service('Buildings', function () {
     },
     trap: {
       name: 'Trap',
-      description: 'A small trap used to catch small animals that wander across the path',
+      description: 'A small trap used to catch animals that wander across the path',
       increase: 1.11,
       requires: {
         resources: {
           stems: { value: 20, rate: 0 },
-          food: { value: 2, rate: 0 }
+          seeds: { value: 5, rate: 0 }
         }
       },
       provides: {
         resources: {
-          food: { value: 0, rate: 0.001 },
           furs: { value: 0, rate: 0.001 }
         },
         tribe: 1
       }
     },
-    meadow: {
-      name: 'Meadow',
+    garden: {
+      name: 'Garden',
       description: 'A naturally growing field of flowers which can be harvested',
       increase: 1.11,
       requires: {
         resources: {
-          flowers: { value: 100, rate: 0 }
+          seeds: { value: 100, rate: 0 }
         }
       },
       provides: {
@@ -391,8 +389,10 @@ angular.module('munchkins').service('Buildings', function () {
   this.load = function (from) {
     _.forEach(from, function (b, k) {
       var building = buildings[k];
-      building.value = b.value;
-      building.locked = b.locked;
+      if (building) {
+        building.value = b.value;
+        building.locked = b.locked;
+      }
     });
   };
 });
@@ -414,16 +414,13 @@ angular.module('munchkins').service('Crafting', function () {
       name: 'Process Flowers',
       description: 'Processes and deconstructs flowers into petals, stems & edible components',
       requires: {
-        buildings: {
-          meadow: { value: 1 }
-        },
         resources: {
           flowers: { value: 10, rate: 0 }
         }
       },
       provides: {
         resources: {
-          food: { value: 2, rate: 0 },
+          seeds: { value: 2, rate: 0 },
           stems: { value: 9, rate: 0 },
           petals: { value: 75, rate: 0 }
         }
@@ -454,7 +451,8 @@ angular.module('munchkins').service('Crafting', function () {
       provides: {
         resources: {
           rocks: { value: 5, rate: 0 },
-          food: { value: 25, rate: 0 }
+          seeds: { value: 25, rate: 0 },
+          furs: { value: 7, rate: 0 }
         }
       }
     }
@@ -498,8 +496,10 @@ angular.module('munchkins').service('Crafting', function () {
   this.load = function (from) {
     _.forEach(from, function (c, k) {
       var craft = crafting[k];
-      craft.value = c.value;
-      craft.locked = c.locked;
+      if (craft) {
+        craft.value = c.value;
+        craft.locked = c.locked;
+      }
     });
   };
 });
@@ -623,9 +623,9 @@ angular.module('munchkins').service('Resources', function () {
       name: 'Tools',
       description: 'Tools makes hard tasks easier'
     },
-    food: {
-      name: 'Food',
-      description: 'Food is always needed, this planet or another'
+    seeds: {
+      name: 'Seeds',
+      description: 'Seeds are is always needed as an edible resource, on this planet or another'
     },
     happiness: {
       name: 'Happiness',
@@ -664,7 +664,10 @@ angular.module('munchkins').service('Resources', function () {
 
   this.load = function (from) {
     _.forEach(from, function (r, k) {
-      resources[k].value = r.value;
+      var resource = resources[k];
+      if (resource) {
+        resource.value = r.value;
+      }
     });
   };
 });
@@ -674,10 +677,10 @@ angular.module('munchkins').service('Tribe', function () {
   var types = {
     farmer: {
       name: 'Farmer',
-      description: 'A farmer works the meadows for additional production of producable resources',
+      description: 'A farmer works the gardens for additional production of producable resources',
       requires: {
         buildings: {
-          meadow: { value: 1 }
+          garden: { value: 1 }
         },
         tribe: 1
       },
@@ -738,7 +741,7 @@ angular.module('munchkins').service('Tribe', function () {
 
     item.requires = item.requires || {};
     item.requires.resources = item.requires.resources || {};
-    item.requires.resources.food = { value: 0, rate: 0.0025 };
+    item.requires.resources.seeds = { value: 0, rate: 0.0025 };
     item.hasRequires = !!Object.keys(item.requires.resources).length;
 
     item.provides = item.provides || {};
@@ -789,8 +792,10 @@ angular.module('munchkins').service('Tribe', function () {
     tribe.free = from.free || tribe.free;
     _.forEach(from.types, function (t, k) {
       var type = types[k];
-      type.locked = t.locked;
-      type.value = t.value;
+      if (type) {
+        type.locked = t.locked;
+        type.value = t.value;
+      }
     });
   };
 });
