@@ -3,7 +3,7 @@ angular
   .service('Crafting', function() {
     const crafting = {
       collect: {
-        name: 'Collect Flowers',
+        name: 'Gather Flowers',
         description: 'Flowers are the staple of the Munchkin diet, collect them',
         locked: false,
         provides: {
@@ -14,7 +14,7 @@ angular
       },
       processing: {
         name: 'Process Flowers',
-        description: 'Processes and deconstructs flowers into petals and stems',
+        description: 'Processes and deconstructs flowers into petals, stems & edible components',
         requires: {
           buildings: {
             meadow: { value: 1 }
@@ -25,6 +25,7 @@ angular
         },
         provides: {
           resources: {
+            food: { value: 2, rate: 0 },
             stems: { value: 9, rate: 0 },
             petals: { value: 75, rate: 0 }
           }

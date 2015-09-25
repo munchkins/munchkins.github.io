@@ -30,6 +30,10 @@ angular
         name: 'Food',
         description: 'Food is always needed, this planet or another'
       },
+      happiness: {
+        name: 'Happiness',
+        description: 'The overal state of mind and contentment of the actual tribe'
+      },
       faith: {
         name: 'Faith',
         description: 'A core ingrediesnt in any religious ceremony, required for any festivals'

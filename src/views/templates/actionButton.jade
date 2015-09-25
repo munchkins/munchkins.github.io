@@ -14,13 +14,13 @@
       .heading Required
       .content(ng-repeat="require in ctrl.requires(item)")
         span {{require.name}}&nbsp;@&nbsp;
-        span(ng-if="require.buynow") {{require.buynow | numeric}}
+        span(ng-if="require.buynow && !require.rate") {{require.buynow | numeric}}
         span(ng-if="require.rate") {{require.rate*4 | numeric}}/sec
         
     .section(ng-if="item.hasProvides")
       .heading Provides
       .content(ng-repeat="provide in ctrl.provides(item)")
         span {{provide.name}}&nbsp;@&nbsp;
-        span(ng-if="provide.value") {{provide.value}} 
+        span(ng-if="provide.value && !provide.rate") {{provide.value}} 
         span(ng-if="provide.rate") {{provide.rate*4 | numeric}}/sec
   

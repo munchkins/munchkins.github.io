@@ -237,6 +237,22 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
 
 angular.module('munchkins').service('Buildings', function () {
   var buildings = {
+    fire: {
+      name: 'Fire',
+      description: 'Fire is the center of the up-and-comming community, providing a place to cook and general happiness',
+      increase: 1.11,
+      requires: {
+        resources: {
+          stems: { value: 10, rate: 0.02 }
+        }
+      },
+      provides: {
+        resources: {
+          food: { value: 0, rate: 0.01 },
+          happiness: { value: 1, rate: 0.001 }
+        }
+      }
+    },
     meadow: {
       name: 'Meadow',
       description: 'A naturally growing field of flowers which can be harvested',
@@ -364,7 +380,7 @@ angular.module('munchkins').service('Buildings', function () {
 angular.module('munchkins').service('Crafting', function () {
   var crafting = {
     collect: {
-      name: 'Collect Flowers',
+      name: 'Gather Flowers',
       description: 'Flowers are the staple of the Munchkin diet, collect them',
       locked: false,
       provides: {
@@ -375,7 +391,7 @@ angular.module('munchkins').service('Crafting', function () {
     },
     processing: {
       name: 'Process Flowers',
-      description: 'Processes and deconstructs flowers into petals and stems',
+      description: 'Processes and deconstructs flowers into petals, stems & edible components',
       requires: {
         buildings: {
           meadow: { value: 1 }
@@ -386,6 +402,7 @@ angular.module('munchkins').service('Crafting', function () {
       },
       provides: {
         resources: {
+          food: { value: 2, rate: 0 },
           stems: { value: 9, rate: 0 },
           petals: { value: 75, rate: 0 }
         }
@@ -580,6 +597,10 @@ angular.module('munchkins').service('Resources', function () {
     food: {
       name: 'Food',
       description: 'Food is always needed, this planet or another'
+    },
+    happiness: {
+      name: 'Happiness',
+      description: 'The overal state of mind and contentment of the actual tribe'
     },
     faith: {
       name: 'Faith',

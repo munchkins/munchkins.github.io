@@ -2,6 +2,22 @@ angular
   .module('munchkins')
   .service('Buildings', function() {
     const buildings = {
+      fire: {
+        name: 'Fire',
+        description: 'Fire is the center of the up-and-comming community, providing a place to cook and general happiness',
+        increase: 1.11,
+        requires: {
+          resources: {
+            stems: { value: 10, rate: 0.02 }
+          }
+        },
+        provides: {
+          resources: {
+            food: { value: 0, rate: 0.01 },
+            happiness: { value: 1, rate: 0.001 }
+          }
+        }
+      },
       meadow: {
         name: 'Meadow',
         description: 'A naturally growing field of flowers which can be harvested',
