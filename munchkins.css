@@ -5,6 +5,8 @@ html{box-sizing:border-box}
 body{color:#333;font-family:"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;font-size:80%}
 a{cursor:pointer;color:#33f;text-decoration:none}
 a.active,a:hover{text-shadow:0 0 .5em #99f}
+a span{vertical-align:middle}
+a span.small{font-size:80%;vertical-align:top}
 .invalid{color:#c33}
 .center{text-align:center}
 .container{margin-right:2.35765%}

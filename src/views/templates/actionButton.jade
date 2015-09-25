@@ -1,5 +1,7 @@
 .action-button(ng-if="!item.locked" ng-class="{ 'inactive': !ctrl.isBuyable(item) }" ng-click="ctrl.buy(item)")
-  a {{item.name}} ({{item.value.current | numeric:0}})
+  a
+    span {{item.name}}&nbsp;
+    span.small ({{item.value.current | numeric:0}})
   
   .detail
     span(ng-repeat="require in ctrl.requires(item)" ng-class="{ 'invalid': !require.affordable }")

@@ -1,4 +1,7 @@
 .subbar(ng-controller="Subbar as sub")
   .nav
-    a(href="#/buildings" ng-class="{ 'active': sub.isOn('/buildings') }" ng-if="sub.totalBuildings()") Buildings
-    a(href="#/tribe"  ng-class="{ 'active': sub.isOn('/tribe') }" ng-if="sub.totalTribe()") Tribe ({{sub.allocTribe()}}/{{sub.totalTribe()}})
+    a(href="#/buildings" ng-class="{ 'active': sub.isOn('/buildings') }" ng-if="sub.totalBuildings()")
+      span Buildings
+    a(href="#/tribe"  ng-class="{ 'active': sub.isOn('/tribe') }" ng-if="sub.totalTribe()")
+      span Tribe&nbsp;
+      span.small ({{sub.allocTribe()}}/{{sub.totalTribe()}})

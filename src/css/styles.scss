@@ -29,6 +29,15 @@ a {
   &.active, &:hover {
     text-shadow: 0px 0px 0.5em #99f;
   }
+
+  span {
+    vertical-align: middle;
+
+    &.small {
+      font-size: 80%;
+      vertical-align: top;
+    }
+  }
 }
 
 .invalid {
