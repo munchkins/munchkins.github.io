@@ -249,7 +249,8 @@ angular.module('munchkins').service('Buildings', function () {
       provides: {
         resources: {
           food: { value: 0, rate: 0.01 },
-          happiness: { value: 1, rate: 0.001 }
+          happiness: { value: 1, rate: 0.001 },
+          charcoal: { value: 0, rate: 0.0015 }
         }
       }
     },
@@ -585,6 +586,10 @@ angular.module('munchkins').service('Resources', function () {
     paper: {
       name: 'Paper',
       description: 'Petal paper are a fine resource'
+    },
+    charcoal: {
+      name: 'Charcoal',
+      description: 'A byproduct of burning stems, wood and other resources'
     },
     rocks: {
       name: 'Rocks',

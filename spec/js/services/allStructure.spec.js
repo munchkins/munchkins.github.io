@@ -98,7 +98,7 @@ describe('Exposed Services', function() {
 
   describe('Resource Structure', function() {
     testResources('Resources', {
-      flowers: true, stems: true, petals: true, paper: true, rocks: true, tools: true, food: true, faith: true, happiness: true
+      flowers: true, stems: true, petals: true, paper: true, rocks: true, tools: true, food: true, faith: true, happiness: true, charcoal: true
     });
   });
 

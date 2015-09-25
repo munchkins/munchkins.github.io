@@ -14,7 +14,8 @@ angular
         provides: {
           resources: {
             food: { value: 0, rate: 0.01 },
-            happiness: { value: 1, rate: 0.001 }
+            happiness: { value: 1, rate: 0.001 },
+            charcoal: { value: 0, rate: 0.0015 }
           }
         }
       },

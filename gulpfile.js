@@ -82,16 +82,13 @@ gulp.task('bower', function() {
   return bower();
 });
 
-gulp.task('test', ['bower'], function(done) {
+gulp.task('build', ['js-eslint', 'js-babel', 'html-jade', 'css-sass']);
+
+gulp.task('test', ['bower', 'build'], function(done) {
   new karma.Server({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true
   }, done).start();
 });
 
-gulp.task('default', [
-  'js-eslint',
-  'js-babel',
-  'html-jade',
-  'css-sass'
-]);
+gulp.task('default', ['test']);

@@ -18,6 +18,10 @@ angular
         name: 'Paper',
         description: 'Petal paper are a fine resource'
       },
+      charcoal: {
+        name: 'Charcoal',
+        description: 'A byproduct of burning stems, wood and other resources'
+      },
       rocks: {
         name: 'Rocks',
         description: 'Rocks are a by-product of farming and produced by mining'
