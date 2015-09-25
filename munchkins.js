@@ -254,6 +254,37 @@ angular.module('munchkins').service('Buildings', function () {
         }
       }
     },
+    shelter: {
+      name: 'Shelter',
+      description: 'A basic shelter made from flower stems with space for one Munchkin',
+      increase: 1.11,
+      requires: {
+        resources: {
+          stems: { value: 100, rate: 0 }
+        }
+      },
+      provides: {
+        tribe: 1
+      }
+    },
+    trap: {
+      name: 'Trap',
+      description: 'A small trap used to catch small animals that wander across the path',
+      increase: 1.11,
+      requires: {
+        resources: {
+          stems: { value: 20, rate: 0 },
+          food: { value: 2, rate: 0 }
+        }
+      },
+      provides: {
+        resources: {
+          food: { value: 0, rate: 0.001 },
+          furs: { value: 0, rate: 0.001 }
+        },
+        tribe: 1
+      }
+    },
     meadow: {
       name: 'Meadow',
       description: 'A naturally growing field of flowers which can be harvested',
@@ -268,19 +299,6 @@ angular.module('munchkins').service('Buildings', function () {
           flowers: { value: 0, rate: 0.01 },
           rocks: { value: 0, rate: 0.001 }
         }
-      }
-    },
-    shelter: {
-      name: 'Shelter',
-      description: 'A basic shelter made from flower stems with space for one Munchkin',
-      increase: 1.11,
-      requires: {
-        resources: {
-          stems: { value: 100, rate: 0 }
-        }
-      },
-      provides: {
-        tribe: 1
       }
     },
     quarry: {
@@ -586,6 +604,10 @@ angular.module('munchkins').service('Resources', function () {
     paper: {
       name: 'Paper',
       description: 'Petal paper are a fine resource'
+    },
+    furs: {
+      name: 'Furs',
+      description: 'An animal byproduct that has uses in and around the village'
     },
     charcoal: {
       name: 'Charcoal',

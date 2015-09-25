@@ -18,6 +18,10 @@ angular
         name: 'Paper',
         description: 'Petal paper are a fine resource'
       },
+      furs: {
+        name: 'Furs',
+        description: 'An animal byproduct that has uses in and around the village'
+      },
       charcoal: {
         name: 'Charcoal',
         description: 'A byproduct of burning stems, wood and other resources'
