@@ -3,8 +3,7 @@
   
   .detail
     span(ng-repeat="require in ctrl.requires(item)" ng-class="{ 'invalid': !require.affordable }")
-      span(ng-if="$index") ,&nbsp;
-      span {{require.name}}@{{require.buynow | numeric}}
+      span(ng-if="require.buynow") &nbsp;{{require.name}}@{{require.buynow | numeric}}
     span &nbsp;
   
   .hint
@@ -14,13 +13,14 @@
     .section(ng-if="item.hasRequires")
       .heading Required
       .content(ng-repeat="require in ctrl.requires(item)")
-        span {{require.name}} @ {{require.buynow | numeric}}
+        span {{require.name}}&nbsp;@&nbsp;
+        span(ng-if="require.buynow") {{require.buynow | numeric}}
+        span(ng-if="require.rate") {{require.rate*4 | numeric}}/sec
         
     .section(ng-if="item.hasProvides")
-      .heading
-        span Provides/
-        span.invalid Consumes
+      .heading Provides
       .content(ng-repeat="provide in ctrl.provides(item)")
-        span(ng-if="provide.value") {{provide.value}} x {{provide.name}}
-        span(ng-if="provide.rate" ng-class="{ 'invalid': provide.rate < 0 }") {{provide.rate | numeric}}/tick x {{provide.name}}
+        span {{provide.name}}&nbsp;@&nbsp;
+        span(ng-if="provide.value") {{provide.value}} 
+        span(ng-if="provide.rate") {{provide.rate*4 | numeric}}/sec
   

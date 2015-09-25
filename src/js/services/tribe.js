@@ -14,8 +14,7 @@ angular
         provides: {
           resources: {
             flowers: { value: 0, rate: 0.01, hyper: true },
-            rocks: { value: 0, rate: 0.001, hyper: true },
-            food: { value: 0, rate: -0.001 }
+            rocks: { value: 0, rate: 0.001, hyper: true }
           }
         }
       },
@@ -26,13 +25,14 @@ angular
           buildings: {
             quarry: { value: 1 }
           },
+          resources: {
+            rocks: { value: 0, rate: 0.025 }
+          },
           tribe: 1
         },
         provides: {
           resources: {
-            tools: { value: 0, rate: 0.0125, hyper: true },
-            rocks: { value: 0, rate: -0.025 },
-            food: { value: 0, rate: -0.001 }
+            tools: { value: 0, rate: 0.0125, hyper: true }
           }
         }
       },
@@ -43,13 +43,14 @@ angular
           buildings: {
             monolith: { value: 1 }
           },
+          resources: {
+            tools: { value: 0, rate: 0.001 }
+          },
           tribe: 1
         },
         provides: {
           resources: {
-            faith: { value: 0, rate: 0.0025, hyper: true },
-            tools: { value: 0, rate: -0.001 },
-            food: { value: 0, rate: -0.001 }
+            faith: { value: 0, rate: 0.0025, hyper: true }
           }
         }
       }
@@ -66,10 +67,13 @@ angular
       item.value = item.value || { current: 0, max: 0, level: 0 };
 
       item.requires = item.requires || {};
-      item.hasRequires = !!Object.keys(item.requires).length;
+      item.requires.resources = item.requires.resources || {};
+      item.requires.resources.food = { value: 0, rate: 0.001 };
+      item.hasRequires = !!Object.keys(item.requires.resources).length;
 
       item.provides = item.provides || {};
-      item.hasProvides = !!Object.keys(item.provides).length;
+      item.provides.resources = item.provides.resources || {};
+      item.hasProvides = !!Object.keys(item.provides.resources).length;
     });
 
     this.all = function() {

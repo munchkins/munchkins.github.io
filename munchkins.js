@@ -168,7 +168,9 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
     item.value.current++;
 
     _.forEach(item.requires.resources, function (r, k) {
-      Resources.get(k).value.current -= r.value * incr;
+      var resource = Resources.get(k);
+      resource.value.current -= r.value * incr;
+      resource.rate -= r.rate;
     });
 
     _.forEach(item.provides.resources, function (p, k) {
@@ -183,26 +185,6 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
     unlockAll();
 
     return true;
-  };
-
-  this.hasRequires = function (item) {
-    var has = false;
-
-    _.forEach(item.requires.resources, function () {
-      has = true;
-    });
-
-    return has;
-  };
-
-  this.hasProvides = function (item) {
-    var has = false;
-
-    _.forEach(item.provides.resources, function () {
-      has = true;
-    });
-
-    return has;
   };
 
   this.provides = function (item) {
@@ -332,10 +314,12 @@ angular.module('munchkins').service('Buildings', function () {
     item.value = item.value || { current: 0, max: 0, level: 0 };
 
     item.requires = item.requires || {};
-    item.hasRequires = !!Object.keys(item.requires).length;
+    item.requires.resources = item.requires.resources || {};
+    item.hasRequires = !!Object.keys(item.requires.resources).length;
 
     item.provides = item.provides || {};
-    item.hasProvides = !!Object.keys(item.provides).length;
+    item.provides.resources = item.provides.resources || {};
+    item.hasProvides = !!Object.keys(item.provides.resources).length;
   });
 
   this.activeTotal = function () {
@@ -444,10 +428,12 @@ angular.module('munchkins').service('Crafting', function () {
     item.value = item.value || { current: 0, max: 0, level: 0 };
 
     item.requires = item.requires || {};
-    item.hasRequires = !!Object.keys(item.requires).length;
+    item.requires.resources = item.requires.resources || {};
+    item.hasRequires = !!Object.keys(item.requires.resources).length;
 
     item.provides = item.provides || {};
-    item.hasProvides = !!Object.keys(item.provides).length;
+    item.provides.resources = item.provides.resources || {};
+    item.hasProvides = !!Object.keys(item.provides.resources).length;
   });
 
   this.all = function () {
@@ -648,8 +634,7 @@ angular.module('munchkins').service('Tribe', function () {
       provides: {
         resources: {
           flowers: { value: 0, rate: 0.01, hyper: true },
-          rocks: { value: 0, rate: 0.001, hyper: true },
-          food: { value: 0, rate: -0.001 }
+          rocks: { value: 0, rate: 0.001, hyper: true }
         }
       }
     },
@@ -660,13 +645,14 @@ angular.module('munchkins').service('Tribe', function () {
         buildings: {
           quarry: { value: 1 }
         },
+        resources: {
+          rocks: { value: 0, rate: 0.025 }
+        },
         tribe: 1
       },
       provides: {
         resources: {
-          tools: { value: 0, rate: 0.0125, hyper: true },
-          rocks: { value: 0, rate: -0.025 },
-          food: { value: 0, rate: -0.001 }
+          tools: { value: 0, rate: 0.0125, hyper: true }
         }
       }
     },
@@ -677,13 +663,14 @@ angular.module('munchkins').service('Tribe', function () {
         buildings: {
           monolith: { value: 1 }
         },
+        resources: {
+          tools: { value: 0, rate: 0.001 }
+        },
         tribe: 1
       },
       provides: {
         resources: {
-          faith: { value: 0, rate: 0.0025, hyper: true },
-          tools: { value: 0, rate: -0.001 },
-          food: { value: 0, rate: -0.001 }
+          faith: { value: 0, rate: 0.0025, hyper: true }
         }
       }
     }
@@ -700,10 +687,13 @@ angular.module('munchkins').service('Tribe', function () {
     item.value = item.value || { current: 0, max: 0, level: 0 };
 
     item.requires = item.requires || {};
-    item.hasRequires = !!Object.keys(item.requires).length;
+    item.requires.resources = item.requires.resources || {};
+    item.requires.resources.food = { value: 0, rate: 0.001 };
+    item.hasRequires = !!Object.keys(item.requires.resources).length;
 
     item.provides = item.provides || {};
-    item.hasProvides = !!Object.keys(item.provides).length;
+    item.provides.resources = item.provides.resources || {};
+    item.hasProvides = !!Object.keys(item.provides.resources).length;
   });
 
   this.all = function () {

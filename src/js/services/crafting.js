@@ -67,10 +67,12 @@ angular
       item.value = item.value || { current: 0, max: 0, level: 0 };
 
       item.requires = item.requires || {};
-      item.hasRequires = !!Object.keys(item.requires).length;
+      item.requires.resources = item.requires.resources || {};
+      item.hasRequires = !!Object.keys(item.requires.resources).length;
 
       item.provides = item.provides || {};
-      item.hasProvides = !!Object.keys(item.provides).length;
+      item.provides.resources = item.provides.resources || {};
+      item.hasProvides = !!Object.keys(item.provides.resources).length;
     });
 
     this.all = function() {

@@ -53,7 +53,9 @@ angular
       item.value.current++;
 
       _.forEach(item.requires.resources, function(r, k) {
-        Resources.get(k).value.current -= r.value * incr;
+        const resource = Resources.get(k);
+        resource.value.current -= r.value * incr;
+        resource.rate -= r.rate;
       });
 
       _.forEach(item.provides.resources, function(p, k) {
@@ -68,26 +70,6 @@ angular
       unlockAll();
 
       return true;
-    };
-
-    this.hasRequires = function(item) {
-      let has = false;
-
-      _.forEach(item.requires.resources, () => {
-        has = true;
-      });
-
-      return has;
-    };
-
-    this.hasProvides = function(item) {
-      let has = false;
-
-      _.forEach(item.provides.resources, () => {
-        has = true;
-      });
-
-      return has;
     };
 
     this.provides = function(item) {
