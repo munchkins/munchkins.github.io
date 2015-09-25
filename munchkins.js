@@ -260,6 +260,7 @@ angular.module('munchkins').service('Buildings', function () {
       increase: 1.11,
       requires: {
         resources: {
+          furs: { value: 5, rate: 0 },
           stems: { value: 100, rate: 0 }
         }
       },
@@ -323,6 +324,7 @@ angular.module('munchkins').service('Buildings', function () {
       requires: {
         resources: {
           rocks: { value: 50, rate: 0 },
+          furs: { value: 25, rate: 0 },
           stems: { value: 150, rate: 0 }
         }
       },
