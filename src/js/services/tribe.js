@@ -16,7 +16,7 @@ angular
         },
         provides: {
           resources: {
-            seeds: { value: 0, rate: 0.01, hyper: true },
+            seeds: { value: 0, rate: 0.01 },
             stems: { value: 0, rate: 0.04 },
             petals: { value: 0, rate: 0.4 }
           }
@@ -33,8 +33,8 @@ angular
         },
         provides: {
           resources: {
-            flowers: { value: 0, rate: 0.01, hyper: true },
-            rocks: { value: 0, rate: 0.001, hyper: true }
+            flowers: { value: 0, rate: 0.01 },
+            rocks: { value: 0, rate: 0.001 }
           }
         }
       },
@@ -52,7 +52,7 @@ angular
         },
         provides: {
           resources: {
-            tools: { value: 0, rate: 0.0125, hyper: true }
+            tools: { value: 0, rate: 0.0125 }
           }
         }
       },
@@ -70,7 +70,7 @@ angular
         },
         provides: {
           resources: {
-            faith: { value: 0, rate: 0.0025, hyper: true }
+            faith: { value: 0, rate: 0.0025 }
           }
         }
       }

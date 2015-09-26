@@ -54,14 +54,14 @@ angular
 
       _.forEach(item.requires.resources, function(r, k) {
         const resource = Resources.get(k);
-        resource.value.current -= r.value * incr;
-        resource.rate -= r.rate;
+        resource.value.current -= (r.value || 0) * incr;
+        resource.rate -= (r.rate || 0);
       });
 
       _.forEach(item.provides.resources, function(p, k) {
         const resource = Resources.get(k);
-        resource.value.current += p.value;
-        resource.rate += Math.pow(p.rate, p.hyper ? item.value.current : 1);
+        resource.value.current += (p.value || 0);
+        resource.rate += item.value.current * (p.rate || 0);
       });
 
       Tribe.add(-1 * (item.requires.tribe || 0));
@@ -98,13 +98,7 @@ angular
     this.initResource = function(item) {
       _.forEach(item.provides.resources, function(p, k) {
         const resource = Resources.get(k);
-        if (p.hyper) {
-          for (let i = 1; i <= item.value.current; i++) {
-            resource.rate += Math.pow((p.rate || 0), i);
-          }
-        } else {
-          resource.rate += item.value.current * (p.rate || 0);
-        }
+        resource.rate += item.value.current * (p.rate || 0);
       });
 
       _.forEach(item.requires.resources, function(r, k) {

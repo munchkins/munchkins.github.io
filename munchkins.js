@@ -171,14 +171,14 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
 
     _.forEach(item.requires.resources, function (r, k) {
       var resource = Resources.get(k);
-      resource.value.current -= r.value * incr;
-      resource.rate -= r.rate;
+      resource.value.current -= (r.value || 0) * incr;
+      resource.rate -= r.rate || 0;
     });
 
     _.forEach(item.provides.resources, function (p, k) {
       var resource = Resources.get(k);
-      resource.value.current += p.value;
-      resource.rate += Math.pow(p.rate, p.hyper ? item.value.current : 1);
+      resource.value.current += p.value || 0;
+      resource.rate += item.value.current * (p.rate || 0);
     });
 
     Tribe.add(-1 * (item.requires.tribe || 0));
@@ -215,13 +215,7 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
   this.initResource = function (item) {
     _.forEach(item.provides.resources, function (p, k) {
       var resource = Resources.get(k);
-      if (p.hyper) {
-        for (var i = 1; i <= item.value.current; i++) {
-          resource.rate += Math.pow(p.rate || 0, i);
-        }
-      } else {
-        resource.rate += item.value.current * (p.rate || 0);
-      }
+      resource.rate += item.value.current * (p.rate || 0);
     });
 
     _.forEach(item.requires.resources, function (r, k) {
@@ -535,7 +529,7 @@ angular.module('munchkins').service('Game', ["$interval", "Actions", "Buildings"
 
     var resources = Resources.all();
     _.forEach(resources, function (resource) {
-      resource.gamerate = resource.rate * 1.0 /* + game.bonus*/;
+      resource.gamerate = resource.rate; // (resource.rate * (1.0 + game.bonus));
       resource.value.current = Math.max(0, resource.gamerate + resource.value.current);
       if (resource.value.limit) {
         resource.value.current = Math.min(resource.value.current, resource.value.limit);
@@ -710,7 +704,7 @@ angular.module('munchkins').service('Tribe', function () {
       },
       provides: {
         resources: {
-          seeds: { value: 0, rate: 0.01, hyper: true },
+          seeds: { value: 0, rate: 0.01 },
           stems: { value: 0, rate: 0.04 },
           petals: { value: 0, rate: 0.4 }
         }
@@ -727,8 +721,8 @@ angular.module('munchkins').service('Tribe', function () {
       },
       provides: {
         resources: {
-          flowers: { value: 0, rate: 0.01, hyper: true },
-          rocks: { value: 0, rate: 0.001, hyper: true }
+          flowers: { value: 0, rate: 0.01 },
+          rocks: { value: 0, rate: 0.001 }
         }
       }
     },
@@ -746,7 +740,7 @@ angular.module('munchkins').service('Tribe', function () {
       },
       provides: {
         resources: {
-          tools: { value: 0, rate: 0.0125, hyper: true }
+          tools: { value: 0, rate: 0.0125 }
         }
       }
     },
@@ -764,7 +758,7 @@ angular.module('munchkins').service('Tribe', function () {
       },
       provides: {
         resources: {
-          faith: { value: 0, rate: 0.0025, hyper: true }
+          faith: { value: 0, rate: 0.0025 }
         }
       }
     }

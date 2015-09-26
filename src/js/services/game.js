@@ -28,7 +28,7 @@ angular
 
       const resources = Resources.all();
       _.forEach(resources, function(resource) {
-        resource.gamerate = (resource.rate * (1.0/* + game.bonus*/));
+        resource.gamerate = resource.rate; // (resource.rate * (1.0 + game.bonus));
         resource.value.current = Math.max(0, resource.gamerate + resource.value.current);
         if (resource.value.limit) {
           resource.value.current = Math.min(resource.value.current, resource.value.limit);
