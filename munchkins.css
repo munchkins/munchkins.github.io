@@ -18,6 +18,7 @@ a span.small{font-size:80%;vertical-align:top}
 .topbar .info:last-child{margin-right:0}
 .topbar .menu{margin-right:2.35765%;text-align:right}
 .topbar .menu:last-child{margin-right:0}
+.topbar .menu a{margin-left:1em}
 .version{float:left;display:block;margin-right:2.35765%;width:100%;font-size:80%;color:#aaa;text-align:right}
 .version:last-child{margin-right:0}
 .subbar{float:left;display:block;margin-right:2.35765%;width:74.41059%}
