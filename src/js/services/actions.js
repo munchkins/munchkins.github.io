@@ -108,7 +108,8 @@ angular
       });
 
       _.forEach(item.requires.resources, function(r, k) {
-        Resources.get(k).rate -= item.value.current * (r.rate || 0);
+        const resource = Resources.get(k);
+        resource.rate -= item.value.current * (r.rate || 0);
       });
     };
 

@@ -224,7 +224,8 @@ angular.module('munchkins').service('Actions', ["Buildings", "Crafting", "Resour
     });
 
     _.forEach(item.requires.resources, function (r, k) {
-      Resources.get(k).rate -= item.value.current * (r.rate || 0);
+      var resource = Resources.get(k);
+      resource.rate -= item.value.current * (r.rate || 0);
     });
   };
 
