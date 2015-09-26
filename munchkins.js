@@ -250,7 +250,7 @@ angular.module('munchkins').service('Buildings', function () {
       },
       provides: {
         resources: {
-          happiness: { value: 1, rate: 0.001 },
+          happiness: { value: 0.95, rate: 0.001 },
           charcoal: { value: 0, rate: 0.0015 }
         }
       }
@@ -438,7 +438,7 @@ angular.module('munchkins').service('Crafting', function () {
       },
       provides: {
         resources: {
-          paper: { value: 1, rate: 0 }
+          paper: { value: 2, rate: 0 }
         }
       }
     },

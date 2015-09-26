@@ -38,7 +38,7 @@ angular
         },
         provides: {
           resources: {
-            paper: { value: 1, rate: 0 }
+            paper: { value: 2, rate: 0 }
           }
         }
       },
