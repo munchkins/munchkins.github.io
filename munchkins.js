@@ -286,7 +286,8 @@ angular.module('munchkins').service('Buildings', function () {
       increase: 1.11,
       requires: {
         resources: {
-          seeds: { value: 75, rate: 0 }
+          seeds: { value: 75, rate: 0 },
+          water: { value: 0, rate: 0.001 }
         }
       },
       provides: {
@@ -297,7 +298,7 @@ angular.module('munchkins').service('Buildings', function () {
       }
     },
     quarry: {
-      name: 'Rock Quarry',
+      name: 'Rock Garden',
       description: 'An area where rocks can be harvested for use in buildings and tools',
       increase: 1.11,
       requires: {
@@ -324,6 +325,22 @@ angular.module('munchkins').service('Buildings', function () {
       },
       provides: {
         tribe: 2
+      }
+    },
+    pond: {
+      name: 'Pond',
+      description: 'A water collection point that porvides a clean source of water',
+      increase: 1.11,
+      requires: {
+        resources: {
+          rocks: { value: 100, rate: 0 },
+          tools: { value: 10, rate: 0 }
+        }
+      },
+      provides: {
+        resources: {
+          water: { value: 0, rate: 0.025 }
+        }
       }
     },
     monolith: {
@@ -641,6 +658,10 @@ angular.module('munchkins').service('Resources', function () {
       name: 'Seeds',
       description: 'Seeds are is always needed as an edible resource, on this planet or another'
     },
+    water: {
+      name: 'Water',
+      description: 'Water is a core resource used for drinking, feeding crops and as a base for production'
+    },
     happiness: {
       name: 'Happiness',
       description: 'The overal state of mind and contentment of the actual tribe'
@@ -777,6 +798,7 @@ angular.module('munchkins').service('Tribe', function () {
     item.requires = item.requires || {};
     item.requires.resources = item.requires.resources || {};
     item.requires.resources.seeds = { value: 0, rate: 0.0025 };
+    item.requires.resources.water = { value: 0, rate: 0.0025 };
     item.hasRequires = !!Object.keys(item.requires.resources).length;
 
     item.provides = item.provides || {};

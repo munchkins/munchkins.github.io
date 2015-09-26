@@ -54,7 +54,8 @@ angular
         increase: 1.11,
         requires: {
           resources: {
-            seeds: { value: 75, rate: 0 }
+            seeds: { value: 75, rate: 0 },
+            water: { value: 0, rate: 0.001 }
           }
         },
         provides: {
@@ -65,7 +66,7 @@ angular
         }
       },
       quarry: {
-        name: 'Rock Quarry',
+        name: 'Rock Garden',
         description: 'An area where rocks can be harvested for use in buildings and tools',
         increase: 1.11,
         requires: {
@@ -92,6 +93,22 @@ angular
         },
         provides: {
           tribe: 2
+        }
+      },
+      pond: {
+        name: 'Pond',
+        description: 'A water collection point that porvides a clean source of water',
+        increase: 1.11,
+        requires: {
+          resources: {
+            rocks: { value: 100, rate: 0 },
+            tools: { value: 10, rate: 0 }
+          }
+        },
+        provides: {
+          resources: {
+            water: { value: 0, rate: 0.025 }
+          }
         }
       },
       monolith: {

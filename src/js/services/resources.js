@@ -38,6 +38,10 @@ angular
         name: 'Seeds',
         description: 'Seeds are is always needed as an edible resource, on this planet or another'
       },
+      water: {
+        name: 'Water',
+        description: 'Water is a core resource used for drinking, feeding crops and as a base for production'
+      },
       happiness: {
         name: 'Happiness',
         description: 'The overal state of mind and contentment of the actual tribe'
