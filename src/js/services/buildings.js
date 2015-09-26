@@ -18,20 +18,6 @@ angular
           }
         }
       },
-      shelter: {
-        name: 'Shelter',
-        description: 'A basic shelter made from flower stems with space for one Munchkin',
-        increase: 1.11,
-        requires: {
-          resources: {
-            furs: { value: 5, rate: 0 },
-            stems: { value: 100, rate: 0 }
-          }
-        },
-        provides: {
-          tribe: 1
-        }
-      },
       trap: {
         name: 'Trap',
         description: 'A small trap used to catch animals that wander across the path',
@@ -48,6 +34,20 @@ angular
           }
         }
       },
+      shelter: {
+        name: 'Shelter',
+        description: 'A basic shelter made from flower stems with space for one Munchkin',
+        increase: 1.11,
+        requires: {
+          resources: {
+            furs: { value: 5, rate: 0 },
+            stems: { value: 100, rate: 0 }
+          }
+        },
+        provides: {
+          tribe: 1
+        }
+      },
       garden: {
         name: 'Garden',
         description: 'A naturally growing field of flowers which can be harvested',
@@ -62,21 +62,6 @@ angular
           resources: {
             flowers: { value: 0, rate: 0.01 },
             rocks: { value: 0, rate: 0.001 }
-          }
-        }
-      },
-      quarry: {
-        name: 'Quarry',
-        description: 'An area where rocks can be harvested for use in buildings and tools',
-        increase: 1.11,
-        requires: {
-          resources: {
-            rocks: { value: 50, rate: 0 }
-          }
-        },
-        provides: {
-          resources: {
-            rocks: { value: 0, rate: 0.01 }
           }
         }
       },
@@ -101,13 +86,29 @@ angular
         increase: 1.11,
         requires: {
           resources: {
-            rocks: { value: 100, rate: 0 },
+            rocks: { value: 50, rate: 0 },
             tools: { value: 10, rate: 0 }
           }
         },
         provides: {
           resources: {
             water: { value: 0, rate: 0.025 }
+          }
+        }
+      },
+      quarry: {
+        name: 'Quarry',
+        description: 'An area where rocks can be harvested for use in buildings and tools',
+        increase: 1.11,
+        requires: {
+          resources: {
+            rocks: { value: 80, rate: 0 },
+            tools: { value: 15, rate: 0.0025 }
+          }
+        },
+        provides: {
+          resources: {
+            rocks: { value: 0, rate: 0.01 }
           }
         }
       },
