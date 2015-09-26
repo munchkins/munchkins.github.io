@@ -7,6 +7,7 @@ $primary-bg: #fff;
 $border-color: #88a;
 $sub-color: #666;
 $inactive-color: #aaa;
+$inactive-hover: #f9f9f9;
 $hover-bg: rgba(245, 245, 255, 1.0);
 $error-color: #d55;
 $link-color: #33f;
@@ -199,12 +200,12 @@ a {
   }
 
   &.inactive:hover {
-    background: inherit;
+    background: $inactive-hover;
     border-color: $inactive-color;
     cursor: default;
 
     .hint {
-      background: $primary-bg;
+      background: $inactive-hover;
       color: $inactive-color;
       border-radius: 0 0 4px 4px;
       border-color: $inactive-color;

@@ -50,8 +50,8 @@ a span.small{font-size:80%;vertical-align:top}
 .action-button.inactive:hover .detail,.action-button.inactive:hover .detail .invactive,.action-button:hover .detail,.action-button:hover .detail .invactive{color:transparent}
 .action-button.inactive:hover .hint,.action-button:hover .hint{display:block}
 .action-button.inactive:hover a,.action-button:hover a{text-shadow:0 0 .5em #99f}
-.action-button.inactive:hover{background:inherit;border-color:#aaa;cursor:default}
-.action-button.inactive:hover .hint{background:#fff;color:#aaa;border-radius:0 0 4px 4px;border-color:transparent #aaa #aaa}
+.action-button.inactive:hover{background:#f9f9f9;border-color:#aaa;cursor:default}
+.action-button.inactive:hover .hint{background:#f9f9f9;color:#aaa;border-radius:0 0 4px 4px;border-color:transparent #aaa #aaa}
 .action-button.inactive:hover .hint .inactive{color:#d55}
 .action-button.inactive:hover a{text-shadow:none}
 table.empty{border:0}
