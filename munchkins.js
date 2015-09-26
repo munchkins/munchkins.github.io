@@ -282,8 +282,7 @@ angular.module('munchkins').service('Buildings', function () {
       provides: {
         resources: {
           furs: { value: 0, rate: 0.001 }
-        },
-        tribe: 1
+        }
       }
     },
     garden: {
