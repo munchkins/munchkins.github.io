@@ -61,7 +61,7 @@ angular
       _.forEach(item.provides.resources, function(p, k) {
         const resource = Resources.get(k);
         resource.value.current += (p.value || 0);
-        resource.rate += item.value.current * (p.rate || 0);
+        resource.rate += (p.rate || 0);
       });
 
       Tribe.add(-1 * (item.requires.tribe || 0));
