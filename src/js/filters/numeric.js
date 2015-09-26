@@ -7,7 +7,7 @@ angular
       const n = Math.abs(number) || 0;
       const u = Math.floor(Math.log(n) / Math.log(1000));
 
-      let p = precision || ((precision === 0) ? 0 : 2);
+      let p = precision || ((precision === 0) ? 0 : 3);
       if ((p === 0) && (n >= 1000)) {
         p = 2;
       }

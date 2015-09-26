@@ -14,11 +14,11 @@ describe('Numeric Filter', function() {
   });
 
   it('returns 0.00 on no value', function() {
-    expect(filter()).to.eq('0.00');
+    expect(filter()).to.eq('0.000');
   });
 
   it('returns values with default precision', function() {
-    expect(filter(123.456)).to.eq('123.46');
+    expect(filter(123.4557)).to.eq('123.456');
   });
 
   it('returns arbitrary precision', function() {
@@ -28,31 +28,31 @@ describe('Numeric Filter', function() {
   });
 
   it('returns values < 1.0', function() {
-    expect(filter(0.59)).to.eq('0.59');
+    expect(filter(0.59213)).to.eq('0.592');
   });
 
   it('returns K values', function() {
-    expect(filter(1100)).to.eq('1.10K');
-    expect(filter(9990)).to.eq('9.99K');
+    expect(filter(1103)).to.eq('1.103K');
+    expect(filter(9994)).to.eq('9.994K');
   });
 
   it('returns M values', function() {
-    expect(filter(1100000)).to.eq('1.10M');
-    expect(filter(9990000)).to.eq('9.99M');
+    expect(filter(1103000)).to.eq('1.103M');
+    expect(filter(9994000)).to.eq('9.994M');
   });
 
   it('returns G values', function() {
-    expect(filter(1100000000)).to.eq('1.10G');
-    expect(filter(9990000000)).to.eq('9.99G');
+    expect(filter(1103000000)).to.eq('1.103G');
+    expect(filter(9994000000)).to.eq('9.994G');
   });
 
   it('returns T values', function() {
-    expect(filter(1100000000000)).to.eq('1.10T');
-    expect(filter(9990000000000)).to.eq('9.99T');
+    expect(filter(1103000000000)).to.eq('1.103T');
+    expect(filter(9994000000000)).to.eq('9.994T');
   });
 
   it('returns P values', function() {
-    expect(filter(1100000000000000)).to.eq('1.10P');
-    expect(filter(9990000000000000)).to.eq('9.99P');
+    expect(filter(1103000000000000)).to.eq('1.103P');
+    expect(filter(9994000000000000)).to.eq('9.994P');
   });
 });
