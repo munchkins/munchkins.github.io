@@ -291,7 +291,7 @@ angular.module('munchkins').service('Buildings', function () {
       increase: 1.11,
       requires: {
         resources: {
-          seeds: { value: 100, rate: 0 }
+          seeds: { value: 75, rate: 0 }
         }
       },
       provides: {
