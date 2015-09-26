@@ -50,6 +50,7 @@ angular
 
     _.forEach(resources, function(item) {
       item.rate = item.rate || 0;
+      item.gamerate = 0;
       item.value = item.value || { current: 0, limit: 0 };
     });
 

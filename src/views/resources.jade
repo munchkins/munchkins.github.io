@@ -7,4 +7,4 @@ div(ng-controller="Resources as resc")
         td.right 
           span {{resource.value.current | numeric}}
         td.right(ng-class="{ 'invalid': resource.rate < 0 }")
-          span(ng-if="resource.rate != 0") ({{resource.rate*4 | numeric}}/sec)
+          span(ng-if="resource.rate != 0") ({{resource.gamerate*4 | numeric}}/sec)

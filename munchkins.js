@@ -65,6 +65,7 @@ angular.module('munchkins').controller('Subbar', ["$location", "Buildings", "Tri
 angular.module('munchkins').controller('Topbar', ["Game", function (Game) {
   this.save = Game.save;
   this.calendar = Game.calendar;
+  this.bonus = Game.bonus;
 }]);
 'use strict';
 
@@ -507,6 +508,7 @@ angular.module('munchkins').service('Crafting', function () {
 
 angular.module('munchkins').service('Game', ["$interval", "Actions", "Buildings", "Crafting", "Defaults", "Resources", "Tribe", function ($interval, Actions, Buildings, Crafting, Defaults, Resources, Tribe) {
   var game = {
+    bonus: 0,
     ticks: 0,
     calendar: {
       day: 0,
@@ -518,26 +520,43 @@ angular.module('munchkins').service('Game', ["$interval", "Actions", "Buildings"
   var DAY_TICKS = 200;
   var SEASON_DAYS = 98;
   var YEAR_DAYS = 4 * SEASON_DAYS;
+  var YEAR_TICKS = 4 * DAY_TICKS * SEASON_DAYS;
 
-  var tick = function tick() {
+  this.tick = function () {
     game.ticks++;
 
     var days = Math.floor(game.ticks / DAY_TICKS);
+    game.bonus = 0.01 * (game.ticks / YEAR_TICKS);
+
     game.calendar.year = Math.floor(days / YEAR_DAYS);
     game.calendar.season = Math.floor(days % YEAR_DAYS / SEASON_DAYS);
     game.calendar.day = days % YEAR_DAYS % SEASON_DAYS;
 
     var resources = Resources.all();
     _.forEach(resources, function (resource) {
-      resource.value.current = Math.max(0, resource.rate + resource.value.current);
+      resource.gamerate = resource.rate * 1.0 /* + game.bonus*/;
+      resource.value.current = Math.max(0, resource.gamerate + resource.value.current);
       if (resource.value.limit) {
         resource.value.current = Math.min(resource.value.current, resource.value.limit);
       }
     });
   };
 
+  this.bonus = function () {
+    return game.bonus;
+  };
+
   this.calendar = function () {
     return game.calendar;
+  };
+
+  this.wipe = function () {
+    console.log('Wiping game');
+    try {
+      localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify({}));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   this.save = function () {
@@ -585,7 +604,7 @@ angular.module('munchkins').service('Game', ["$interval", "Actions", "Buildings"
   Actions.initResources();
 
   $interval(this.save, Defaults.SAVE_RATE);
-  $interval(tick, Defaults.TICK_RATE);
+  $interval(this.tick, Defaults.TICK_RATE);
 }]);
 'use strict';
 
@@ -639,6 +658,7 @@ angular.module('munchkins').service('Resources', function () {
 
   _.forEach(resources, function (item) {
     item.rate = item.rate || 0;
+    item.gamerate = 0;
     item.value = item.value || { current: 0, limit: 0 };
   });
 
@@ -675,9 +695,29 @@ angular.module('munchkins').service('Resources', function () {
 
 angular.module('munchkins').service('Tribe', function () {
   var types = {
+    cook: {
+      name: 'Cook',
+      description: 'Processes flowers to make food for the tribe',
+      requires: {
+        buildings: {
+          fire: { value: 1 }
+        },
+        resources: {
+          flowers: { value: 0, rate: 0.04 }
+        },
+        tribe: 1
+      },
+      provides: {
+        resources: {
+          seeds: { value: 0, rate: 0.01, hyper: true },
+          stems: { value: 0, rate: 0.04 },
+          petals: { value: 0, rate: 0.4 }
+        }
+      }
+    },
     farmer: {
       name: 'Farmer',
-      description: 'A farmer works the gardens for additional production of producable resources',
+      description: 'A farmer works the gardens for additional production of resources',
       requires: {
         buildings: {
           garden: { value: 1 }

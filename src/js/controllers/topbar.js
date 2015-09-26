@@ -3,4 +3,5 @@ angular
   .controller('Topbar', function(Game) {
     this.save = Game.save;
     this.calendar = Game.calendar;
+    this.bonus = Game.bonus;
   });

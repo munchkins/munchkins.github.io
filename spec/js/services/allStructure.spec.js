@@ -22,7 +22,7 @@ describe('Exposed Services', function() {
     testExpected(source, exp);
 
     const fields = {
-      name: true, description: true, rate: true,
+      name: true, description: true, rate: true, gamerate: true,
       value: { current: true, limit: true }
     };
 
@@ -116,7 +116,7 @@ describe('Exposed Services', function() {
 
   describe('Tribe Structure', function() {
     testStructure('Tribe', {
-      farmer: true, tooler: true, priest: true
+      farmer: true, tooler: true, priest: true, cook: true
     });
   });
 });

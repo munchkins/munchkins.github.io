@@ -2,9 +2,29 @@ angular
   .module('munchkins')
   .service('Tribe', function() {
     const types = {
+      cook: {
+        name: 'Cook',
+        description: 'Processes flowers to make food for the tribe',
+        requires: {
+          buildings: {
+            fire: { value: 1 }
+          },
+          resources: {
+            flowers: { value: 0, rate: 0.04 }
+          },
+          tribe: 1
+        },
+        provides: {
+          resources: {
+            seeds: { value: 0, rate: 0.01, hyper: true },
+            stems: { value: 0, rate: 0.04 },
+            petals: { value: 0, rate: 0.4 }
+          }
+        }
+      },
       farmer: {
         name: 'Farmer',
-        description: 'A farmer works the gardens for additional production of producable resources',
+        description: 'A farmer works the gardens for additional production of resources',
         requires: {
           buildings: {
             garden: { value: 1 }
