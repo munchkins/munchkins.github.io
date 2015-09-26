@@ -298,7 +298,7 @@ angular.module('munchkins').service('Buildings', function () {
       }
     },
     quarry: {
-      name: 'Rock Garden',
+      name: 'Quarry',
       description: 'An area where rocks can be harvested for use in buildings and tools',
       increase: 1.11,
       requires: {
