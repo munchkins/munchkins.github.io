@@ -8,10 +8,7 @@ describe('Game', () => {
   let resourcesMock;
   let tribeMock;
 
-  const testResource = {
-    rate: 0.1,
-    value: { current: 100 }
-  };
+  let testResource;
 
   beforeEach(() => {
     module('munchkins');
@@ -34,6 +31,10 @@ describe('Game', () => {
         this.save = craftingMock.save;
       });
 
+      testResource = {
+        rate: 0.1,
+        value: { current: 100 }
+      };
       resourcesMock = { load: sinon.stub(), save: sinon.stub() };
       $provide.service('Resources', function() {
         this.all = function() {
@@ -150,7 +151,29 @@ describe('Game', () => {
       });
     });
 
-    // TODO: resource updates
+    describe('resources', () => {
+      it('updates the game-rate', () => {
+        Game.tick();
+        expect(testResource.gamerate).to.equal(0.1);
+      });
+
+      it('updates the value by the gamerate', () => {
+        Game.tick();
+        expect(testResource.value.current).to.equal(100.1);
+      });
+
+      it('allows no negative values', () => {
+        testResource.value.current = -1234;
+        Game.tick();
+        expect(testResource.value.current).to.equal(0);
+      });
+
+      it('only updates to the limit (when available)', () => {
+        testResource.value.limit = 50;
+        Game.tick();
+        expect(testResource.value.current).to.equal(50);
+      });
+    });
   });
 
   describe('.load', () => {
