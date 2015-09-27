@@ -9,6 +9,7 @@ var cssmin = require('gulp-cssmin');
 var eslint = require('gulp-eslint');
 var ignore = require('gulp-ignore');
 var jade = require('gulp-jade');
+var lcovmerger = require('lcov-result-merger');
 var annotate = require('gulp-ng-annotate');
 var replace = require('gulp-replace');
 var sourcemaps = require('gulp-sourcemaps');
@@ -84,11 +85,22 @@ gulp.task('bower', function() {
 
 gulp.task('build', ['js-eslint', 'js-babel', 'html-jade', 'css-sass']);
 
-gulp.task('test', ['bower', 'build'], function(done) {
+gulp.task('test', ['bower'], function(done) {
   new karma.Server({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true
   }, done).start();
 });
 
-gulp.task('default', ['test']);
+gulp.task('coverage', ['test'], function() {
+  var root = process.cwd();
+
+  return gulp
+    .src(['coverage/*.lcov'])
+    .pipe(replace('SF:' + root, 'SF:'))
+    .pipe(replace(/SF:[\.]{0,1}\/src\//g, 'SF:src/'))
+    .pipe(lcovmerger())
+    .pipe(gulp.dest('coverage/'));
+});
+
+gulp.task('default', ['build']);

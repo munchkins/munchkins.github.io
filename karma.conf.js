@@ -18,6 +18,7 @@ module.exports = function(config) {
 
     plugins: [
       'karma-babel-preprocessor',
+      'karma-coverage',
       'karma-mocha',
       'karma-mocha-reporter',
       'karma-phantomjs-launcher',
@@ -33,6 +34,7 @@ module.exports = function(config) {
     ],
 
     reporters: [
+      'coverage',
       'mocha'
     ],
 
@@ -41,10 +43,28 @@ module.exports = function(config) {
     ],
 
     preprocessors: {
-      'src/**/*.js': ['babel'],
+      'src/**/*.js': ['babel', 'coverage'],
       'spec/**/*.js': ['babel']
     },
 
-    reportSlowerThan: 1000
+    babelPreprocessor: {
+      options: {
+        sourceMap: 'inline',
+        retainLines: true,
+        stage: 1
+      },
+      sourceFileName: function(file) {
+        return file.originalPath;
+      }
+    },
+
+    reportSlowerThan: 1000,
+
+    coverageReporter: {
+      type: 'lcovonly',
+      dir: 'coverage/',
+      subdir: '.',
+      file: 'karma.lcov'
+    }
   });
 };

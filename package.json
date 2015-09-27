@@ -7,7 +7,10 @@
     "url": "https://github.com/CQSCloud/mypractice"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "coveralls": "node_modules/.bin/coveralls < coverage/lcov.info",
+    "codeclimate": "node_modules/.bin/codeclimate-test-reporter < coverage/lcov.info",
+    "test": "gulp build && gulp coverage && npm run coveralls"
   },
   "devDependencies": {
     "babel": "^5.8.23",
@@ -17,6 +20,8 @@
     "chai": "^3.2.0",
     "chai-as-promised": "^5.1.0",
     "chai-stats": "^0.3.0",
+    "codeclimate-test-reporter": "^0.1.1",
+    "coveralls": "^2.11.4",
     "eslint": "^1.3.1",
     "eslint-config-airbnb": "0.0.8",
     "eslint-plugin-react": "^3.3.0",
@@ -39,9 +44,11 @@
     "karma": "^0.13.9",
     "karma-babel-preprocessor": "^5.2.2",
     "karma-chai-plugins": "^0.6.0",
+    "karma-coverage": "^0.5.2",
     "karma-mocha": "^0.2.0",
     "karma-mocha-reporter": "^1.1.1",
     "karma-phantomjs-launcher": "^0.2.1",
+    "lcov-result-merger": "^1.0.2",
     "mocha": "^2.3.0",
     "morgan": "^1.6.1",
     "phantomjs": "^1.9.18",
