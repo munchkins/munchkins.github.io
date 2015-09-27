@@ -23,5 +23,4 @@ deployment:
       - git add -A
       - git commit --allow-empty -m "buildbot [ci skip]"
       - git merge --no-edit -s ours -m "buildbot [ci skip]" origin/master
-      - git tag `date +"%y%m%d-%H%M%S"`
-      - git push --force --tags origin HEAD:master
+      - git push --force origin HEAD:master
