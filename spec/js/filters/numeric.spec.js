@@ -27,6 +27,10 @@ describe('Numeric Filter', function() {
     expect(filter(55.6789, 5)).to.eq('55.67890');
   });
 
+  it('uses precision 3 when none specified for numbers > 1000', function() {
+    expect(filter(12345, 0)).to.eq('12.345K');
+  });
+
   it('returns values < 1.0', function() {
     expect(filter(0.59213)).to.eq('0.592');
   });

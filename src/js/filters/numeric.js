@@ -9,7 +9,7 @@ angular
 
       let p = precision || ((precision === 0) ? 0 : 3);
       if ((p === 0) && (n >= 1000)) {
-        p = 2;
+        p = 3;
       }
 
       return (n < 1) ? (n.toFixed(p)) : ((n / 1000 ** Math.floor(u)).toFixed(p) + units[u]);
