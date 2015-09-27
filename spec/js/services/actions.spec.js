@@ -15,18 +15,12 @@ describe('Actions', () => {
           return {
             building1: {
               value: { current: 1 },
-              provides: {
-                resources: { resource1: { rate: 0.5 } }
-              },
-              requires: {
-                resources: { resource2: { rate: 0.1 } }
-              }
+              provides: { resources: { resource1: { rate: 0.5 } } },
+              requires: { resources: { resource2: { rate: 0.1 } } }
             },
             building2: {
               value: { current: 0 },
-              requires: {
-                buildings: { building1: { value: 2 }}
-              },
+              requires: { buildings: { building1: { value: 2 } } },
               provides: { resources: {} }
             }
           };
@@ -74,11 +68,7 @@ describe('Actions', () => {
             tribe1: {
               value: { current: 1 },
               requires: { resources: {} },
-              provides: {
-                resources: {
-                  resource3: { rate: 0.33 }
-                }
-              }
+              provides: { resources: { resource3: { rate: 0.33 } } }
             }
           };
         }
