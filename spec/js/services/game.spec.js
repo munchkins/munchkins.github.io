@@ -115,6 +115,31 @@ describe('Game', () => {
     });
   });
 
+  describe('bonus', () => {
+    describe('increments', () => {
+      it('adds 1% for year 1', () => {
+        Game.game().ticks = Defaults.YEAR_TICKS;
+        Game.calcBonus();
+
+        expect(Game.bonus()).to.equal(0.01);
+      });
+
+      it('adds 1.5% for year 1.25', () => {
+        Game.game().ticks = Defaults.YEAR_TICKS + Defaults.SEASON_TICKS;
+        Game.calcBonus();
+
+        expect(Game.bonus()).to.equal(0.0125);
+      });
+
+      it('adds 11% for year 11', () => {
+        Game.game().ticks = Defaults.YEAR_TICKS * 11;
+        Game.calcBonus();
+
+        expect(Game.bonus()).to.equal(0.11);
+      });
+    });
+  });
+
   describe('calendar', () => {
     describe('day calculation', () => {
       it('stays within a day based on defaults', () => {

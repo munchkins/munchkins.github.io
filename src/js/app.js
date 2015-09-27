@@ -8,6 +8,7 @@ angular
     SAVE_LOCATION: 'munchkinsSave',
     DAY_TICKS: 200,
     SEASON_DAYS: 98,
+    SEASON_TICKS: 98 * 200,
     YEAR_DAYS: 4 * 98,
     YEAR_TICKS: 4 * 98 * 200
   })
