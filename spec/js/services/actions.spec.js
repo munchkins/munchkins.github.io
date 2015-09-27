@@ -42,9 +42,9 @@ describe('Actions', () => {
       });
 
       const resources = {
-        resource1: { name: 'R1', rate: 0 },
-        resource2: { name: 'R2', rate: 0 },
-        resource3: { name: 'R3', rate: 0 }
+        resource1: { name: 'R1', rate: 0, value: { current: 5 } },
+        resource2: { name: 'R2', rate: 0, value: { current: 4 } },
+        resource3: { name: 'R3', rate: 0, value: { current: 3 } }
       };
       resourcesMock = {
         all: function() {
@@ -139,6 +139,55 @@ describe('Actions', () => {
     });
   });
 
+  describe('.requires', () => {
+    it('returns single resources', () => {
+      const item = { value: { current: 0 }, requires: { resources: { resource1: { rate: 1 } } } };
+      const requires = Actions.requires(item);
+      expect(requires).to.have.length(1);
+    });
+
+    it('returns multiple resources', () => {
+      const item = { value: { current: 0 }, requires: { resources: { resource1: { rate: 1 }, resource2: { rate: 2 } } } };
+      const requires = Actions.requires(item);
+      expect(requires).to.have.length(2);
+    });
+
+    it('adds resource names, prices', () => {
+      const item = { increase: 1, value: { current: 1 }, requires: { resources: { resource1: { value: 1 } } } };
+      const requires = Actions.requires(item);
+      expect(requires).to.deep.equal([{value: 1, buynow: 1, affordable: true, name: 'R1'}]);
+    });
+
+    describe('buynow & afforability', () => {
+      it('shows affordable resources', () => {
+        const item = { increase: 1, value: { current: 1 }, requires: { resources: { resource1: { value: 1 } } } };
+        const requires = Actions.requires(item);
+        const res = requires[0];
+
+        expect(res.affordable).to.be.true;
+        expect(res.buynow).to.equal(1);
+      });
+
+      it('shows non-affordable resources', () => {
+        const item = { increase: 1, value: { current: 1 }, requires: { resources: { resource1: { value: 6 } } } };
+        const requires = Actions.requires(item);
+        const res = requires[0];
+
+        expect(res.affordable).to.be.false;
+        expect(res.buynow).to.equal(6);
+      });
+
+      it('shows non-affordable multi-buy resources', () => {
+        const item = { increase: 2, value: { current: 1 }, requires: { resources: { resource1: { value: 3 } } } };
+        const requires = Actions.requires(item);
+        const res = requires[0];
+
+        expect(res.affordable).to.be.false;
+        expect(res.buynow).to.equal(6);
+      });
+    });
+  });
+
   describe('.isBuyable', () => {
     it('passes simple items', () => {
       const item = { increase: 1, value: { current: 1 }, requires: { resources: {} } };
@@ -165,17 +214,6 @@ describe('Actions', () => {
     });
 
     describe('resources checking', () => {
-      let resource;
-
-      beforeEach(() => {
-        const resources = resourcesMock.all();
-
-        resource = resources.resource1;
-        resource.value = { current: 5 };
-
-        resources.resource2.value = { current: 10 };
-      });
-
       describe('with singles', () => {
         it('passes on smaller required amounts', () => {
           const item = { increase: 1, value: { current: 1 }, requires: { resources: { resource1: { value: 4 } } } };
