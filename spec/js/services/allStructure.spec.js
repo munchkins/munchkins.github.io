@@ -1,5 +1,5 @@
-describe('Exposed Services', function() {
-  beforeEach(function() {
+describe('Exposed Services', () => {
+  beforeEach(() => {
     module('munchkins');
   });
 
@@ -20,22 +20,22 @@ describe('Exposed Services', function() {
   };
 
   const testExpected = function(source, exp) {
-    it('has all expected resources', inject(function($injector) {
+    it('has all expected resources', inject(($injector) => {
       const res = $injector.get(source);
       _.forEach(exp, function(b, k) {
         expect(res.get(k) ? true : `${k}`).to.be.true;
       });
     }));
 
-    it('has no additional resources', inject(function($injector) {
-      _.forEach($injector.get(source).keys(), function(k) {
+    it('has no additional resources', inject(($injector) => {
+      _.forEach($injector.get(source).keys(), (k) => {
         expect(exp[k] || `${k}`).to.be.true;
       });
     }));
   };
 
   const testResources = function(source, exp) {
-    describe(source, function() {
+    describe(source, () => {
       testExpected(source, exp);
 
       const fields = {
@@ -43,10 +43,10 @@ describe('Exposed Services', function() {
         value: { current: true, limit: true }
       };
 
-      describe('containing', function() {
-        _.forEach(exp, function(b, k) {
-          describe(`${k}`, function() {
-            it('has valid fields', inject(function($injector) {
+      describe('containing', () => {
+        _.forEach(exp, (b, k) => {
+          describe(`${k}`, () => {
+            it('has valid fields', inject(($injector) => {
               const res = $injector.get(source).get(k);
 
               expect(res.name).to.be.ok;
@@ -58,12 +58,12 @@ describe('Exposed Services', function() {
               expect(res.value.limit || (res.value.limit === 0) ? 0 : 'value.limit').to.be.at.least(0);
             }));
 
-            it('has no invalid fields', inject(function($injector) {
+            it('has no invalid fields', inject(($injector) => {
               const res = $injector.get(source).get(k);
 
-              _.forEach(Object.keys(res), function(f) {
+              _.forEach(Object.keys(res), (f) => {
                 if (_.isObject(fields[f])) {
-                  _.forEach(Object.keys(fields[f]), function(s) {
+                  _.forEach(Object.keys(fields[f]), (s) => {
                     expect(fields[f][s] || `${f}.${s}`).to.be.true;
                   });
                 } else {
@@ -78,7 +78,7 @@ describe('Exposed Services', function() {
   };
 
   const testStructure = function(source, exp) {
-    describe(source, function() {
+    describe(source, () => {
       testExpected(source, exp);
 
       const fields = {
@@ -87,10 +87,10 @@ describe('Exposed Services', function() {
         requires: true, provides: true, hasRequires: true, hasProvides: true
       };
 
-      describe('containing', function() {
+      describe('containing', () => {
         _.forEach(exp, function(b, k) {
-          describe(`${k}`, function() {
-            it('has valid fields', inject(function($injector) {
+          describe(`${k}`, () => {
+            it('has valid fields', inject(($injector) => {
               const res = $injector.get(source).get(k);
 
               expect(res.name).to.be.ok;
@@ -98,10 +98,10 @@ describe('Exposed Services', function() {
               expect(res.increase || 'increase').to.be.at.least(1);
             }));
 
-            it('has no invalid fields', inject(function($injector) {
+            it('has no invalid fields', inject(($injector) => {
               const res = $injector.get(source).get(k);
 
-              _.forEach(Object.keys(res), function(f) {
+              _.forEach(Object.keys(res), (f) => {
                 if (_.isObject(fields[f])) {
                   _.forEach(Object.keys(fields[f]), function(s) {
                     expect(fields[f][s] || `${f}.${s}`).to.be.true;
@@ -119,7 +119,7 @@ describe('Exposed Services', function() {
 
               expect(requires).to.be.ok;
 
-              _.forEach(requires, function(req, type) {
+              _.forEach(requires, (req, type) => {
                 expect(reqs[type] || `${type}`).to.be.true;
 
                 let allow = null;
@@ -130,19 +130,19 @@ describe('Exposed Services', function() {
                 }
 
                 if (allow) {
-                  _.forEach(requires[type], function(item, name) {
+                  _.forEach(requires[type], (item, name) => {
                     expect(allow[name] || `${name}`).to.be.true;
                   });
                 }
               });
             };
 
-            it('has valid requires', inject(function($injector) {
+            it('has valid requires', inject(($injector) => {
               const res = $injector.get(source).get(k);
               expectRequires(res.requires);
             }));
 
-            it('has valid provides', inject(function($injector) {
+            it('has valid provides', inject(($injector) => {
               const res = $injector.get(source).get(k);
               expectRequires(res.provides);
             }));
