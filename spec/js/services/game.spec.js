@@ -53,6 +53,9 @@ describe('Game', () => {
     });
 
     inject(($injector) => {
+      sinon.spy(localStorage, 'setItem');
+      sinon.spy(localStorage, 'getItem');
+
       Defaults = $injector.get('Defaults');
       Game = $injector.get('Game');
 
@@ -63,16 +66,20 @@ describe('Game', () => {
   });
 
   afterEach(() => {
+    localStorage.setItem.restore();
+    localStorage.getItem.restore();
+
     Game.load.restore();
     Game.calcBonus.restore();
     Game.calcCalendar.restore();
   });
 
   describe('on init', () => {
-    // small issue: injector calls, so we miss it
-    /* it('calls .load', () => {
-      expect(Game.load).to.have.been.called;
-    }); */
+    it('calls .load', () => {
+      // FIXME: injector calls and creates object, so we miss it
+      // expect(Game.load).to.have.been.called;
+      expect(localStorage.getItem).to.have.been.called;
+    });
 
     it('does action init', () => {
       expect(actionsMock.initResources).to.have.been.called;
@@ -177,6 +184,10 @@ describe('Game', () => {
   });
 
   describe('.load', () => {
+    it('loads from localStorage', () => {
+      expect(localStorage.getItem).to.have.been.calledWith(Defaults.SAVE_LOCATION);
+    });
+
     describe('dependencies', () => {
       it('loads buildings', () => {
         expect(buildingsMock.load).to.have.been.called;
@@ -197,6 +208,12 @@ describe('Game', () => {
   });
 
   describe('.save', () => {
+    it('saves to localStorage', () => {
+      expect(localStorage.setItem).not.to.have.been.called;
+      Game.save();
+      expect(localStorage.setItem).to.have.been.calledWith(Defaults.SAVE_LOCATION);
+    });
+
     describe('dependencies', () => {
       it('saves buildings', () => {
         Game.save();
@@ -217,6 +234,16 @@ describe('Game', () => {
         Game.save();
         expect(tribeMock.save).to.have.been.called;
       });
+    });
+  });
+
+  describe('.wipe', () => {
+    it('empties localStorage', () => {
+      localStorage.setItem(Defaults.SAVE_LOCATION, 'OLD');
+      expect(localStorage.getItem(Defaults.SAVE_LOCATION)).to.equal('OLD');
+
+      Game.wipe();
+      expect(localStorage.getItem(Defaults.SAVE_LOCATION)).to.equal('{}');
     });
   });
 });

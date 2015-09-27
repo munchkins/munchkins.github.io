@@ -53,52 +53,40 @@ angular
 
     this.wipe = function() {
       console.log('Wiping game');
-      try {
-        localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify({}));
-      } catch (err) {
-        console.error(err);
-      }
+      localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify({}));
     };
 
     this.save = function() {
       console.log('Saving game');
-      try {
-        const save = {
-          version: 1,
-          game: {
-            ticks: game.ticks
-          },
-          buildings: {},
-          crafting: {},
-          resources: {},
-          tribe: {}
-        };
+      const save = {
+        version: 1,
+        game: {
+          ticks: game.ticks
+        },
+        buildings: {},
+        crafting: {},
+        resources: {},
+        tribe: {}
+      };
 
-        Buildings.save(save.buildings);
-        Crafting.save(save.crafting);
-        Resources.save(save.resources);
-        Tribe.save(save.tribe);
+      Buildings.save(save.buildings);
+      Crafting.save(save.crafting);
+      Resources.save(save.resources);
+      Tribe.save(save.tribe);
 
-        localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify(save));
-      } catch (err) {
-        console.error(err);
-      }
+      localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify(save));
     };
 
     this.load = function() {
       console.log('Loading game');
-      try {
-        const load = JSON.parse(localStorage.getItem(Defaults.SAVE_LOCATION)) || {};
+      const load = JSON.parse(localStorage.getItem(Defaults.SAVE_LOCATION)) || {};
 
-        game.ticks = (load.game || {}).ticks || game.ticks;
+      game.ticks = (load.game || {}).ticks || game.ticks;
 
-        Buildings.load(load.buildings || {});
-        Crafting.load(load.crafting || {});
-        Resources.load(load.resources || {});
-        Tribe.load(load.tribe || {});
-      } catch (err) {
-        console.error(err);
-      }
+      Buildings.load(load.buildings || {});
+      Crafting.load(load.crafting || {});
+      Resources.load(load.resources || {});
+      Tribe.load(load.tribe || {});
     };
 
     this.load();
