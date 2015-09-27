@@ -1,9 +1,8 @@
 describe('Game', () => {
   let Game;
 
-  let actionInit;
-  let bldSave;
-  let bldLoad;
+  let actionsMock;
+  let buildingsMock;
   let cftLoad;
   let cftSave;
   let resLoad;
@@ -15,16 +14,15 @@ describe('Game', () => {
     module('munchkins');
 
     module(($provide) => {
-      actionInit = sinon.stub();
+      actionsMock = { initResources: sinon.stub() };
       $provide.service('Actions', function() {
-        this.initResources = actionInit;
+        this.initResources = actionsMock.initResources;
       });
 
-      bldLoad = sinon.stub();
-      bldSave = sinon.stub();
+      buildingsMock = { load: sinon.stub(), save: sinon.stub() };
       $provide.service('Buildings', function() {
-        this.load = bldLoad;
-        this.save = bldSave;
+        this.load = buildingsMock.load;
+        this.save = buildingsMock.save;
       });
 
       cftLoad = sinon.stub();
@@ -56,21 +54,21 @@ describe('Game', () => {
 
   describe('on init', () => {
     it('calls .load on Buildings, Crafing, Resources & Tribe', () => {
-      expect(bldLoad).to.have.been.called;
+      expect(buildingsMock.load).to.have.been.called;
       expect(cftLoad).to.have.been.called;
       expect(resLoad).to.have.been.called;
       expect(trbLoad).to.have.been.called;
     });
 
     it('calls Actions.initResources', () => {
-      expect(actionInit).to.have.been.called;
+      expect(actionsMock.initResources).to.have.been.called;
     });
   });
 
   describe('.save', () => {
     it('calls .save on Buildings, Crafing, Resources & Tribe', () => {
       Game.save();
-      expect(bldSave).to.have.been.called;
+      expect(buildingsMock.save).to.have.been.called;
       expect(cftSave).to.have.been.called;
       expect(resSave).to.have.been.called;
       expect(resLoad).to.have.been.called;
