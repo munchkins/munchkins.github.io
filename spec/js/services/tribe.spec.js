@@ -9,6 +9,8 @@ describe('Tribe', () => {
     });
   });
 
+  testStructure('Tribe', TYPES_TRIBE);
+
   describe('.all', () => {
     it('returns all resources', () => {
       const all = Tribe.all();

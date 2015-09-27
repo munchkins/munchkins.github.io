@@ -9,6 +9,8 @@ describe('Buildings', () => {
     });
   });
 
+  testStructure('Buildings', TYPES_BUILDINGS);
+
   describe('.all', () => {
     it('returns all resources', () => {
       const all = Buildings.all();

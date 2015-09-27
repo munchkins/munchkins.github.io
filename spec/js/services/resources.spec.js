@@ -9,6 +9,8 @@ describe('Resources', () => {
     });
   });
 
+  testResources('Resources', TYPES_RESOURCES);
+
   describe('.all', () => {
     it('returns all resources', () => {
       const all = Resources.all();

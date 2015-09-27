@@ -9,6 +9,8 @@ describe('Crafting', () => {
     });
   });
 
+  testStructure('Crafting', TYPES_CRAFTING);
+
   describe('.all', () => {
     it('returns all resources', () => {
       const all = Crafting.all();
