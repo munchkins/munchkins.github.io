@@ -1,1 +1,0 @@
-<div ng-controller="Topbar as top" class="topbar"><div class="info"><span>Day {{1 + top.calendar().day}} of Year {{(1 + top.calendar().year) | number:0}} ({{['Spring', 'Summer', 'Autum', 'Winter'][top.calendar().season]}})</span></div><div class="menu"><a ng-click="top.save()">Save</a><a ng-click="top.wipe()" class="invalid">Delete</a></div></div>

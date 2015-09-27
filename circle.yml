@@ -18,6 +18,7 @@ deployment:
     branch: development
     commands:
       - npm run codeclimate
+      - sed -i -e 's/views\///' .gitignore
       - sed -i -e 's/index\.html//' .gitignore
       - sed -i -e 's/munchkins\.css//' .gitignore
       - sed -i -e 's/munchkins\.js\.map//' .gitignore
