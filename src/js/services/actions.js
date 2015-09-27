@@ -27,12 +27,12 @@ angular
       _.forEach(Tribe.all(), unlockOne);
     };
 
-    const priceMultiplier = function(item) {
+    this.priceMultiplier = function(item) {
       return Math.pow(item.increase, item.value.current);
     };
 
     this.isBuyable = function(item) {
-      const incr = priceMultiplier(item);
+      const incr = this.priceMultiplier(item);
       let buyable = !item.locked && (Tribe.free() >= (item.requires.tribe || 0));
 
       _.forEach(item.requires.resources, function(r, k) {
@@ -49,7 +49,7 @@ angular
         return false;
       }
 
-      const incr = priceMultiplier(item);
+      const incr = this.priceMultiplier(item);
       item.value.current++;
 
       _.forEach(item.requires.resources, function(r, k) {
@@ -81,7 +81,7 @@ angular
     };
 
     this.requires = function(item) {
-      const incr = priceMultiplier(item);
+      const incr = this.priceMultiplier(item);
 
       _.forEach(item.requires.resources, function(r, k) {
         const price = r.value * incr;
