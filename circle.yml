@@ -18,6 +18,10 @@ deployment:
     branch: development
     commands:
       - npm run codeclimate
+      - sed -i -e 's/index\.html//' .gitignore
+      - sed -i -e 's/munchkins\.css//' .gitignore
+      - sed -i -e 's/munchkins\.js\.map//' .gitignore
+      - sed -i -e 's/munchkins\.js//' .gitignore
       - git config branch.master.remote origin
       - git config branch.master.merge refs/heads/master
       - git add -A
