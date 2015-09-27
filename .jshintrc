@@ -1,9 +1,7 @@
 {
-  "environments": {
-    "browser": true,
-    "mocha": true,
-    "node": true
-  },
+  "browser": true,
+  "mocha": true,
+  "node": true,
   "globals": {
     "_": false,
     "angular": false
