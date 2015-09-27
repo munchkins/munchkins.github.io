@@ -26,7 +26,7 @@ describe('Tribe', () => {
     });
   });
 
-  describe('.add, .free & .total', () => {
+  describe('.add, .free, .total & .allocated', () => {
     it('starts with 0 free', () => {
       expect(Tribe.free()).to.equal(0);
     });
@@ -48,6 +48,12 @@ describe('Tribe', () => {
     it('adds total on active', () => {
       Tribe.get('farmer').value.current = 5;
       expect(Tribe.total()).to.equal(5);
+    });
+
+    it('reflects the allocated amount', () => {
+      Tribe.add(5);
+      Tribe.get('farmer').value.current = 2;
+      expect(Tribe.allocated()).to.equal(2);
     });
   });
 

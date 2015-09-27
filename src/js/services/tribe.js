@@ -125,6 +125,10 @@ angular
       return tribe.free + count;
     };
 
+    this.allocated = function() {
+      return this.total() - this.free();
+    };
+
     this.save = function(to) {
       to.free = tribe.free;
       to.types = {};
