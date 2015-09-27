@@ -11,20 +11,35 @@ angular
       }
     };
 
-    const DAY_TICKS = 200;
-    const SEASON_DAYS = 98;
-    const YEAR_DAYS = 4 * SEASON_DAYS;
-    const YEAR_TICKS = 4 * DAY_TICKS * SEASON_DAYS;
+    this.game = function() {
+      return game;
+    };
+
+    this.calendar = function() {
+      return game.calendar;
+    };
+
+    this.calcCalendar = function() {
+      const days = Math.floor(game.ticks / Defaults.DAY_TICKS);
+
+      game.calendar.year = Math.floor(days / Defaults.YEAR_DAYS);
+      game.calendar.season = Math.floor((days % Defaults.YEAR_DAYS) / Defaults.SEASON_DAYS);
+      game.calendar.day = (days % Defaults.YEAR_DAYS) % Defaults.SEASON_DAYS;
+    };
+
+    this.bonus = function() {
+      return game.bonus;
+    };
+
+    this.calcBonus = function() {
+      game.bonus = 0.01 * (game.ticks / Defaults.YEAR_TICKS);
+    };
 
     this.tick = function() {
       game.ticks++;
 
-      const days = Math.floor(game.ticks / DAY_TICKS);
-      game.bonus = 0.01 * (game.ticks / YEAR_TICKS);
-
-      game.calendar.year = Math.floor(days / YEAR_DAYS);
-      game.calendar.season = Math.floor((days % YEAR_DAYS) / SEASON_DAYS);
-      game.calendar.day = (days % YEAR_DAYS) % SEASON_DAYS;
+      this.calcBonus();
+      this.calcCalendar();
 
       const resources = Resources.all();
       _.forEach(resources, function(resource) {
@@ -34,14 +49,6 @@ angular
           resource.value.current = Math.min(resource.value.current, resource.value.limit);
         }
       });
-    };
-
-    this.bonus = function() {
-      return game.bonus;
-    };
-
-    this.calendar = function() {
-      return game.calendar;
     };
 
     this.wipe = function() {

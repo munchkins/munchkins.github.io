@@ -5,7 +5,11 @@ angular
   .constant('Defaults', {
     TICK_RATE: 250,
     SAVE_RATE: 60000,
-    SAVE_LOCATION: 'munchkinsSave'
+    SAVE_LOCATION: 'munchkinsSave',
+    DAY_TICKS: 200,
+    SEASON_DAYS: 98,
+    YEAR_DAYS: 4 * 98,
+    YEAR_TICKS: 4 * 98 * 200
   })
   .config(function($routeProvider) {
     $routeProvider
