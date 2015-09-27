@@ -1,4 +1,4 @@
-describe.only('Actions', () => {
+describe('Actions', () => {
   let Actions;
 
   let buildingsMock;
