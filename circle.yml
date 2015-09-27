@@ -17,7 +17,6 @@ deployment:
   deploy:
     branch: development
     commands:
-      - npm run codeclimate
       - sed -i -e 's/views\///' .gitignore
       - sed -i -e 's/index\.html//' .gitignore
       - sed -i -e 's/munchkins\.css//' .gitignore
@@ -26,6 +25,11 @@ deployment:
       - git config branch.master.remote origin
       - git config branch.master.merge refs/heads/master
       - git add -A
-      - git commit --allow-empty -m "buildbot [ci skip]"
-      - git merge --no-edit -s ours -m "buildbot [ci skip]" origin/master
+      - git commit --allow-empty -m "buildbot"
+      - git merge --no-edit -s ours -m "buildbot" origin/master
       - git push --force origin HEAD:master
+
+  master:
+    branch: master
+    commands:
+      - npm run codeclimate
