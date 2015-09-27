@@ -109,7 +109,6 @@ angular
 
     this.initResources = function() {
       _.forEach(Buildings.all(), this.initResource);
-      _.forEach(Crafting.all(), this.initResource);
       _.forEach(Tribe.all(), this.initResource);
     };
   });
