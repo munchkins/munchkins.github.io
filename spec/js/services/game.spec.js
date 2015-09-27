@@ -8,6 +8,11 @@ describe('Game', () => {
   let resourcesMock;
   let tribeMock;
 
+  const testResource = {
+    rate: 0.1,
+    value: { current: 100 }
+  };
+
   beforeEach(() => {
     module('munchkins');
 
@@ -29,10 +34,12 @@ describe('Game', () => {
         this.save = craftingMock.save;
       });
 
-      resourcesMock = { load: sinon.stub(), save: sinon.stub(), all: function() {
-        return {};
-      }};
+      resourcesMock = { load: sinon.stub(), save: sinon.stub() };
       $provide.service('Resources', function() {
+        this.all = function() {
+          return { test: testResource };
+        };
+
         this.load = resourcesMock.load;
         this.save = resourcesMock.save;
       });
@@ -68,50 +75,6 @@ describe('Game', () => {
 
     it('does action init', () => {
       expect(actionsMock.initResources).to.have.been.called;
-    });
-  });
-
-  describe('.load', () => {
-    describe('dependencies', () => {
-      it('loads buildings', () => {
-        expect(buildingsMock.load).to.have.been.called;
-      });
-
-      it('loads crafting', () => {
-        expect(craftingMock.load).to.have.been.called;
-      });
-
-      it('loads resources', () => {
-        expect(resourcesMock.load).to.have.been.called;
-      });
-
-      it('loads tribe', () => {
-        expect(tribeMock.load).to.have.been.called;
-      });
-    });
-  });
-
-  describe('.save', () => {
-    describe('dependencies', () => {
-      it('saves buildings', () => {
-        Game.save();
-        expect(buildingsMock.save).to.have.been.called;
-      });
-
-      it('saves crafting', () => {
-        Game.save();
-        expect(craftingMock.save).to.have.been.called;
-      });
-
-      it('saves resources', () => {
-        Game.save();
-        expect(resourcesMock.save).to.have.been.called;
-      });
-
-      it('saves tribe', () => {
-        Game.save();
-        expect(tribeMock.save).to.have.been.called;
-      });
     });
   });
 
@@ -160,6 +123,76 @@ describe('Game', () => {
         expect(cal.day).to.equal(1);
         expect(cal.season).to.equal(0);
         expect(cal.year).to.equal(0);
+      });
+    });
+  });
+
+  describe('.tick', () => {
+    it('increments the game ticks', () => {
+      const game = Game.game();
+      game.ticks = 1233;
+      Game.tick();
+
+      expect(game.ticks).to.equal(1234);
+    });
+
+    describe('calculations', () => {
+      it('updates the game bonus', () => {
+        expect(Game.calcBonus).not.to.have.been.called;
+        Game.tick();
+        expect(Game.calcBonus).to.have.been.called;
+      });
+
+      it('updates the calendar', () => {
+        expect(Game.calcCalendar).not.to.have.been.called;
+        Game.tick();
+        expect(Game.calcCalendar).to.have.been.called;
+      });
+    });
+
+    // TODO: resource updates
+  });
+
+  describe('.load', () => {
+    describe('dependencies', () => {
+      it('loads buildings', () => {
+        expect(buildingsMock.load).to.have.been.called;
+      });
+
+      it('loads crafting', () => {
+        expect(craftingMock.load).to.have.been.called;
+      });
+
+      it('loads resources', () => {
+        expect(resourcesMock.load).to.have.been.called;
+      });
+
+      it('loads tribe', () => {
+        expect(tribeMock.load).to.have.been.called;
+      });
+    });
+  });
+
+  describe('.save', () => {
+    describe('dependencies', () => {
+      it('saves buildings', () => {
+        Game.save();
+        expect(buildingsMock.save).to.have.been.called;
+      });
+
+      it('saves crafting', () => {
+        Game.save();
+        expect(craftingMock.save).to.have.been.called;
+      });
+
+      it('saves resources', () => {
+        Game.save();
+        expect(resourcesMock.save).to.have.been.called;
+      });
+
+      it('saves tribe', () => {
+        Game.save();
+        expect(tribeMock.save).to.have.been.called;
       });
     });
   });
