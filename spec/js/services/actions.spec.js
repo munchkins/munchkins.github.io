@@ -10,31 +10,31 @@ describe('Actions', () => {
     module('munchkins');
 
     module(($provide) => {
-      buildingsMock = {
-        all: function() {
-          return {
-            building1: {
-              value: { current: 1 },
-              provides: { resources: { resource1: { rate: 0.5 } } },
-              requires: { resources: { resource2: { rate: 0.1 } } }
-            },
-            building2: {
-              value: { current: 0 },
-              requires: { buildings: { building1: { value: 2 } } },
-              provides: { resources: {} }
-            }
-          };
+      const buildings = {
+        building1: {
+          value: { current: 1 },
+          provides: { resources: { resource1: { rate: 0.5 } } },
+          requires: { resources: { resource2: { rate: 0.1 } } }
+        },
+        building2: {
+          value: { current: 0 },
+          requires: { buildings: { building1: { value: 2 } } },
+          provides: { resources: {} }
         }
       };
+      buildingsMock = {
+        all: function() { return buildings; },
+        get: function(k) { return buildings[k]; }
+      };
       sinon.spy(buildingsMock, 'all');
+      sinon.spy(buildingsMock, 'get');
       $provide.service('Buildings', function() {
         this.all = buildingsMock.all;
+        this.get = buildingsMock.get;
       });
 
       craftingMock = {
-        all: function() {
-          return {};
-        }
+        all: function() { return {}; }
       };
       sinon.spy(craftingMock, 'all');
       $provide.service('Crafting', function() {
@@ -47,48 +47,51 @@ describe('Actions', () => {
         resource3: { name: 'R3', rate: 0, value: { current: 3 } }
       };
       resourcesMock = {
-        all: function() {
-          return resources;
-        }
+        all: function() { return resources; },
+        get: function(k) { return resources[k]; }
       };
       sinon.spy(resourcesMock, 'all');
+      sinon.spy(resourcesMock, 'get');
       $provide.service('Resources', function() {
         this.all = resourcesMock.all;
-        this.get = function(k) {
-          return this.all()[k];
-        };
+        this.get = resourcesMock.get;
       });
 
-      tribeMock = {
-        free: function() {
-          return 1;
-        },
-        all: function() {
-          return {
-            tribe1: {
-              value: { current: 1 },
-              requires: { resources: {} },
-              provides: { resources: { resource3: { rate: 0.33 } } }
-            }
-          };
+      const tribe = {
+        tribe1: {
+          value: { current: 1 },
+          requires: { resources: {} },
+          provides: { resources: { resource3: { rate: 0.33 } } }
         }
+      };
+      tribeMock = {
+        free: function() { return 1; },
+        add: sinon.stub(),
+        all: function() { return tribe; },
+        get: function(k) { return tribe[k]; }
       };
       sinon.spy(tribeMock, 'all');
       sinon.spy(tribeMock, 'free');
+      sinon.spy(tribeMock, 'get');
       $provide.service('Tribe', function() {
         this.all = tribeMock.all;
+        this.add = tribeMock.add;
         this.free = tribeMock.free;
+        this.get = tribeMock.get;
       });
     });
 
     inject(($injector) => {
       Actions = $injector.get('Actions');
+
       sinon.spy(Actions, 'initResource');
+      sinon.spy(Actions, 'isBuyable');
     });
   });
 
   afterEach(() => {
     Actions.initResource.restore();
+    Actions.isBuyable.restore();
   });
 
   describe('.initResources & .initResource', () => {
@@ -188,6 +191,18 @@ describe('Actions', () => {
     });
   });
 
+  describe('.unlock', () => {
+    it('ignores unlocked items', () => {
+      const item = { locked: false };
+      Actions.unlock(item);
+      expect(item.locked).to.be.false;
+    });
+  });
+
+  describe('.unlockAll', () => {
+
+  });
+
   describe('.isBuyable', () => {
     it('passes simple items', () => {
       const item = { increase: 1, value: { current: 1 }, requires: { resources: {} } };
@@ -250,5 +265,25 @@ describe('Actions', () => {
         });
       });
     });
+  });
+
+  describe('.buy', () => {
+    it('uses .isBuyable', () => {
+      const item = { increase: 1, value: { current: 1 }, requires: { resources: {} }, locked: true };
+      expect(Actions.buy(item)).to.be.false;
+      expect(Actions.isBuyable).to.have.been.calledWith(item);
+    });
+
+    // describe('with .isBuyable', () => {
+    //   it('passes simple items', () => {
+    //     const item = { increase: 1, value: { current: 1 }, requires: { resources: {} }, provides: { resources: {} } };
+    //     expect(Actions.buy(item)).to.be.true;
+    //   });
+    //
+    //   it('ignores non-buyable items', () => {
+    //     const item = { increase: 1, value: { current: 1 }, requires: { resources: {} }, locked: true };
+    //     expect(Actions.buy(item)).to.be.false;
+    //   });
+    // });
   });
 });

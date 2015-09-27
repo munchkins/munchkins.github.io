@@ -1,30 +1,30 @@
 angular
   .module('munchkins')
   .service('Actions', function(Buildings, Crafting, Resources, Tribe) {
-    const unlockAll = function() {
-      const unlockOne = function(item) {
-        if (item.locked) {
-          let locked = false;
+    this.unlock = function(item) {
+      if (item.locked) {
+        let locked = false;
 
-          _.forEach(item.requires.buildings, function(b, k) {
-            if (!locked) {
-              locked = !(Buildings.get(k).value.current >= b.value);
-            }
-          });
+        _.forEach(item.requires.buildings, function(b, k) {
+          if (!locked) {
+            locked = !(Buildings.get(k).value.current >= b.value);
+          }
+        });
 
-          _.forEach(item.requires.resources, function(r, k) {
-            if (!locked) {
-              locked = !(Resources.get(k).value.current >= r.value);
-            }
-          });
+        _.forEach(item.requires.resources, function(r, k) {
+          if (!locked) {
+            locked = !(Resources.get(k).value.current >= r.value);
+          }
+        });
 
-          item.locked = locked;
-        }
-      };
+        item.locked = locked;
+      }
+    };
 
-      _.forEach(Buildings.all(), unlockOne);
-      _.forEach(Crafting.all(), unlockOne);
-      _.forEach(Tribe.all(), unlockOne);
+    this.unlockAll = function() {
+      _.forEach(Buildings.all(), this.unlock);
+      _.forEach(Crafting.all(), this.unlock);
+      _.forEach(Tribe.all(), this.unlock);
     };
 
     this.priceMultiplier = function(item) {
@@ -67,7 +67,7 @@ angular
       Tribe.add(-1 * (item.requires.tribe || 0));
       Tribe.add(item.provides.tribe || 0);
 
-      unlockAll();
+      this.unlockAll();
 
       return true;
     };
