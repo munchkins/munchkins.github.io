@@ -3,12 +3,9 @@ describe('Game', () => {
 
   let actionsMock;
   let buildingsMock;
-  let cftLoad;
-  let cftSave;
-  let resLoad;
-  let resSave;
-  let trbLoad;
-  let trbSave;
+  let craftingMock;
+  let resourcesMock;
+  let tribeMock;
 
   beforeEach(() => {
     module('munchkins');
@@ -25,53 +22,87 @@ describe('Game', () => {
         this.save = buildingsMock.save;
       });
 
-      cftLoad = sinon.stub();
-      cftSave = sinon.stub();
+      craftingMock = { load: sinon.stub(), save: sinon.stub() };
       $provide.service('Crafting', function() {
-        this.load = cftLoad;
-        this.save = cftSave;
+        this.load = craftingMock.load;
+        this.save = craftingMock.save;
       });
 
-      resLoad = sinon.stub();
-      resSave = sinon.stub();
+      resourcesMock = { load: sinon.stub(), save: sinon.stub() };
       $provide.service('Resources', function() {
-        this.load = resLoad;
-        this.save = resSave;
+        this.load = resourcesMock.load;
+        this.save = resourcesMock.save;
       });
 
-      trbLoad = sinon.stub();
-      trbSave = sinon.stub();
+      tribeMock = { load: sinon.stub(), save: sinon.stub() };
       $provide.service('Tribe', function() {
-        this.load = trbLoad;
-        this.save = trbSave;
+        this.load = tribeMock.load;
+        this.save = tribeMock.save;
       });
     });
 
     inject(($injector) => {
       Game = $injector.get('Game');
+      sinon.spy(Game, 'load');
     });
   });
 
-  describe('on init', () => {
-    it('calls .load on Buildings, Crafing, Resources & Tribe', () => {
-      expect(buildingsMock.load).to.have.been.called;
-      expect(cftLoad).to.have.been.called;
-      expect(resLoad).to.have.been.called;
-      expect(trbLoad).to.have.been.called;
-    });
+  afterEach(() => {
+    Game.load.restore();
+  });
 
-    it('calls Actions.initResources', () => {
+  describe('on init', () => {
+    // small issue: injector calls, so we miss it
+    /* it('calls .load', () => {
+      expect(Game.load).to.have.been.called;
+    }); */
+
+    it('does action init', () => {
       expect(actionsMock.initResources).to.have.been.called;
     });
   });
 
+  describe('.load', () => {
+    describe('dependencies', () => {
+      it('loads buildings', () => {
+        expect(buildingsMock.load).to.have.been.called;
+      });
+
+      it('loads crafting', () => {
+        expect(craftingMock.load).to.have.been.called;
+      });
+
+      it('loads resources', () => {
+        expect(resourcesMock.load).to.have.been.called;
+      });
+
+      it('loads tribe', () => {
+        expect(tribeMock.load).to.have.been.called;
+      });
+    });
+  });
+
   describe('.save', () => {
-    it('calls .save on Buildings, Crafing, Resources & Tribe', () => {
-      Game.save();
-      expect(buildingsMock.save).to.have.been.called;
-      expect(cftSave).to.have.been.called;
-      expect(resSave).to.have.been.called;
-      expect(resLoad).to.have.been.called;
+    describe('dependencies', () => {
+      it('saves buildings', () => {
+        Game.save();
+        expect(buildingsMock.save).to.have.been.called;
+      });
+
+      it('saves crafting', () => {
+        Game.save();
+        expect(craftingMock.save).to.have.been.called;
+      });
+
+      it('saves resources', () => {
+        Game.save();
+        expect(resourcesMock.save).to.have.been.called;
+      });
+
+      it('saves tribe', () => {
+        Game.save();
+        expect(tribeMock.save).to.have.been.called;
+      });
     });
   });
 });
