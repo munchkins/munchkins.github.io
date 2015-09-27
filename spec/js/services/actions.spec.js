@@ -42,9 +42,9 @@ describe('Actions', () => {
       });
 
       const resources = {
-        resource1: { rate: 0 },
-        resource2: { rate: 0 },
-        resource3: { rate: 0 }
+        resource1: { name: 'R1', rate: 0 },
+        resource2: { name: 'R2', rate: 0 },
+        resource3: { name: 'R3', rate: 0 }
       };
       resourcesMock = {
         all: function() {
@@ -116,6 +116,26 @@ describe('Actions', () => {
       const item = { increase: 1.5, value: { current: 2 }};
       const incr = Actions.priceMultiplier(item);
       expect(incr).to.equal(1.5 * 1.5);
+    });
+  });
+
+  describe('.provides', () => {
+    it('returns single resources', () => {
+      const item = { provides: { resources: { resource1: { rate: 1 } } } };
+      const provides = Actions.provides(item);
+      expect(provides).to.have.length(1);
+    });
+
+    it('returns multiple resources', () => {
+      const item = { provides: { resources: { resource1: { rate: 1 }, resource2: { rate: 2 } } } };
+      const provides = Actions.provides(item);
+      expect(provides).to.have.length(2);
+    });
+
+    it('adds resource names', () => {
+      const item = { provides: { resources: { resource1: { rate: 1 } } } };
+      const provides = Actions.provides(item);
+      expect(provides).to.deep.equal([{ name: 'R1', rate: 1 }]);
     });
   });
 
