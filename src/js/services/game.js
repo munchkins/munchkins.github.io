@@ -48,7 +48,7 @@ angular
       console.log('Wiping game');
       try {
         localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify({}));
-      } catch(err) {
+      } catch (err) {
         console.error(err);
       }
     };
@@ -73,7 +73,7 @@ angular
         Tribe.save(save.tribe);
 
         localStorage.setItem(Defaults.SAVE_LOCATION, JSON.stringify(save));
-      } catch(err) {
+      } catch (err) {
         console.error(err);
       }
     };
