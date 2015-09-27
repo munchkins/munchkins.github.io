@@ -197,10 +197,62 @@ describe('Actions', () => {
       Actions.unlock(item);
       expect(item.locked).to.be.false;
     });
+
+    describe('Buildings', () => {
+      let item;
+
+      beforeEach(() => {
+        item = { locked: true, requires: { resources: {}, buildings: { building1: { value: 1 } } } };
+      });
+
+      it('stays locked with insufficient number', () => {
+        buildingsMock.get('building1').value.current = 0;
+        Actions.unlock(item);
+        expect(item.locked).to.be.true;
+      });
+
+      it('becomes unlocked with sufficient number', () => {
+        buildingsMock.get('building1').value.current = 1;
+        Actions.unlock(item);
+        expect(item.locked).to.be.false;
+      });
+    });
+
+    describe('Resources', () => {
+      let item;
+
+      beforeEach(() => {
+        item = { locked: true, requires: { resources: { resource1: { value: 6 } } } };
+      });
+
+      it('stays locked with insufficient number', () => {
+        Actions.unlock(item);
+        expect(item.locked).to.be.true;
+      });
+
+      it('becomes unlocked with sufficient number', () => {
+        resourcesMock.get('resource1').value.current = 6;
+        Actions.unlock(item);
+        expect(item.locked).to.be.false;
+      });
+    });
   });
 
   describe('.unlockAll', () => {
+    it('unlocks Buildings', () => {
+      Actions.unlockAll();
+      expect(buildingsMock.all).to.have.been.called;
+    });
 
+    it('unlocks Crafting', () => {
+      Actions.unlockAll();
+      expect(craftingMock.all).to.have.been.called;
+    });
+
+    it('unlocks Tribe', () => {
+      Actions.unlockAll();
+      expect(tribeMock.all).to.have.been.called;
+    });
   });
 
   describe('.isBuyable', () => {
