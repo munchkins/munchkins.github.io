@@ -64,8 +64,7 @@ angular
         resource.rate += (p.rate || 0);
       });
 
-      Tribe.add(-1 * (item.requires.tribe || 0));
-      Tribe.add(item.provides.tribe || 0);
+      Tribe.add((-1 * (item.requires.tribe || 0)) + (item.provides.tribe || 0));
 
       this.unlockAll();
 

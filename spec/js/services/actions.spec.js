@@ -86,12 +86,14 @@ describe('Actions', () => {
 
       sinon.spy(Actions, 'initResource');
       sinon.spy(Actions, 'isBuyable');
+      sinon.spy(Actions, 'unlockAll');
     });
   });
 
   afterEach(() => {
     Actions.initResource.restore();
     Actions.isBuyable.restore();
+    Actions.unlockAll.restore();
   });
 
   describe('.initResources & .initResource', () => {
@@ -324,6 +326,40 @@ describe('Actions', () => {
       const item = { increase: 1, value: { current: 1 }, requires: { resources: {} }, locked: true };
       expect(Actions.buy(item)).to.be.false;
       expect(Actions.isBuyable).to.have.been.calledWith(item);
+    });
+
+    describe('buying', () => {
+      it('requires/removes resource values/rates', () => {
+        const item = { increase: 1, value: { current: 0 }, requires: { resources: { resource1: { value: 5, rate: 0 }, resource2: { value: 0, rate: 9.99 } } }, provides: { resources: {} } };
+        expect(Actions.buy(item)).to.be.true;
+        expect(resourcesMock.get('resource1').value.current).to.equal(0);
+        expect(resourcesMock.get('resource2').rate).to.equal(-9.99);
+      });
+
+      it('provides/adds resource values/rates', () => {
+        const item = { increase: 1, value: { current: 0 }, provides: { resources: { resource1: { value: 5, rate: 0 }, resource2: { value: 0, rate: 9.99 } } }, requires: { resources: {} } };
+        expect(Actions.buy(item)).to.be.true;
+        expect(resourcesMock.get('resource1').value.current).to.equal(10);
+        expect(resourcesMock.get('resource2').rate).to.equal(9.99);
+      });
+
+      it('requires/removes tribe free', () => {
+        const item = { increase: 1, value: { current: 0 }, requires: { resources: {}, tribe: 1 }, provides: { resources: {} } };
+        expect(Actions.buy(item)).to.be.true;
+        expect(tribeMock.add).to.have.been.calledWith(-1);
+      });
+
+      it('provides/adds tribe free', () => {
+        const item = { increase: 1, value: { current: 0 }, requires: { resources: {} }, provides: { resources: {}, tribe: 1 } };
+        expect(Actions.buy(item)).to.be.true;
+        expect(tribeMock.add).to.have.been.calledWith(1);
+      });
+
+      it('calls .unlockAll', () => {
+        const item = { increase: 1, value: { current: 0 }, requires: { resources: {} }, provides: { resources: {} } };
+        expect(Actions.buy(item)).to.be.true;
+        expect(Actions.unlockAll).to.have.been.called;
+      });
     });
 
     // describe('with .isBuyable', () => {
