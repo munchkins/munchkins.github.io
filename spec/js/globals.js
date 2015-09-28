@@ -1,3 +1,4 @@
+/* eslint no-unused-vars:0 */
 const TYPES_BUILDINGS = {
   garden: true, shelter: true, quarry: true, hut: true, monolith: true, fire: true, trap: true, pond: true
 };

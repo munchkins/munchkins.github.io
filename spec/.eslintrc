@@ -1,0 +1,18 @@
+{
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "node": true
+  },
+  "globals": {
+    "expect": false,
+    "inject": false,
+    "sinon": false,
+    "TYPES_BUILDINGS": false,
+    "TYPES_CRAFTING": false,
+    "TYPES_RESOURCES": false,
+    "TYPES_TRIBE": false,
+    "testResources": false,
+    "testStructure": false
+  }
+}

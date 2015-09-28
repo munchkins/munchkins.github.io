@@ -1,3 +1,4 @@
+/* eslint no-unused-vars:0 */
 const testExpected = function(source, exp) {
   it('has all expected resources', inject(($injector) => {
     const res = $injector.get(source);
