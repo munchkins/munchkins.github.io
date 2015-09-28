@@ -16,7 +16,15 @@ angular
       },
       paper: {
         name: 'Paper',
-        description: 'Petal paper are a fine resource'
+        description: 'Petal paper is a fine resource used in trade and science'
+      },
+      trees: {
+        name: 'Trees',
+        description: 'A naturally growing wood resource'
+      },
+      wood: {
+        name: 'Wood',
+        description: 'A product of trees, useful in creating additional structures'
       },
       furs: {
         name: 'Furs',

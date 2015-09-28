@@ -61,7 +61,8 @@ angular
         provides: {
           resources: {
             flowers: { value: 0, rate: 0.01 },
-            rocks: { value: 0, rate: 0.001 }
+            rocks: { value: 0, rate: 0.001 },
+            trees: { value: 2 }
           }
         }
       },

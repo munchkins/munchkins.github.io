@@ -7,9 +7,9 @@ const TYPES_CRAFTING = {
 };
 
 const TYPES_RESOURCES = {
-  flowers: true, stems: true, petals: true, paper: true, rocks: true, tools: true, seeds: true, faith: true, happiness: true, charcoal: true, furs: true, water: true
+  flowers: true, stems: true, petals: true, paper: true, rocks: true, tools: true, seeds: true, faith: true, happiness: true, charcoal: true, furs: true, water: true, trees: true, wood: true
 };
 
 const TYPES_TRIBE = {
-  farmer: true, tooler: true, priest: true, cook: true
+  farmer: true, tooler: true, priest: true, cook: true, woodcutter: true
 };

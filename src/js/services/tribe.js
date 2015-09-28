@@ -34,7 +34,27 @@ angular
         provides: {
           resources: {
             flowers: { value: 0, rate: 0.01 },
-            rocks: { value: 0, rate: 0.001 }
+            rocks: { value: 0, rate: 0.001 },
+            trees: { value: 2, rate: 0 }
+          }
+        }
+      },
+      woodcutter: {
+        name: 'Woodcutter',
+        description: 'A woodcutter cuts down trees, creating a supply of wood',
+        requires: {
+          buildings: {
+            garden: { value: 5 }
+          },
+          resources: {
+            trees: { value: 1, rate: 0.001 },
+            tools: { value: 0, rate: 0.001 }
+          },
+          tribe: 1
+        },
+        provides: {
+          resources: {
+            wood: { value: 0, rate: 0.0175 }
           }
         }
       },
