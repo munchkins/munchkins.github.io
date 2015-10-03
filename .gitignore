@@ -2,7 +2,7 @@ node_modules/
 bower_components/
 npm-debug.log
 coverage/
-*.html
-munchkins.css
-munchkins.js
-munchkins.js.map
+
+
+
+
