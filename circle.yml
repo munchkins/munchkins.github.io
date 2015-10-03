@@ -15,8 +15,7 @@ deployment:
   deploy:
     branch: development
     commands:
-      - sed -i -e 's/views\///' .gitignore
-      - sed -i -e 's/index\.html//' .gitignore
+      - sed -i -e 's/\*\.html//' .gitignore
       - sed -i -e 's/munchkins\.css//' .gitignore
       - sed -i -e 's/munchkins\.js\.map//' .gitignore
       - sed -i -e 's/munchkins\.js//' .gitignore
