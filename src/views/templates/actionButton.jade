@@ -1,10 +1,10 @@
-.action-button(ng-if="!item.locked" ng-class="{ 'inactive': !ctrl.isBuyable(item) }" ng-click="ctrl.buy(item)")
+.action-button(ng-if="!item.locked" ng-class="{ 'inactive': !ctrl.actions.isBuyable(item) }" ng-click="ctrl.actions.buy(item)")
   a
     span {{item.name}}&nbsp;
     span.small ({{item.value.current | numeric:0}})
   
   .detail
-    span(ng-repeat="require in ctrl.requires(item)" ng-class="{ 'invalid': !require.affordable }")
+    span(ng-repeat="require in ctrl.actions.requires(item)" ng-class="{ 'invalid': !require.affordable }")
       span(ng-if="require.buynow") &nbsp;{{require.name}}
     span &nbsp;
   
@@ -14,7 +14,7 @@
     
     .section(ng-if="item.hasRequires")
       .heading Required
-      .content(ng-repeat="require in ctrl.requires(item)" ng-class="{ 'inactive': !require.affordable }")
+      .content(ng-repeat="require in ctrl.actions.requires(item)" ng-class="{ 'inactive': !require.affordable }")
         span {{require.name}}&nbsp;@&nbsp;
         span(ng-if="require.buynow") {{require.buynow | numeric}}
         span(ng-if="require.buynow && require.rate") &nbsp;&amp;&nbsp;
@@ -22,7 +22,7 @@
         
     .section(ng-if="item.hasProvides")
       .heading Provides
-      .content(ng-repeat="provide in ctrl.provides(item)")
+      .content(ng-repeat="provide in ctrl.actions.provides(item)")
         span {{provide.name}}&nbsp;@&nbsp;
         span(ng-if="provide.value") {{provide.value}}
         span(ng-if="provide.value && provide.rate") &nbsp;&amp;&nbsp;

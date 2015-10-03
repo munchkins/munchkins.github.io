@@ -92,6 +92,6 @@ angular
     this.load();
     Actions.initResources();
 
-    $interval(this.save, Defaults.SAVE_RATE);
-    $interval(this.tick, Defaults.TICK_RATE);
+    $interval(() => this.save(), Defaults.SAVE_RATE);
+    $interval(() => this.tick(), Defaults.TICK_RATE);
   });
